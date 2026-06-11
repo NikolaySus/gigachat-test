@@ -1,0 +1,44 @@
+{
+  "name": "fair_oecd_proxy_circle_from_step80_lr5e7_anchor20_reh05_b12_40_4096_eager_frozenrepro",
+  "description": "Fair OECD-style scientific taxonomy repair from the current step-80 fair frontier. Uses balanced broad OECD-proxy circle-loss batches derived from audited Kaggle GRNTI articles; no RuSciBench rows, released model scores, or released latent weights.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_grnti_geo_oecd_knn_from_grandcircle_20p40p20_4096_eager_frozenrepro/step-80.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_kaggle_oecd_proxy_labeled_circle_b12_4800_seed2631.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_oecd_proxy_circle_from_step80_lr5e7_anchor20_reh05_b12_40_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 12,
+  "learning_rate": 5e-7,
+  "weight_decay": 0.0,
+  "temperature": 0.03,
+  "pair_score_loss_weight": 1.0,
+  "max_steps": 40,
+  "log_every": 5,
+  "save_every": 20,
+  "seed": 2633,
+  "stages": [
+    {
+      "name": "kaggle_oecd_proxy_labeled_circle",
+      "data_path": "data/contrastive/open_ru_1r_nc_kaggle_oecd_proxy_labeled_circle_b12_4800_seed2631.jsonl",
+      "max_steps": 40,
+      "batch_size": 12,
+      "learning_rate": 5e-7,
+      "shuffle": false,
+      "task_loss_weight": 1.0,
+      "temperature": 0.03,
+      "parameter_anchor_weight": 20.0,
+      "rehearsal_loss_weight": 0.5,
+      "save_every": 20
+    }
+  ],
+  "retention": {
+    "parameter_anchor_weight": 20.0,
+    "rehearsal_data_path": "data/contrastive/fair_rusts_repair_rehearsal_cedr800_mixh1600_seed2032.jsonl",
+    "rehearsal_batch_size": 1,
+    "rehearsal_loss_weight": 0.5
+  }
+}

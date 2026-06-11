@@ -1,0 +1,47 @@
+[project]
+name = "gigachat-test"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = "==3.13.2"
+dependencies = [
+    "flash-attn>=2.8.3",
+    "matplotlib>=3.10.8",
+    "numpy>=2.4.3",
+    "pandas>=3.0.1",
+    "scikit-learn>=1.8.0",
+    "seaborn>=0.13.2",
+    "torch>=2.9.1",
+    "tqdm>=4.67.3",
+    "transformers==4.51.0",
+    "torchvision==0.25.0",
+    "markupsafe>=3.0.3",
+    "accelerate>=1.13.0",
+    "mteb>=2.12.30",
+]
+
+
+
+
+[tool.uv]
+index-strategy = "unsafe-best-match"
+
+# Set PyPI as the default index
+[[tool.uv.index]]
+name = "pypi"
+url = "https://pypi.org/simple"
+default = true
+
+# Add PyTorch CUDA 13.0 index
+[[tool.uv.index]]
+name = "pytorch-cu130"
+url = "https://download.pytorch.org/whl/cu130"
+index.explicit = true
+
+# Explicitly tell uv to use the PyTorch index for torch packages
+[tool.uv.sources]
+torch = { index = "pytorch-cu130" }
+torchvision = { index = "pytorch-cu130" }
+torchtext = { index = "pytorch-cu130" }
+markupsafe = { git = "https://github.com/pallets/markupsafe", rev = "3.0.3" }
+flash-attn = { url = "https://github.com/mjun0812/flash-attention-prebuild-wheels/releases/download/v0.9.0/flash_attn-2.8.3+cu130torch2.10-cp313-cp313-linux_x86_64.whl" }

@@ -1,0 +1,22 @@
+{
+  "name": "exp01r_nc_mixh_habrfull_plus_geracl_remaining_4096",
+  "description": "Continuation ablation: start from Mix H Habr-full checkpoint and train one pass over the standard remaining GeRaCl recovery split.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "flash_attention_2",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/open_ru_1r_nc_mixh_habrfull_4096/latest.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_mixb_geracl_remaining_9600.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/open_ru_1r_nc_mixh_habrfull_plus_geracl_remaining_4096",
+  "max_length": 4096,
+  "batch_size": 8,
+  "learning_rate": 3e-06,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "max_steps": 1200,
+  "log_every": 50,
+  "save_every": 1200,
+  "seed": 75
+}

@@ -1,0 +1,44 @@
+{
+  "name": "fair_oecd29_knn_salvage_from_frontier_lr5e7_anchor50_reh1_b1_20_4096_eager_frozenrepro",
+  "description": "Fair micro-step OECD kNN salvage from the current OECD29 frontier. Uses the already audited Kaggle GRNTI-to-OECD29 TF-IDF kNN episodes, but with lower LR, stronger parameter anchor, stronger rehearsal, and dense checkpoints to test whether early OECD clustering movement can be retained without damaging the six-task gate.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_oecd29_circle_from_oecd_step40_lr5e7_anchor20_reh05_b4_40_4096_eager_frozenrepro/step-40.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_kaggle_oecd29_tfidf_knn_episode_p2_n4s1_1200_seed2671.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_oecd29_knn_salvage_from_frontier_lr5e7_anchor50_reh1_b1_20_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 1,
+  "learning_rate": 5e-7,
+  "weight_decay": 0.0,
+  "temperature": 0.03,
+  "pair_score_loss_weight": 1.0,
+  "max_steps": 20,
+  "log_every": 1,
+  "save_every": 5,
+  "seed": 2701,
+  "stages": [
+    {
+      "name": "kaggle_oecd29_tfidf_knn_episode_salvage",
+      "data_path": "data/contrastive/open_ru_1r_nc_kaggle_oecd29_tfidf_knn_episode_p2_n4s1_1200_seed2671.jsonl",
+      "max_steps": 20,
+      "batch_size": 1,
+      "learning_rate": 5e-7,
+      "shuffle": true,
+      "task_loss_weight": 1.0,
+      "temperature": 0.03,
+      "parameter_anchor_weight": 50.0,
+      "rehearsal_loss_weight": 1.0,
+      "save_every": 5
+    }
+  ],
+  "retention": {
+    "parameter_anchor_weight": 50.0,
+    "rehearsal_data_path": "data/contrastive/fair_rusts_repair_rehearsal_cedr800_mixh1600_seed2032.jsonl",
+    "rehearsal_batch_size": 1,
+    "rehearsal_loss_weight": 1.0
+  }
+}

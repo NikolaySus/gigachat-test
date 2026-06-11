@@ -1,0 +1,22 @@
+{
+  "name": "exp01r_nc_cedr_correction_rusentitweet_lr5e6_cont_from_lr1e5_4096_eager_frozenrepro",
+  "description": "Continuation of the successful RuSentiTweet CEDR correction, lower LR to test saturation.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/cedr_correction_rusentitweet_lr1e5_from_habrminimal_4096_eager_frozenrepro/latest.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_cedr_rusentitweet_local_sentiment_component_3200.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/cedr_correction_rusentitweet_lr5e6_cont_from_lr1e5_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 2,
+  "learning_rate": 5e-6,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "max_steps": 1600,
+  "log_every": 50,
+  "save_every": 1600,
+  "seed": 605
+}

@@ -1,0 +1,26 @@
+{
+  "name": "fair_rusts_repair_from_highsts_mixh01_sts_cedr_mixh_lr1e6_anchor5_200_4096_eager_frozenrepro",
+  "description": "Fair RuSTS repair from the best-average high-STS CEDR checkpoint. Mixed STS pair-score rows with CEDR Lenta and Mix H broad rehearsal rows; no released/a050 teacher or benchmark rows.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_cedr_highstsbase_lenta_rehmixh01_target0_lr2e5_w100_80_4096_eager_frozenrepro/step-80.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/fair_rusts_repair_highstsbase_mixh01_sts3200_cedr800_mixh1600_seed2031.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_rusts_repair_from_highsts_mixh01_sts_cedr_mixh_lr1e6_anchor5_200_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 2,
+  "learning_rate": 1e-6,
+  "weight_decay": 0.001,
+  "temperature": 0.02,
+  "pair_score_loss_weight": 5.0,
+  "max_steps": 200,
+  "log_every": 25,
+  "save_every": 100,
+  "seed": 2031,
+  "retention": {
+    "parameter_anchor_weight": 5.0
+  }
+}

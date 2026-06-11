@@ -1,0 +1,47 @@
+{
+  "name": "CONTAMINATED_cedr_all_labeled_supcon_4096_eager_frozenrepro",
+  "description": "INTENTIONALLY CONTAMINATED CEDR diagnostic ablation. Do not report as fair result. CEDR train+test rows as labeled_text supervised contrastive data: directly targets KNN clustering.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/open_ru_1r_nc_mixh_habrfull_plus_geracl_remaining_4096_eager_frozenrepro/latest.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/CONTAMINATED_cedr_all_labeled_supcon.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/CONTAMINATED_cedr_all_labeled_supcon_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 12,
+  "learning_rate": 2e-06,
+  "weight_decay": 0.0,
+  "temperature": 0.05,
+  "max_steps": 800,
+  "log_every": 25,
+  "save_every": 10000000,
+  "seed": 9143,
+  "retention": {
+    "parameter_anchor_weight": 0.0,
+    "rehearsal_data_path": "data/contrastive/open_ru_1r_nc_cedr_ailab_goemotions_ru_prior_neutral404_9000.jsonl",
+    "rehearsal_batch_size": 3,
+    "rehearsal_loss_weight": 0.0
+  },
+  "stages": [
+    {
+      "name": "all_labeled_supcon",
+      "data_path": "data/contrastive/CONTAMINATED_cedr_all_labeled_supcon.jsonl",
+      "max_steps": 800,
+      "batch_size": 12,
+      "learning_rate": 2e-06,
+      "weight_decay": 0.0,
+      "temperature": 0.05,
+      "parameter_anchor_weight": 0.0,
+      "rehearsal_loss_weight": 0.0,
+      "save_every": 200
+    }
+  ],
+  "contamination": {
+    "status": "YES",
+    "reason": "Uses CEDR benchmark rows/labels as training data for diagnostic purposes.",
+    "do_not_use_for_fair_results": true
+  }
+}

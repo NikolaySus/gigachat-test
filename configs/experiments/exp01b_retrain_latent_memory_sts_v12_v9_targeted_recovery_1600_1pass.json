@@ -1,0 +1,41 @@
+{
+  "name": "exp01b_retrain_latent_memory_sts_v12_v9_targeted_recovery_1600_1pass",
+  "description": "STS-v12: initialize from STS-v9 and apply a 1600-step low-LR targeted broad recovery stage over an expanded recovery mix, approximately one pass over the selected retrieval/classification/clustering sources.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "flash_attention_2",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_original_latent_memory/checkpoints/open_ru_sts_v9_anchor_only/latest.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_recovery_v12_2134_per_source.jsonl",
+  "output_dir": "experiments/exp01_original_latent_memory/checkpoints/open_ru_sts_v12_v9_targeted_recovery_1600_1pass",
+  "max_length": 4096,
+  "batch_size": 4,
+  "learning_rate": 2e-6,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "pair_score_loss_weight": 1.0,
+  "log_every": 10,
+  "save_every": 1600,
+  "seed": 13,
+  "retention": {
+    "parameter_anchor_weight": 10.0
+  },
+  "stages": [
+    {
+      "name": "targeted_broad_recovery_1600_1pass",
+      "data_path": "data/contrastive/open_ru_recovery_v12_2134_per_source.jsonl",
+      "objectives": ["contrastive"],
+      "sources": [
+        "ai-forever/rubq-retrieval",
+        "ai-forever/ru-scibench-grnti-classification",
+        "ai-forever/ru-scibench-oecd-classification"
+      ],
+      "max_steps": 1600,
+      "batch_size": 4,
+      "temperature": 0.02,
+      "parameter_anchor_weight": 10.0
+    }
+  ]
+}

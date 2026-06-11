@@ -1,0 +1,44 @@
+{
+  "name": "fair_kaggle_oecd29_labelstmt_from_frontier_lr1e6_anchor10_reh05_b4_60_save20_4096_eager_frozenrepro",
+  "description": "Fair OECD taxonomy-semantic continuation from the accepted frontier. Clean Kaggle GRNTI article texts are contrasted against short Russian statements of their mapped public OECD-style label, with other OECD labels as negatives. This tests whether explicit text-to-taxonomy alignment can improve RuSciBenchOECDClassification and clustering where metric-only batches saturated.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_oecd29_circle_from_oecd_step40_lr5e7_anchor20_reh05_b4_40_4096_eager_frozenrepro/step-40.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/fair_kaggle_oecd29_label_statement_neg8_1350_seed3141.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_oecd29_labelstmt_from_frontier_lr1e6_anchor10_reh05_b4_60_save20_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 4,
+  "learning_rate": 1e-6,
+  "weight_decay": 0.0,
+  "temperature": 0.05,
+  "pair_score_loss_weight": 1.0,
+  "max_steps": 60,
+  "log_every": 5,
+  "save_every": 20,
+  "seed": 3143,
+  "stages": [
+    {
+      "name": "kaggle_oecd29_label_statement_neg8",
+      "data_path": "data/contrastive/fair_kaggle_oecd29_label_statement_neg8_1350_seed3141.jsonl",
+      "max_steps": 60,
+      "batch_size": 4,
+      "learning_rate": 1e-6,
+      "shuffle": true,
+      "task_loss_weight": 1.0,
+      "temperature": 0.05,
+      "parameter_anchor_weight": 10.0,
+      "rehearsal_loss_weight": 0.5,
+      "save_every": 20
+    }
+  ],
+  "retention": {
+    "parameter_anchor_weight": 10.0,
+    "rehearsal_data_path": "data/contrastive/fair_rusts_repair_rehearsal_cedr800_mixh1600_seed2032.jsonl",
+    "rehearsal_batch_size": 1,
+    "rehearsal_loss_weight": 0.5
+  }
+}

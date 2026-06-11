@@ -1,0 +1,78 @@
+{
+  "name": "open_ru_sts_v13",
+  "description": "Clean-first v13 recovery manifest: starts from v12_1600 and adds clean synthetic clustering plus Russian retrieval recovery data while excluding RU-MTEB-derived GeRaCl configs.",
+  "datasets": [
+    {
+      "id": "deepvk/ru-HNP",
+      "license": "Apache-2.0",
+      "usage": ["sts", "paraphrase", "hard_negative_finetune", "synthetic", "initial_checkpoint"],
+      "splits": ["train"],
+      "coverage_tags": ["hard_negative", "paraphrase", "negation", "numeric_logic", "entity_swap"],
+      "contaminates_rumteb_tasks": [],
+      "notes": "Inherited through the STS-v9/v12 initialization checkpoint, not used directly in v13 recovery."
+    },
+    {
+      "id": "merionum/ru_paraphraser",
+      "license": "MIT",
+      "usage": ["sts", "paraphrase", "initial_checkpoint"],
+      "splits": ["train"],
+      "coverage_tags": ["sts", "paraphrase", "news_headlines"],
+      "contaminates_rumteb_tasks": ["RUParaPhraserSTS"],
+      "notes": "Inherited through STS-v9/v12 initialization; excluded from the v13 recovery stage."
+    },
+    {
+      "id": "ai-forever/ru-stsbenchmark-sts",
+      "license": "CC-BY-SA-4.0",
+      "usage": ["sts", "pair_score", "initial_checkpoint"],
+      "splits": ["train"],
+      "coverage_tags": ["sts", "graded_similarity"],
+      "contaminates_rumteb_tasks": ["RuSTSBenchmarkSTS"],
+      "notes": "Inherited through STS-v9/v12 initialization; excluded from the v13 recovery stage."
+    },
+    {
+      "id": "ai-forever/rubq-retrieval",
+      "license": "CC-BY-SA-4.0",
+      "usage": ["retrieval", "hard_negative_finetune", "recovery"],
+      "splits": ["train"],
+      "coverage_tags": ["retrieval"],
+      "contaminates_rumteb_tasks": ["RuBQRetrieval"],
+      "notes": "Used in the v13 balanced recovery stage through the existing v12 targeted recovery mix."
+    },
+    {
+      "id": "ai-forever/ru-scibench-grnti-classification",
+      "license": "MIT",
+      "usage": ["classification", "clustering", "recovery"],
+      "splits": ["train"],
+      "coverage_tags": ["classification", "clustering", "scientific_text"],
+      "contaminates_rumteb_tasks": ["RuSciBenchGRNTIClassification", "RuSciBenchGRNTIClusteringP2P"],
+      "notes": "Used in the v13 balanced recovery stage through the existing v12 targeted recovery mix."
+    },
+    {
+      "id": "ai-forever/ru-scibench-oecd-classification",
+      "license": "MIT",
+      "usage": ["classification", "clustering", "recovery"],
+      "splits": ["train"],
+      "coverage_tags": ["classification", "clustering", "scientific_text"],
+      "contaminates_rumteb_tasks": ["RuSciBenchOECDClassification", "RuSciBenchOECDClusteringP2P"],
+      "notes": "Used in the v13 balanced recovery stage through the existing v12 targeted recovery mix."
+    },
+    {
+      "id": "deepvk/GeRaCl_synthethic_dataset",
+      "license": "Apache-2.0",
+      "usage": ["classification", "clustering", "synthetic", "recovery"],
+      "splits": ["synthetic_classes_train/train", "synthetic_positives/train"],
+      "coverage_tags": ["clustering", "classification", "synthetic_classes", "c4"],
+      "contaminates_rumteb_tasks": [],
+      "notes": "Only synthetic_classes_train and synthetic_positives are used. ru_mteb_classes and ru_mteb_extended_classes are forbidden because they reuse RU-MTEB class lists."
+    },
+    {
+      "id": "Vladimirlv/ru-promptriever-dataset",
+      "license": "CC-BY-NC-4.0",
+      "usage": ["retrieval", "hard_negative_finetune", "recovery", "research_only"],
+      "splits": ["train"],
+      "coverage_tags": ["retrieval", "bm25_hard_negatives", "russian", "msmarco_ru"],
+      "contaminates_rumteb_tasks": [],
+      "notes": "Only non-repeated, non-instruction rows are used in v13. Non-commercial research license; do not use for commercial checkpoints."
+    }
+  ]
+}

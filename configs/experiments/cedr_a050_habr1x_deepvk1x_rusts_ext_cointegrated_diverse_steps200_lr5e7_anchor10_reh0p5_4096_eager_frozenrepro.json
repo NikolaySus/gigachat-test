@@ -1,0 +1,28 @@
+{
+  "name": "cedr_a050_habr1x_deepvk1x_rusts_ext_cointegrated_diverse_steps200_lr5e7_anchor10_reh0p5_4096_eager_frozenrepro",
+  "description": "External RuSTS paraphrase add-on from Habr 1x + DeepVK 1x a050-recovery checkpoint.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/cedr_a050_recover_habr1x_deepvk1x_lr2e6_anchor1_rehgo05_5989_4096_eager_frozenrepro/step-5989.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/rusts_external_cointegrated_diverse_3200.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/cedr_a050_habr1x_deepvk1x_rusts_ext_cointegrated_diverse_steps200_lr5e7_anchor10_reh0p5_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 2,
+  "learning_rate": 5e-07,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "max_steps": 200,
+  "log_every": 50,
+  "save_every": 200,
+  "seed": 5202,
+  "retention": {
+    "parameter_anchor_weight": 10.0,
+    "rehearsal_data_path": "data/contrastive/open_ru_1r_nc_cedr_ailab_goemotions_ru_prior_neutral404_9000.jsonl",
+    "rehearsal_batch_size": 2,
+    "rehearsal_loss_weight": 0.5
+  }
+}

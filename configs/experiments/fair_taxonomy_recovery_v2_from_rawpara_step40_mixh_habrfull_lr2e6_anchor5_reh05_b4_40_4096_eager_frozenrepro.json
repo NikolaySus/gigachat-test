@@ -1,0 +1,44 @@
+{
+  "name": "fair_taxonomy_recovery_v2_from_rawpara_step40_mixh_habrfull_lr2e6_anchor5_reh05_b4_40_4096_eager_frozenrepro",
+  "description": "Stronger fair taxonomy/clustering recovery from the raw-paraphrase frontier. Same clean MixH Habr-full/GeRaCl/DeepVK/Grandmaster data as v1, but with higher task pressure and weaker retention to test whether the taxonomy signal can repair RuSciBench/OECD/Georeview clustering gaps.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_rusts_rawparaphrase_promptaligned_from_w35_step35_lr3e6_anchor8_reh05_b8_60_4096_eager_frozenrepro/step-40.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_mixh_habrfull_geracl6400_habr4369_deepvk3200_grandmaster3200_17169.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_taxonomy_recovery_v2_from_rawpara_step40_mixh_habrfull_lr2e6_anchor5_reh05_b4_40_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 4,
+  "learning_rate": 2e-6,
+  "weight_decay": 0.0,
+  "temperature": 0.02,
+  "pair_score_loss_weight": 1.0,
+  "max_steps": 40,
+  "log_every": 5,
+  "save_every": 20,
+  "seed": 2447,
+  "stages": [
+    {
+      "name": "mixh_taxonomy_recovery_v2",
+      "data_path": "data/contrastive/open_ru_1r_nc_mixh_habrfull_geracl6400_habr4369_deepvk3200_grandmaster3200_17169.jsonl",
+      "max_steps": 40,
+      "batch_size": 4,
+      "learning_rate": 2e-6,
+      "shuffle": true,
+      "task_loss_weight": 1.0,
+      "temperature": 0.02,
+      "rehearsal_loss_weight": 0.5,
+      "parameter_anchor_weight": 5.0,
+      "save_every": 20
+    }
+  ],
+  "retention": {
+    "parameter_anchor_weight": 5.0,
+    "rehearsal_data_path": "data/contrastive/fair_rusts_repair_rehearsal_cedr800_mixh1600_seed2032.jsonl",
+    "rehearsal_batch_size": 2,
+    "rehearsal_loss_weight": 0.5
+  }
+}

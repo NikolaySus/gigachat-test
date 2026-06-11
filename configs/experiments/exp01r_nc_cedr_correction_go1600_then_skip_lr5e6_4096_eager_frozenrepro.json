@@ -1,0 +1,22 @@
+{
+  "name": "exp01r_nc_cedr_correction_go1600_then_skip_lr5e6_4096_eager_frozenrepro",
+  "description": "Alternate from best AiLab GoEmotions-RU checkpoint back to skip-only RuSentiTweet local sentiment data.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/cedr_correction_ailab_goemotions6400_from_best_4096_eager_frozenrepro/step-1600.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_cedr_rusentitweet_skip_as_neutral_component_full.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/cedr_correction_go1600_then_skip_lr5e6_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 2,
+  "learning_rate": 5e-6,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "max_steps": 3000,
+  "log_every": 50,
+  "save_every": 1000,
+  "seed": 751
+}

@@ -1,0 +1,47 @@
+{
+  "name": "CONTAMINATED_oecd_exact_labeled_circle_from_frontier_lr2e6_b12_100_save50_4096_eager_frozenrepro",
+  "description": "INTENTIONALLY CONTAMINATED OECD diagnostic ablation. Do not report as fair result. Uses direct RuSciBench OECD benchmark rows/labels as labeled_text circle-loss data to test whether target contamination can close the OECD clustering gap.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_oecd29_circle_from_oecd_step40_lr5e7_anchor20_reh05_b4_40_4096_eager_frozenrepro/step-40.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/CONTAMINATED_oecd_exact_labeled_circle_seed3122.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/CONTAMINATED_oecd_exact_labeled_circle_from_frontier_lr2e6_b12_100_save50_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 12,
+  "learning_rate": 2e-6,
+  "weight_decay": 0.0,
+  "temperature": 0.05,
+  "pair_score_loss_weight": 1.0,
+  "max_steps": 100,
+  "log_every": 5,
+  "save_every": 50,
+  "seed": 3124,
+  "stages": [
+    {
+      "name": "CONTAMINATED_oecd_exact_labeled_circle",
+      "data_path": "data/contrastive/CONTAMINATED_oecd_exact_labeled_circle_seed3122.jsonl",
+      "max_steps": 100,
+      "batch_size": 12,
+      "learning_rate": 2e-6,
+      "shuffle": true,
+      "task_loss_weight": 1.0,
+      "temperature": 0.05,
+      "parameter_anchor_weight": 0.0,
+      "rehearsal_loss_weight": 0.0,
+      "save_every": 50
+    }
+  ],
+  "retention": {
+    "parameter_anchor_weight": 0.0,
+    "rehearsal_loss_weight": 0.0
+  },
+  "contamination": {
+    "status": "YES",
+    "reason": "Uses direct RuSciBench OECD benchmark rows/labels as training data for diagnostic purposes.",
+    "do_not_use_for_fair_results": true
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "name": "fair_mixed_oecd29_grnti_geo_from_frontier_lr5e7_anchor15_reh05_b6_80_4096_eager_frozenrepro",
+  "description": "Fair coupled local-structure continuation from the current frontier. Each batch contains OECD29 KNN, GRNTI KNN, and Georeview SupCon records so OECD clustering pressure is trained together with the clustering objectives it previously damaged.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_oecd29_circle_from_oecd_step40_lr5e7_anchor20_reh05_b4_40_4096_eager_frozenrepro/step-40.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/fair_mixed_oecd29_grnti_geo_knn_supcon_b6_480_seed2681.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_mixed_oecd29_grnti_geo_from_frontier_lr5e7_anchor15_reh05_b6_80_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 6,
+  "learning_rate": 5e-7,
+  "weight_decay": 0.0,
+  "temperature": 0.03,
+  "pair_score_loss_weight": 1.0,
+  "max_steps": 80,
+  "log_every": 5,
+  "save_every": 20,
+  "seed": 2683,
+  "stages": [
+    {
+      "name": "mixed_oecd29_grnti_geo_local_structure",
+      "data_path": "data/contrastive/fair_mixed_oecd29_grnti_geo_knn_supcon_b6_480_seed2681.jsonl",
+      "max_steps": 80,
+      "batch_size": 6,
+      "learning_rate": 5e-7,
+      "shuffle": false,
+      "task_loss_weight": 1.0,
+      "temperature": 0.03,
+      "parameter_anchor_weight": 15.0,
+      "rehearsal_loss_weight": 0.5,
+      "save_every": 20
+    }
+  ],
+  "retention": {
+    "parameter_anchor_weight": 15.0,
+    "rehearsal_data_path": "data/contrastive/fair_rusts_repair_rehearsal_cedr800_mixh1600_seed2032.jsonl",
+    "rehearsal_batch_size": 1,
+    "rehearsal_loss_weight": 0.5
+  }
+}

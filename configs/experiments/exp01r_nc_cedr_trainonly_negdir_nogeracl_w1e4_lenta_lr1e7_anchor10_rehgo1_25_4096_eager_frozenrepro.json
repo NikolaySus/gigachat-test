@@ -1,0 +1,30 @@
+{
+  "name": "exp01r_nc_cedr_trainonly_negdir_nogeracl_w1e4_lenta_lr1e7_anchor10_rehgo1_25_4096_eager_frozenrepro",
+  "description": "Short calibration: strong optimizer repulsion from no-GeRaCl direction during Lenta/Go correction. No direct weight arithmetic.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/cedr_correction_go9000_neutral404_continue_from_step1800_lr5e7_anchor10_1200_4096_eager_frozenrepro/step-1200.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_cedr_lenta_news_neutral_distractors_reported_3200.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/cedr_trainonly_negdir_nogeracl_w1e4_lenta_lr1e7_anchor10_rehgo1_25_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 3,
+  "learning_rate": 1e-07,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "max_steps": 25,
+  "log_every": 5,
+  "save_every": 5,
+  "seed": 950,
+  "retention": {
+    "parameter_anchor_weight": 10.0,
+    "rehearsal_data_path": "data/contrastive/open_ru_1r_nc_cedr_ailab_goemotions_ru_prior_neutral404_9000.jsonl",
+    "rehearsal_batch_size": 3,
+    "rehearsal_loss_weight": 1.0,
+    "negative_direction_checkpoint": "experiments/exp01_reinit_fair/checkpoints/mixh_habrfull_leave1out_no_geracl_4096_eager_frozenrepro/latest.pt",
+    "negative_direction_weight": 10000.0
+  }
+}

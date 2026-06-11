@@ -1,0 +1,52 @@
+{
+  "name": "CONTAMINATED_cedr_diagnostic_distill_a050_allcedr_4096_eager_frozenrepro",
+  "description": "INTENTIONALLY CONTAMINATED CEDR diagnostic training from row-level flip set. Do not report as fair result.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/cedr_correction_lenta_reported_replay_go9000_from_retainedbest_lr1e7_anchor10_reh1_300_4096_eager_frozenrepro/step-150.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/CONTAMINATED_cedr_all_labeled_supcon.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/CONTAMINATED_cedr_diagnostic_distill_a050_allcedr_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 4,
+  "learning_rate": 5e-07,
+  "weight_decay": 0.0,
+  "temperature": 0.05,
+  "max_steps": 300,
+  "log_every": 25,
+  "save_every": 10000000,
+  "seed": 9551,
+  "retention": {
+    "parameter_anchor_weight": 0.0,
+    "rehearsal_data_path": "data/contrastive/open_ru_1r_nc_cedr_ailab_goemotions_ru_prior_neutral404_9000.jsonl",
+    "rehearsal_batch_size": 3,
+    "rehearsal_loss_weight": 0.0,
+    "teacher_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/cedr_goal_best_minus_nogeracl_a050/latent.pt",
+    "distillation_max_texts": 4
+  },
+  "stages": [
+    {
+      "name": "distill_a050_allcedr",
+      "data_path": "data/contrastive/CONTAMINATED_cedr_all_labeled_supcon.jsonl",
+      "max_steps": 300,
+      "batch_size": 4,
+      "learning_rate": 5e-07,
+      "weight_decay": 0.0,
+      "temperature": 0.05,
+      "parameter_anchor_weight": 1.0,
+      "rehearsal_loss_weight": 0.0,
+      "negative_direction_weight": 0.0,
+      "task_loss_weight": 0.0,
+      "distillation_loss_weight": 1.0,
+      "save_every": 50
+    }
+  ],
+  "contamination": {
+    "status": "YES",
+    "reason": "Uses CEDR benchmark rows, labels, and diagnostic flip sets.",
+    "do_not_use_for_fair_results": true
+  }
+}

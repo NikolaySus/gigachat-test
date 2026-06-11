@@ -1,0 +1,63 @@
+{
+  "name": "exp01b_retrain_latent_memory_sts_v11_balanced_curriculum",
+  "description": "STS-v11: balanced curriculum combining the broad Experiment 1b open-RU mix with the STS-v6/v9 mixture. Uses stage-level broad recovery and latent-parameter anchoring, with no per-step rehearsal and no teacher distillation.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "flash_attention_2",
+  "latent_architecture": "original_latent_attention",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_sts_v6_train.jsonl",
+  "output_dir": "experiments/exp01_original_latent_memory/checkpoints/open_ru_sts_v11_balanced_curriculum",
+  "max_length": 4096,
+  "batch_size": 12,
+  "learning_rate": 1e-5,
+  "weight_decay": 0.01,
+  "temperature": 0.03,
+  "pair_score_loss_weight": 1.0,
+  "log_every": 10,
+  "save_every": 3050,
+  "seed": 13,
+  "retention": {
+    "parameter_anchor_weight": 10.0
+  },
+  "stages": [
+    {
+      "name": "broad_contrastive_warmup",
+      "data_path": "data/contrastive/open_ru_train.jsonl",
+      "objectives": ["contrastive"],
+      "max_steps": 500,
+      "batch_size": 4,
+      "temperature": 0.02,
+      "parameter_anchor_weight": 10.0
+    },
+    {
+      "name": "soft_sts_pair_scores",
+      "data_path": "data/contrastive/open_ru_sts_v6_train.jsonl",
+      "objectives": ["pair_score"],
+      "max_steps": 450,
+      "batch_size": 12,
+      "pair_score_loss_weight": 0.5,
+      "temperature": 0.02,
+      "parameter_anchor_weight": 10.0
+    },
+    {
+      "name": "hard_sts_contrastive_b4",
+      "data_path": "data/contrastive/open_ru_sts_v6_train.jsonl",
+      "objectives": ["contrastive"],
+      "max_steps": 1500,
+      "batch_size": 4,
+      "temperature": 0.03,
+      "parameter_anchor_weight": 10.0
+    },
+    {
+      "name": "broad_contrastive_recovery",
+      "data_path": "data/contrastive/open_ru_train.jsonl",
+      "objectives": ["contrastive"],
+      "max_steps": 600,
+      "batch_size": 4,
+      "temperature": 0.02,
+      "parameter_anchor_weight": 10.0
+    }
+  ]
+}

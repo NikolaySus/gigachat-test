@@ -1,0 +1,44 @@
+{
+  "name": "fair_geracl_scenario_knn_from_grandcircle_step20_lr7e7_anchor15_reh05_b4_40_4096_eager_frozenrepro",
+  "description": "Fair taxonomy/classification repair from the current GrandMaster-circle frontier using clean GeRaCl scenario-grouped KNN episodes. Targets OECD/GRNTI classification and clustering gaps without benchmark rows.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_grandmaster_circle_repair_from_taxv2_step20_lr5e7_anchor15_reh05_b8_40_4096_eager_frozenrepro/step-20.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_geracl_scenario_knn_c6_p1_b4_2400_seed2521.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_geracl_scenario_knn_from_grandcircle_step20_lr7e7_anchor15_reh05_b4_40_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 4,
+  "learning_rate": 7e-7,
+  "weight_decay": 0.0,
+  "temperature": 0.05,
+  "pair_score_loss_weight": 1.0,
+  "max_steps": 40,
+  "log_every": 5,
+  "save_every": 20,
+  "seed": 2523,
+  "stages": [
+    {
+      "name": "geracl_scenario_knn",
+      "data_path": "data/contrastive/open_ru_1r_nc_geracl_scenario_knn_c6_p1_b4_2400_seed2521.jsonl",
+      "max_steps": 40,
+      "batch_size": 4,
+      "learning_rate": 7e-7,
+      "shuffle": false,
+      "task_loss_weight": 1.0,
+      "temperature": 0.05,
+      "parameter_anchor_weight": 15.0,
+      "rehearsal_loss_weight": 0.5,
+      "save_every": 20
+    }
+  ],
+  "retention": {
+    "parameter_anchor_weight": 15.0,
+    "rehearsal_data_path": "data/contrastive/fair_rusts_repair_rehearsal_cedr800_mixh1600_seed2032.jsonl",
+    "rehearsal_batch_size": 2,
+    "rehearsal_loss_weight": 0.5
+  }
+}

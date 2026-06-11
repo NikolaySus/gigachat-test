@@ -1,0 +1,28 @@
+{
+  "name": "fair_cedr_top05base_lenta_stronganchor_lr5e6_anchor20_rehmixh02_300_4096_eager_frozenrepro",
+  "description": "Fair conservative CEDR repair from the high-geometry top05 base. Previous top05 repair reached CEDR only by destroying geometry; this variant removes negative-direction pressure, lowers LR, and uses stronger L2-SP anchoring plus Mix H rehearsal to test whether CEDR can rise while preserving Georeview/OECD geometry.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/lossgap_top05_open_ru_1r_nc_cedr_ruizard_classifier_pseudolabel_neu55_7200_4096_eager_frozenrepro/step-300.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_cedr_lenta_news_neutral_distractors_reported_3200.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_cedr_top05base_lenta_stronganchor_lr5e6_anchor20_rehmixh02_300_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 2,
+  "learning_rate": 5e-6,
+  "weight_decay": 0.0,
+  "temperature": 0.02,
+  "max_steps": 300,
+  "log_every": 25,
+  "save_every": 100,
+  "seed": 2087,
+  "retention": {
+    "parameter_anchor_weight": 20.0,
+    "rehearsal_data_path": "data/contrastive/open_ru_1r_nc_mixh_habrfull_geracl6400_habr4369_deepvk3200_grandmaster3200_17169.jsonl",
+    "rehearsal_batch_size": 3,
+    "rehearsal_loss_weight": 0.2
+  }
+}

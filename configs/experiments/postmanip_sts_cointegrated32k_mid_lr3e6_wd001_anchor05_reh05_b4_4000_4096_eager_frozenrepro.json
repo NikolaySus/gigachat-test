@@ -1,0 +1,29 @@
+{
+  "name": "postmanip_sts_cointegrated32k_mid_lr3e6_wd001_anchor05_reh05_b4_4000_4096_eager_frozenrepro",
+  "description": "Post-manipulation STS repair sweep from Habr1x+DeepVK1x recovery. Tests lower/shorter STS updates with stronger CEDR retention.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/cedr_a050_recover_habr1x_deepvk1x_lr2e6_anchor1_rehgo05_5989_4096_eager_frozenrepro/step-5989.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/rusts_external_cointegrated_diverse_32000.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/postmanip_sts_cointegrated32k_mid_lr3e6_wd001_anchor05_reh05_b4_4000_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 4,
+  "learning_rate": 3e-06,
+  "weight_decay": 0.001,
+  "temperature": 0.02,
+  "pair_score_loss_weight": 5.0,
+  "max_steps": 4000,
+  "log_every": 50,
+  "save_every": 4000,
+  "seed": 8912,
+  "retention": {
+    "parameter_anchor_weight": 0.5,
+    "rehearsal_data_path": "data/contrastive/open_ru_1r_nc_cedr_ailab_goemotions_ru_prior_neutral404_9000.jsonl",
+    "rehearsal_batch_size": 4,
+    "rehearsal_loss_weight": 0.5
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "exp01r_nc_mixo_pair_calibration_600_4096",
+  "description": "Mix O continuation probe from Mix F seed53. Pair calibration data uses GeRaCl:Habr:UC Berkeley:MVR-CII = 8:2:1:1.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "flash_attention_2",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/open_ru_1r_nc_mixf_plus_geracl_remaining_seed53_4096/latest.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_mixo_pair_calibration_g8_h2_uc1_mvr1_3600.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/mixo_pair_calibration_600_4096",
+  "max_length": 4096,
+  "batch_size": 4,
+  "learning_rate": 1e-06,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "max_steps": 600,
+  "log_every": 50,
+  "save_every": 600,
+  "seed": 811
+}

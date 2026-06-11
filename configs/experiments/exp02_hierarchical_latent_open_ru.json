@@ -1,0 +1,23 @@
+{
+  "name": "exp02_hierarchical_latent_open_ru",
+  "description": "Experiment 2: hierarchical latent-memory block, stage1 initialized from original 512-slot block and stage2 adds 128 latent slots.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": false,
+  "attn_implementation": "flash_attention_2",
+  "latent_architecture": "hierarchical_latent_attention",
+  "stage2_latents": 128,
+  "copy_stage1_from_original": true,
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_train.jsonl",
+  "output_dir": "experiments/exp02_hierarchical_latent/checkpoints/open_ru",
+  "max_length": 512,
+  "batch_size": 8,
+  "learning_rate": 0.00001,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "max_steps": 1000,
+  "log_every": 10,
+  "save_every": 100,
+  "seed": 13
+}

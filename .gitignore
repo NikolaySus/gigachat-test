@@ -1,0 +1,62 @@
+# Python-generated files
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+build/
+dist/
+wheels/
+*.egg-info/
+
+# Virtual environments and local env
+.venv/
+official_repro/.venv/
+.env
+.env.*
+
+# Local agent/editor/cache state
+.cache/
+.codex/
+.agents/
+tmp.html
+
+# Hugging Face / MTEB / dataset caches
+data/hf_cache*/
+results/mteb_cache/
+results/official_repro_cache/
+results/**/embedding_cache/
+
+# Generated training/evaluation artifacts
+data/contrastive/
+data/external/
+data/raw/
+experiments/**/checkpoints/
+experiments/**/logs/
+logs/
+
+# Large or reproducible result payloads.
+results/
+
+# Generated notebooks/arrays/log archives
+*.npy
+*.npz
+*.zip
+*.log
+*.jsonl
+*.parquet
+*.arrow
+
+# Model/checkpoint files
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.bin
+*.onnx
+
+# OS/editor noise
+.DS_Store
+Thumbs.db

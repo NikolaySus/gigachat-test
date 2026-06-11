@@ -1,0 +1,60 @@
+{
+  "name": "open_ru_sts_v12",
+  "description": "STS-v12 recovery manifest: starts from STS-v9 and fine-tunes only on targeted broad recovery sources from the Experiment 1b open-RU mix.",
+  "datasets": [
+    {
+      "id": "deepvk/ru-HNP",
+      "license": "Apache-2.0",
+      "usage": ["sts", "paraphrase", "hard_negative_finetune", "synthetic", "initial_checkpoint"],
+      "splits": ["train"],
+      "coverage_tags": ["hard_negative", "paraphrase", "negation", "numeric_logic", "entity_swap"],
+      "contaminates_rumteb_tasks": [],
+      "notes": "Inherited through the STS-v9 initialization checkpoint, not used directly in the v12 recovery stage."
+    },
+    {
+      "id": "merionum/ru_paraphraser",
+      "license": "MIT",
+      "usage": ["sts", "paraphrase", "initial_checkpoint"],
+      "splits": ["train"],
+      "coverage_tags": ["sts", "paraphrase", "news_headlines"],
+      "contaminates_rumteb_tasks": ["RUParaPhraserSTS"],
+      "notes": "Inherited through STS-v9 initialization; excluded from the v12 recovery stage."
+    },
+    {
+      "id": "ai-forever/ru-stsbenchmark-sts",
+      "license": "CC-BY-SA-4.0",
+      "usage": ["sts", "pair_score", "initial_checkpoint"],
+      "splits": ["train"],
+      "coverage_tags": ["sts", "graded_similarity"],
+      "contaminates_rumteb_tasks": ["RuSTSBenchmarkSTS"],
+      "notes": "Inherited through STS-v9 initialization; excluded from the v12 recovery stage."
+    },
+    {
+      "id": "ai-forever/rubq-retrieval",
+      "license": "CC-BY-SA-4.0",
+      "usage": ["retrieval", "hard_negative_finetune", "recovery"],
+      "splits": ["train"],
+      "coverage_tags": ["retrieval"],
+      "contaminates_rumteb_tasks": ["RuBQRetrieval"],
+      "notes": "Used directly in the v12 targeted recovery stage."
+    },
+    {
+      "id": "ai-forever/ru-scibench-grnti-classification",
+      "license": "MIT",
+      "usage": ["classification", "clustering", "recovery"],
+      "splits": ["train"],
+      "coverage_tags": ["classification", "clustering", "scientific_text"],
+      "contaminates_rumteb_tasks": ["RuSciBenchGRNTIClassification", "RuSciBenchGRNTIClusteringP2P"],
+      "notes": "Used directly in the v12 targeted recovery stage."
+    },
+    {
+      "id": "ai-forever/ru-scibench-oecd-classification",
+      "license": "MIT",
+      "usage": ["classification", "clustering", "recovery"],
+      "splits": ["train"],
+      "coverage_tags": ["classification", "clustering", "scientific_text"],
+      "contaminates_rumteb_tasks": ["RuSciBenchOECDClassification", "RuSciBenchOECDClusteringP2P"],
+      "notes": "Used directly in the v12 targeted recovery stage."
+    }
+  ]
+}

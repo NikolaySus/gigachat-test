@@ -1,0 +1,52 @@
+{
+  "name": "fair_rawparaphrase_from_oecd29_frontier_lr7e7_anchor15_reh05_b8_40_4096_eager_frozenrepro",
+  "description": "Short fair raw-paraphrase continuation from the current Kaggle OECD29 frontier. Uses decontaminated prompt-aligned paraphrase/near-paraphrase pair-score data with strong anchoring and CEDR/MixH rehearsal to test whether small CEDR/STS/Geo gains can be recovered without OECD damage.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_oecd29_circle_from_oecd_step40_lr5e7_anchor20_reh05_b4_40_4096_eager_frozenrepro/step-40.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/fair_rusts_paraphrase_pairscore_balanced_promptaligned_12800_seed2071.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_rawparaphrase_from_oecd29_frontier_lr7e7_anchor15_reh05_b8_40_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 8,
+  "learning_rate": 7e-7,
+  "weight_decay": 0.0,
+  "temperature": 0.02,
+  "pair_score_loss_weight": 6.0,
+  "pair_score_rank_loss_weight": 1.0,
+  "pair_score_correlation_loss_weight": 1.0,
+  "pair_score_rank_scale": 16.0,
+  "pair_score_rank_min_gap": 0.05,
+  "max_steps": 40,
+  "log_every": 5,
+  "save_every": 20,
+  "seed": 2697,
+  "stages": [
+    {
+      "name": "raw_paraphrase_promptaligned_repair",
+      "data_path": "data/contrastive/fair_rusts_paraphrase_pairscore_balanced_promptaligned_12800_seed2071.jsonl",
+      "max_steps": 40,
+      "batch_size": 8,
+      "learning_rate": 7e-7,
+      "shuffle": true,
+      "task_loss_weight": 1.0,
+      "pair_score_loss_weight": 6.0,
+      "pair_score_rank_loss_weight": 1.0,
+      "pair_score_correlation_loss_weight": 1.0,
+      "pair_score_rank_scale": 16.0,
+      "pair_score_rank_min_gap": 0.05,
+      "rehearsal_loss_weight": 0.5,
+      "parameter_anchor_weight": 15.0,
+      "save_every": 20
+    }
+  ],
+  "retention": {
+    "parameter_anchor_weight": 15.0,
+    "rehearsal_data_path": "data/contrastive/fair_rusts_repair_rehearsal_cedr800_mixh1600_seed2032.jsonl",
+    "rehearsal_batch_size": 2,
+    "rehearsal_loss_weight": 0.5
+  }
+}

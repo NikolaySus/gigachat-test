@@ -1,0 +1,48 @@
+{
+  "name": "exp01r_nc_mixn_three_stage_correction_4096",
+  "description": "Fair 1R-NC Mix N: Mix F broad stage, one pass over Mix F GeRaCl remainder, then low-LR correction with GeRaCl rehearsal:Habr:MVR-CII:UC Berkeley = 4:1:0.5:0.5.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "flash_attention_2",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": null,
+  "freeze_llm": true,
+  "reinit_latent": true,
+  "data_path": "data/contrastive/open_ru_1r_nc_mixf_geracl2_habr1_deepvk1_groundedstrict1_16000.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/open_ru_1r_nc_mixn_three_stage_correction_4096",
+  "max_length": 4096,
+  "batch_size": 4,
+  "learning_rate": 1e-05,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "max_steps": 6400,
+  "log_every": 50,
+  "save_every": 4000,
+  "seed": 191,
+  "stages": [
+    {
+      "name": "mixf_broad_stage",
+      "data_path": "data/contrastive/open_ru_1r_nc_mixf_geracl2_habr1_deepvk1_groundedstrict1_16000.jsonl",
+      "max_steps": 4000,
+      "batch_size": 4,
+      "learning_rate": 1e-05,
+      "save_every": 4000
+    },
+    {
+      "name": "mixf_geracl_remaining_seed53",
+      "data_path": "data/contrastive/open_ru_1r_nc_mixf_geracl_remaining_seed53_9600.jsonl",
+      "max_steps": 1200,
+      "batch_size": 8,
+      "learning_rate": 3e-06,
+      "save_every": 1200
+    },
+    {
+      "name": "low_lr_sensitive_terra_correction",
+      "data_path": "data/contrastive/open_ru_1r_nc_mixn_correction_geracl3200_habr800_mvrcii400_ucb400_seed191.jsonl",
+      "max_steps": 1200,
+      "batch_size": 4,
+      "learning_rate": 2e-06,
+      "save_every": 1200
+    }
+  ]
+}

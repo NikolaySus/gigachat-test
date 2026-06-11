@@ -1,0 +1,44 @@
+{
+  "name": "fair_cedr_supconbase_lenta_outputdistill_lr2e5_distill1_b2_200_4096_eager_frozenrepro",
+  "description": "Fair CEDR repair from the recreated SupCon geometry base using output-level preservation to the same fair SupCon checkpoint. This tests whether the high-RuSTS SupCon geometry survives CEDR repair better than the previous parameter-anchor repair. No released teacher, no released latent initialization, no benchmark rows, and no checkpoint arithmetic are used.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/nomanip_radical_supcon_lr5_t10_loanchor600_4096_eager_frozenrepro/step-600.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_cedr_lenta_news_neutral_distractors_reported_3200.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_cedr_supconbase_lenta_outputdistill_lr2e5_distill1_b2_200_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 2,
+  "learning_rate": 2e-5,
+  "weight_decay": 0.0,
+  "temperature": 0.02,
+  "max_steps": 200,
+  "log_every": 25,
+  "save_every": 50,
+  "seed": 2131,
+  "retention": {
+    "teacher_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/nomanip_radical_supcon_lr5_t10_loanchor600_4096_eager_frozenrepro/step-600.pt",
+    "distillation_max_texts": 8,
+    "distillation_max_length": 4096,
+    "rehearsal_data_path": "data/contrastive/open_ru_1r_nc_mixh_habrfull_geracl6400_habr4369_deepvk3200_grandmaster3200_17169.jsonl",
+    "rehearsal_batch_size": 2,
+    "rehearsal_loss_weight": 0.0,
+    "parameter_anchor_weight": 0.0
+  },
+  "stages": [
+    {
+      "name": "lenta_cedr_with_supcon_output_distill",
+      "data_path": "data/contrastive/open_ru_1r_nc_cedr_lenta_news_neutral_distractors_reported_3200.jsonl",
+      "max_steps": 200,
+      "batch_size": 2,
+      "task_loss_weight": 1.0,
+      "distillation_loss_weight": 1.0,
+      "rehearsal_loss_weight": 0.0,
+      "parameter_anchor_weight": 0.0,
+      "save_every": 50
+    }
+  ]
+}

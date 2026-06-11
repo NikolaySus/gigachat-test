@@ -1,0 +1,28 @@
+{
+  "name": "cedr_a050_habr1x_deepvk1x_rusts_hist_geracl_steps300_lr1e6_anchor5_reh0p5_4096_eager_frozenrepro",
+  "description": "History-driven RuSTS recovery ablation from Habr 1x + DeepVK 1x a050-recovery checkpoint.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/cedr_a050_recover_habr1x_deepvk1x_lr2e6_anchor1_rehgo05_5989_4096_eager_frozenrepro/step-5989.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_geracl.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/cedr_a050_habr1x_deepvk1x_rusts_hist_geracl_steps300_lr1e6_anchor5_reh0p5_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 2,
+  "learning_rate": 1e-06,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "max_steps": 300,
+  "log_every": 50,
+  "save_every": 300,
+  "seed": 1413,
+  "retention": {
+    "parameter_anchor_weight": 5.0,
+    "rehearsal_data_path": "data/contrastive/open_ru_1r_nc_cedr_ailab_goemotions_ru_prior_neutral404_9000.jsonl",
+    "rehearsal_batch_size": 2,
+    "rehearsal_loss_weight": 0.5
+  }
+}

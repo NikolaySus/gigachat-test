@@ -1,0 +1,25 @@
+{
+  "name": "exp01r_nc_cedr_correction_neutral40_from_anchorbest_b4_lr1e6_anchor10_4096_eager_frozenrepro",
+  "description": "CEDR correction batch-size ablation: current best plus CEDR-matched neutral40 GoEmotions-RU, batch 4, low LR, and L2-SP anchoring.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/cedr_correction_go2400_go_anchor10_lr2e6_4096_eager_frozenrepro/step-1600.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_cedr_ailab_goemotions_ru_prior_neutral40_6400.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/cedr_correction_neutral40_from_anchorbest_b4_lr1e6_anchor10_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 4,
+  "learning_rate": 1e-6,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "max_steps": 900,
+  "log_every": 50,
+  "save_every": 300,
+  "seed": 805,
+  "retention": {
+    "parameter_anchor_weight": 10.0
+  }
+}

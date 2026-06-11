@@ -1,0 +1,42 @@
+{
+  "name": "open_ru_sts_v14",
+  "description": "Clean-first v14 recovery manifest: starts from v12_1600 and adds Vikhr Grounded-RAG-RU-v2 retrieval recovery data.",
+  "datasets": [
+    {
+      "id": "deepvk/ru-HNP",
+      "license": "Apache-2.0",
+      "usage": ["sts", "paraphrase", "hard_negative_finetune", "synthetic", "initial_checkpoint"],
+      "splits": ["train"],
+      "coverage_tags": ["hard_negative", "paraphrase", "negation", "numeric_logic", "entity_swap"],
+      "contaminates_rumteb_tasks": [],
+      "notes": "Inherited through the STS-v9/v12 initialization checkpoint, not used directly in v14 recovery."
+    },
+    {
+      "id": "merionum/ru_paraphraser",
+      "license": "MIT",
+      "usage": ["sts", "paraphrase", "initial_checkpoint"],
+      "splits": ["train"],
+      "coverage_tags": ["sts", "paraphrase", "news_headlines"],
+      "contaminates_rumteb_tasks": ["RUParaPhraserSTS"],
+      "notes": "Inherited through STS-v9/v12 initialization; excluded from v14 recovery."
+    },
+    {
+      "id": "ai-forever/ru-stsbenchmark-sts",
+      "license": "CC-BY-SA-4.0",
+      "usage": ["sts", "pair_score", "initial_checkpoint"],
+      "splits": ["train"],
+      "coverage_tags": ["sts", "graded_similarity"],
+      "contaminates_rumteb_tasks": ["RuSTSBenchmarkSTS"],
+      "notes": "Inherited through STS-v9/v12 initialization; excluded from v14 recovery."
+    },
+    {
+      "id": "Vikhrmodels/Grounded-RAG-RU-v2",
+      "license": "Apache-2.0",
+      "usage": ["retrieval", "hard_negative_finetune", "rag", "recovery"],
+      "splits": ["train"],
+      "coverage_tags": ["retrieval", "russian_wikipedia", "multi_document_qa", "hard_negatives"],
+      "contaminates_rumteb_tasks": [],
+      "notes": "Only type=good train rows are converted. Query is the user question, positives are assistant-cited documents, and hard negatives are non-cited documents from the same retrieved cluster plus random documents."
+    }
+  ]
+}

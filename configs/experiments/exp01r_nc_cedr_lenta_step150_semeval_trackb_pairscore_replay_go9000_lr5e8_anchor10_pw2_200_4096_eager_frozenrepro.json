@@ -1,0 +1,29 @@
+{
+  "name": "exp01r_nc_cedr_lenta_step150_semeval_trackb_pairscore_replay_go9000_lr5e8_anchor10_pw2_200_4096_eager_frozenrepro",
+  "description": "CEDR continuation from Lenta step-150 using SemEval-2025 Russian Track B intensity pair-score calibration plus Go9000 rehearsal.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/cedr_correction_lenta_reported_replay_go9000_from_retainedbest_lr1e7_anchor10_reh1_300_4096_eager_frozenrepro/step-150.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_cedr_semeval2025_rus_trackb_intensity_pairscore_train_dev_neutral.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/cedr_lenta_step150_semeval_trackb_pairscore_replay_go9000_lr5e8_anchor10_pw2_200_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 6,
+  "learning_rate": 5e-8,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "pair_score_loss_weight": 2.0,
+  "max_steps": 200,
+  "log_every": 25,
+  "save_every": 25,
+  "seed": 932,
+  "retention": {
+    "parameter_anchor_weight": 10.0,
+    "rehearsal_data_path": "data/contrastive/open_ru_1r_nc_cedr_ailab_goemotions_ru_prior_neutral404_9000.jsonl",
+    "rehearsal_batch_size": 3,
+    "rehearsal_loss_weight": 0.5
+  }
+}

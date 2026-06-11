@@ -1,0 +1,51 @@
+{
+  "name": "fair_oecd29_knn_pairdistill_mid_from_frontier_lr8e7_anchor25_dist05_pair5_reh05_b1_40_save5_4096_eager_frozenrepro",
+  "description": "Fair OECD29 KNN midpoint probe from the current accepted frontier. It reuses the audited Kaggle GRNTI-to-OECD29 TF-IDF KNN episodes, with stronger output/pairwise self-distillation than the original KNN route but less anchoring than the no-op salvage route.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_oecd29_circle_from_oecd_step40_lr5e7_anchor20_reh05_b4_40_4096_eager_frozenrepro/step-40.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_kaggle_oecd29_tfidf_knn_episode_p2_n4s1_1200_seed2671.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_oecd29_knn_pairdistill_mid_from_frontier_lr8e7_anchor25_dist05_pair5_reh05_b1_40_save5_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 1,
+  "learning_rate": 8e-7,
+  "weight_decay": 0.0,
+  "temperature": 0.03,
+  "pair_score_loss_weight": 1.0,
+  "max_steps": 40,
+  "log_every": 1,
+  "save_every": 5,
+  "seed": 2911,
+  "stages": [
+    {
+      "name": "oecd29_knn_pairdistill_mid",
+      "data_path": "data/contrastive/open_ru_1r_nc_kaggle_oecd29_tfidf_knn_episode_p2_n4s1_1200_seed2671.jsonl",
+      "max_steps": 40,
+      "batch_size": 1,
+      "learning_rate": 8e-7,
+      "shuffle": true,
+      "task_loss_weight": 1.0,
+      "temperature": 0.03,
+      "distillation_loss_weight": 0.5,
+      "pairwise_distillation_loss_weight": 5.0,
+      "parameter_anchor_weight": 25.0,
+      "rehearsal_loss_weight": 0.5,
+      "save_every": 5
+    }
+  ],
+  "retention": {
+    "parameter_anchor_weight": 25.0,
+    "rehearsal_data_path": "data/contrastive/fair_rusts_repair_rehearsal_cedr800_mixh1600_seed2032.jsonl",
+    "rehearsal_batch_size": 1,
+    "rehearsal_loss_weight": 0.5,
+    "distillation_loss_weight": 0.5,
+    "distillation_max_texts": 8,
+    "pairwise_distillation_loss_weight": 5.0,
+    "pairwise_distillation_max_texts": 12,
+    "distillation_max_length": 4096
+  }
+}

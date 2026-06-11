@@ -1,0 +1,40 @@
+{
+  "name": "exp01b_retrain_latent_memory_sts_v3_clean_repeat_b4_exposure_matched",
+  "description": "Clean uninterrupted STS-v3 repeat after batch-12 hard-stage OOM. Keeps soft stage unchanged and uses hard contrastive batch 4 for 1200 steps, matching the previous final run's hard-record exposure count of 4800 records.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "flash_attention_2",
+  "latent_architecture": "original_latent_attention",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_sts_v3_train.jsonl",
+  "output_dir": "experiments/exp01_original_latent_memory/checkpoints/open_ru_sts_v3_clean_repeat_b4_exposure_matched",
+  "max_length": 4096,
+  "batch_size": 12,
+  "learning_rate": 1e-5,
+  "weight_decay": 0.01,
+  "temperature": 0.03,
+  "pair_score_loss_weight": 1.0,
+  "log_every": 10,
+  "save_every": 1500,
+  "seed": 13,
+  "stages": [
+    {
+      "name": "soft_pair_scores",
+      "data_path": "data/contrastive/open_ru_sts_v3_train.jsonl",
+      "objectives": ["pair_score"],
+      "max_steps": 300,
+      "batch_size": 12,
+      "pair_score_loss_weight": 0.5,
+      "temperature": 0.02
+    },
+    {
+      "name": "hard_contrastive_b4_exposure_matched",
+      "data_path": "data/contrastive/open_ru_sts_v3_train.jsonl",
+      "objectives": ["contrastive"],
+      "max_steps": 1200,
+      "batch_size": 4,
+      "temperature": 0.03
+    }
+  ]
+}

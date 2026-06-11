@@ -1,0 +1,28 @@
+{
+  "name": "fair_repair_from_rehmixh015_supportp4_cont150_lr1e6_anchor1_reh01_b1_100_4096_eager_frozenrepro",
+  "description": "Continuation of the fair support-p4 repair from step 150. The previous run OOMed in the rehearsal branch, while the weak-target trend was improving Georeview clustering and RuSTS with CEDR still above released. This continuation lowers rehearsal batch and weight to keep the useful signal while avoiding the OOM path.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_repair_from_rehmixh015_supportp4_lr1e6_anchor1_reh025_200_4096_eager_frozenrepro/step-150.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_cedr_multilabel_support_v1_p4_7100.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_repair_from_rehmixh015_supportp4_cont150_lr1e6_anchor1_reh01_b1_100_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 2,
+  "learning_rate": 1e-6,
+  "weight_decay": 0.001,
+  "temperature": 0.08,
+  "max_steps": 100,
+  "log_every": 25,
+  "save_every": 25,
+  "seed": 2037,
+  "retention": {
+    "parameter_anchor_weight": 1.0,
+    "rehearsal_data_path": "data/contrastive/open_ru_1r_nc_mixh_habrfull_geracl6400_habr4369_deepvk3200_grandmaster3200_17169.jsonl",
+    "rehearsal_batch_size": 1,
+    "rehearsal_loss_weight": 0.1
+  }
+}

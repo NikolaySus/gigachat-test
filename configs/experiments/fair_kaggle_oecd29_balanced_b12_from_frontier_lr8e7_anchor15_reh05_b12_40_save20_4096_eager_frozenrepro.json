@@ -1,0 +1,44 @@
+{
+  "name": "fair_kaggle_oecd29_balanced_b12_from_frontier_lr8e7_anchor15_reh05_b12_40_save20_4096_eager_frozenrepro",
+  "description": "Fair OECD clustering-aligned continuation from the accepted frontier. Uses audited Kaggle GRNTI articles remapped to OECD-style labels with larger balanced b12 circle-loss batches: six OECD labels per batch, two positives per label. This tests whether broader in-batch class separation helps OECD/GRNTI P2P clustering without using benchmark rows or released-model signals.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_oecd29_circle_from_oecd_step40_lr5e7_anchor20_reh05_b4_40_4096_eager_frozenrepro/step-40.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/fair_kaggle_oecd29_balanced_b12_chunk2_4800_seed3131.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_oecd29_balanced_b12_from_frontier_lr8e7_anchor15_reh05_b12_40_save20_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 12,
+  "learning_rate": 8e-7,
+  "weight_decay": 0.0,
+  "temperature": 0.03,
+  "pair_score_loss_weight": 1.0,
+  "max_steps": 40,
+  "log_every": 5,
+  "save_every": 20,
+  "seed": 3133,
+  "stages": [
+    {
+      "name": "kaggle_oecd29_balanced_b12_circle",
+      "data_path": "data/contrastive/fair_kaggle_oecd29_balanced_b12_chunk2_4800_seed3131.jsonl",
+      "max_steps": 40,
+      "batch_size": 12,
+      "learning_rate": 8e-7,
+      "shuffle": false,
+      "task_loss_weight": 1.0,
+      "temperature": 0.03,
+      "parameter_anchor_weight": 15.0,
+      "rehearsal_loss_weight": 0.5,
+      "save_every": 20
+    }
+  ],
+  "retention": {
+    "parameter_anchor_weight": 15.0,
+    "rehearsal_data_path": "data/contrastive/fair_rusts_repair_rehearsal_cedr800_mixh1600_seed2032.jsonl",
+    "rehearsal_batch_size": 1,
+    "rehearsal_loss_weight": 0.5
+  }
+}

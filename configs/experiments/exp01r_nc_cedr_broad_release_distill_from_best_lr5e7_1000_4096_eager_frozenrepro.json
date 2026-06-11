@@ -1,0 +1,29 @@
+{
+  "name": "exp01r_nc_cedr_broad_release_distill_from_best_lr5e7_1000_4096_eager_frozenrepro",
+  "description": "Broad non-CEDR released-latent teacher distillation from the retained CEDR best checkpoint. This tests whether clean broad-text distillation can recover released CEDR geometry without using CEDR records.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/cedr_correction_go9000_neutral404_continue_from_step1800_lr5e7_anchor10_1200_4096_eager_frozenrepro/step-1200.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_mixh_habrfull_geracl6400_habr4369_deepvk3200_grandmaster3200_17169.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/cedr_broad_release_distill_from_best_lr5e7_1000_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 2,
+  "learning_rate": 5e-7,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "task_loss_weight": 0.0,
+  "max_steps": 1000,
+  "log_every": 50,
+  "save_every": 200,
+  "seed": 875,
+  "retention": {
+    "teacher_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/released_original_latent_attention.pt",
+    "distillation_loss_weight": 1.0,
+    "distillation_max_texts": 16,
+    "distillation_max_length": 4096
+  }
+}

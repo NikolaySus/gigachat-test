@@ -1,0 +1,26 @@
+{
+  "name": "fair_recovery_from_rehmixh015_step120_geocluster_ms_lr1e6_anchor1_300_4096_eager_frozenrepro",
+  "description": "Targeted fair Georeview clustering recovery from the high-CEDR rehearsal-0.15 checkpoint using grouped GeRaCl/GrandMaster labeled-text multi-similarity batches.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_cedr_highstsbase_lenta_rehmixh015_target0_lr2e5_w100_120_4096_eager_frozenrepro/step-120.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/fair_geo_cluster_labeled_ms_6000_seed2034.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_recovery_from_rehmixh015_step120_geocluster_ms_lr1e6_anchor1_300_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 12,
+  "learning_rate": 1e-6,
+  "weight_decay": 0.0,
+  "temperature": 0.02,
+  "max_steps": 300,
+  "log_every": 25,
+  "save_every": 100,
+  "seed": 2034,
+  "shuffle": false,
+  "retention": {
+    "parameter_anchor_weight": 1.0
+  }
+}

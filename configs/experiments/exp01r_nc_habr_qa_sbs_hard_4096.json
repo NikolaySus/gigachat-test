@@ -1,0 +1,22 @@
+{
+  "name": "exp01r_nc_habr_qa_sbs_hard_4096",
+  "description": "Fair 1R-NC per-source ablation: reinitialize original latent-attention block and train on hard-filtered Vikhr Habr QA SBS only. Uses batch 4 at full 4096 context to fit long answers without repeats.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "flash_attention_2",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": null,
+  "freeze_llm": true,
+  "reinit_latent": true,
+  "data_path": "data/contrastive/open_ru_1r_nc_habr_qa_sbs_hard.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/open_ru_1r_nc_habr_qa_sbs_hard_4096",
+  "max_length": 4096,
+  "batch_size": 4,
+  "learning_rate": 1e-5,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "max_steps": 2588,
+  "log_every": 50,
+  "save_every": 2588,
+  "seed": 13
+}

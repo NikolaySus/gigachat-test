@@ -1,0 +1,22 @@
+{
+  "name": "exp01r_nc_cedr_correction_go1600_go_single_multi_blend_lr2e6_4096_eager_frozenrepro",
+  "description": "CEDR correction probe from the current best checkpoint using a rehearsal blend of single-label and capped multi-label AiLab GoEmotions-RU records.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/cedr_correction_go1600_go_lr2e6_4096_eager_frozenrepro/step-1600.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_cedr_go_single6400_multilabel_capped5270_blend11670.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/cedr_correction_go1600_go_single_multi_blend_lr2e6_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 3,
+  "learning_rate": 2e-6,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "max_steps": 1600,
+  "log_every": 50,
+  "save_every": 400,
+  "seed": 778
+}

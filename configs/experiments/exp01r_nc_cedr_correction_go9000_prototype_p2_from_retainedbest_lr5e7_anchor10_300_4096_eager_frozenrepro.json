@@ -1,0 +1,25 @@
+{
+  "name": "exp01r_nc_cedr_correction_go9000_prototype_p2_from_retainedbest_lr5e7_anchor10_300_4096_eager_frozenrepro",
+  "description": "Short CEDR correction from retained best using clean GoEmotions-RU pseudo few-shot prototype-classification records, matching the benchmark's KNN/prototype geometry more closely than pair contrastive loss.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/cedr_correction_go9000_neutral404_continue_from_step1800_lr5e7_anchor10_1200_4096_eager_frozenrepro/step-1200.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_cedr_go9000_prototype_cls_p2_9000.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/cedr_correction_go9000_prototype_p2_from_retainedbest_lr5e7_anchor10_300_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 2,
+  "learning_rate": 5e-7,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "max_steps": 300,
+  "log_every": 25,
+  "save_every": 100,
+  "seed": 883,
+  "retention": {
+    "parameter_anchor_weight": 10.0
+  }
+}

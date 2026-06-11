@@ -1,0 +1,42 @@
+{
+  "name": "fair_recovery_from_rehmixh015_circle_teacher_lenta_lr1e6_distill07_reh005_b3_120_4096_eager_frozenrepro",
+  "description": "Fair RuSTS/geometry recovery from the high-CEDR-margin checkpoint using a fair circle-loss checkpoint as teacher. The high CEDR surplus is preserved with clean Lenta CEDR records while broad Mix H records are distilled toward the circle checkpoint.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_cedr_highstsbase_lenta_rehmixh015_target0_lr2e5_w100_120_4096_eager_frozenrepro/step-120.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_cedr_lenta_news_neutral_distractors_reported_3200.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_recovery_from_rehmixh015_circle_teacher_lenta_lr1e6_distill07_reh005_b3_120_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 3,
+  "learning_rate": 1e-6,
+  "weight_decay": 0.0,
+  "temperature": 0.02,
+  "max_steps": 120,
+  "log_every": 20,
+  "save_every": 40,
+  "seed": 2086,
+  "retention": {
+    "teacher_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/nomanip_radical_circle600_4096_eager_frozenrepro/latest.pt",
+    "distillation_max_texts": 8,
+    "distillation_max_length": 4096,
+    "rehearsal_data_path": "data/contrastive/open_ru_1r_nc_mixh_habrfull_geracl6400_habr4369_deepvk3200_grandmaster3200_17169.jsonl",
+    "rehearsal_batch_size": 2,
+    "rehearsal_loss_weight": 0.05,
+    "parameter_anchor_weight": 0.0
+  },
+  "stages": [
+    {
+      "name": "cedr_preserve_circle_distill",
+      "data_path": "data/contrastive/open_ru_1r_nc_cedr_lenta_news_neutral_distractors_reported_3200.jsonl",
+      "max_steps": 120,
+      "task_loss_weight": 0.3,
+      "distillation_loss_weight": 0.7,
+      "rehearsal_loss_weight": 0.05,
+      "parameter_anchor_weight": 0.0
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "exp01b_retrain_latent_memory_smoke",
+  "description": "Smoke-test training config for Experiment 1b using toy contrastive pairs.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": null,
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "experiments/exp01_original_latent_memory/data/toy_pairs.jsonl",
+  "output_dir": "experiments/exp01_original_latent_memory/checkpoints/smoke",
+  "max_length": 512,
+  "batch_size": 2,
+  "learning_rate": 0.00001,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "max_steps": 2,
+  "log_every": 1,
+  "save_every": 2,
+  "seed": 13
+}

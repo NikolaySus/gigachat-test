@@ -1,0 +1,44 @@
+{
+  "name": "fair_oecd_textdetox_recovery_from_taxv2_step20_lr1e6_anchor8_reh05_b4_40_4096_eager_frozenrepro",
+  "description": "Short fair OECD-oriented recovery from the current best taxonomy-v2 checkpoint using the clean TextDetox sensitive-topic discrimination component. Historical gates showed TextDetox can improve OECD clustering and TERRa, so this tests a small anchored continuation without benchmark contamination.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_taxonomy_recovery_v2_from_rawpara_step40_mixh_habrfull_lr2e6_anchor5_reh05_b4_40_4096_eager_frozenrepro/step-20.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_sensitive_topic_textdetox_3200.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_oecd_textdetox_recovery_from_taxv2_step20_lr1e6_anchor8_reh05_b4_40_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 4,
+  "learning_rate": 1e-6,
+  "weight_decay": 0.0,
+  "temperature": 0.02,
+  "pair_score_loss_weight": 1.0,
+  "max_steps": 40,
+  "log_every": 5,
+  "save_every": 20,
+  "seed": 2467,
+  "stages": [
+    {
+      "name": "textdetox_topic_recovery",
+      "data_path": "data/contrastive/open_ru_1r_nc_sensitive_topic_textdetox_3200.jsonl",
+      "max_steps": 40,
+      "batch_size": 4,
+      "learning_rate": 1e-6,
+      "shuffle": true,
+      "task_loss_weight": 0.8,
+      "temperature": 0.02,
+      "rehearsal_loss_weight": 0.5,
+      "parameter_anchor_weight": 8.0,
+      "save_every": 20
+    }
+  ],
+  "retention": {
+    "parameter_anchor_weight": 8.0,
+    "rehearsal_data_path": "data/contrastive/fair_rusts_repair_rehearsal_cedr800_mixh1600_seed2032.jsonl",
+    "rehearsal_batch_size": 2,
+    "rehearsal_loss_weight": 0.5
+  }
+}

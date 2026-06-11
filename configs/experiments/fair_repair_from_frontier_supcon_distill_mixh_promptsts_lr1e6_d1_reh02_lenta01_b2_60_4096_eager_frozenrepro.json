@@ -1,0 +1,49 @@
+{
+  "name": "fair_repair_from_frontier_supcon_distill_mixh_promptsts_lr1e6_d1_reh02_lenta01_b2_60_4096_eager_frozenrepro",
+  "description": "Fair RuSTS-targeted continuation from the current strong-SupCon frontier. Distills toward the fair high-RuSTS SupCon checkpoint on a retention mix containing both broad Mix H and prompt-aligned open-teacher STS pairs, while keeping a weak clean Lenta CEDR task loss.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_repair_from_strongsupcon40_supcon_distill_rehmixh_lr2e6_d1_reh02_lenta02_b2_80_4096_eager_frozenrepro/step-40.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_cedr_lenta_news_neutral_distractors_reported_3200.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_repair_from_frontier_supcon_distill_mixh_promptsts_lr1e6_d1_reh02_lenta01_b2_60_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 2,
+  "learning_rate": 1e-6,
+  "weight_decay": 0.0,
+  "temperature": 0.02,
+  "max_steps": 60,
+  "log_every": 10,
+  "save_every": 20,
+  "seed": 2158,
+  "retention": {
+    "teacher_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/nomanip_radical_supcon_lr5_t10_loanchor600_4096_eager_frozenrepro/step-600.pt",
+    "distillation_max_texts": 8,
+    "distillation_max_length": 4096,
+    "rehearsal_data_path": "data/contrastive/fair_rehearsal_mixh1600_promptopensts1600_seed2157.jsonl",
+    "rehearsal_batch_size": 2,
+    "rehearsal_loss_weight": 0.2,
+    "parameter_anchor_weight": 0.0,
+    "rehearsal_pair_score_loss_weight": 1.0,
+    "rehearsal_pair_score_rank_loss_weight": 0.5,
+    "rehearsal_pair_score_correlation_loss_weight": 1.0,
+    "rehearsal_pair_score_rank_scale": 10.0,
+    "rehearsal_pair_score_rank_min_gap": 0.15
+  },
+  "stages": [
+    {
+      "name": "supcon_distill_on_mixh_promptsts_with_lenta_cedr",
+      "data_path": "data/contrastive/open_ru_1r_nc_cedr_lenta_news_neutral_distractors_reported_3200.jsonl",
+      "max_steps": 60,
+      "batch_size": 2,
+      "task_loss_weight": 0.1,
+      "distillation_loss_weight": 1.0,
+      "rehearsal_loss_weight": 0.2,
+      "parameter_anchor_weight": 0.0,
+      "save_every": 20
+    }
+  ]
+}

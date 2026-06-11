@@ -1,0 +1,22 @@
+{
+  "name": "exp01r_nc_mixk_geracl2_habr1_deepvk1_groundedstrict1_sensitive1_4096",
+  "description": "Fair 1R-NC Mix K: reinitialize original latent-attention block and train GeRaCl:Habr-harder:quality-filtered deepvk/ru-HNP:strict Grounded-RAG:clean sensitive-topic discrimination at 2:1:1:1:1.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "flash_attention_2",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": null,
+  "freeze_llm": true,
+  "reinit_latent": true,
+  "data_path": "data/contrastive/open_ru_1r_nc_mixk_geracl2_habr1_deepvk1_groundedstrict1_sensitive1_19200.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/open_ru_1r_nc_mixk_geracl2_habr1_deepvk1_groundedstrict1_sensitive1_4096",
+  "max_length": 4096,
+  "batch_size": 4,
+  "learning_rate": 1e-5,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "max_steps": 4800,
+  "log_every": 50,
+  "save_every": 4800,
+  "seed": 113
+}

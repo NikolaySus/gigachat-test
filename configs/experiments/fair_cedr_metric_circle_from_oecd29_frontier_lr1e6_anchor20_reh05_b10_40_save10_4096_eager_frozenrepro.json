@@ -1,0 +1,45 @@
+{
+  "name": "fair_cedr_metric_circle_from_oecd29_frontier_lr1e6_anchor20_reh05_b10_40_save10_4096_eager_frozenrepro",
+  "description": "Current-frontier probe using clean CEDR labeled metric circle batches. Tests whether the CEDR emotion-class geometry that helped Georeview/OECD in older no-manip runs can improve the current OECD29 frontier without the MixH clustering regression.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_oecd29_circle_from_oecd_step40_lr5e7_anchor20_reh05_b4_40_4096_eager_frozenrepro/step-40.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_cedr_labeled_metric_v1_circle.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_cedr_metric_circle_from_oecd29_frontier_lr1e6_anchor20_reh05_b10_40_save10_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 10,
+  "learning_rate": 1e-6,
+  "weight_decay": 0.0,
+  "temperature": 0.15,
+  "pair_score_loss_weight": 1.0,
+  "max_steps": 40,
+  "log_every": 5,
+  "save_every": 10,
+  "seed": 2731,
+  "stages": [
+    {
+      "name": "cedr_labeled_metric_circle",
+      "data_path": "data/contrastive/open_ru_1r_nc_cedr_labeled_metric_v1_circle.jsonl",
+      "max_steps": 40,
+      "batch_size": 10,
+      "learning_rate": 1e-6,
+      "weight_decay": 0.0,
+      "shuffle": false,
+      "task_loss_weight": 1.0,
+      "temperature": 0.15,
+      "parameter_anchor_weight": 20.0,
+      "rehearsal_loss_weight": 0.5,
+      "save_every": 10
+    }
+  ],
+  "retention": {
+    "parameter_anchor_weight": 20.0,
+    "rehearsal_data_path": "data/contrastive/fair_rusts_repair_rehearsal_cedr800_mixh1600_seed2032.jsonl",
+    "rehearsal_batch_size": 2,
+    "rehearsal_loss_weight": 0.5
+  }
+}

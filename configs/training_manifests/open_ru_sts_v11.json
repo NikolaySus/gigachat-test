@@ -1,0 +1,60 @@
+{
+  "name": "open_ru_sts_v11",
+  "description": "STS-v11 balanced curriculum: combines Experiment 1b broad open-RU training data with the STS-v6/v9 DeepVK-upweighted STS mixture. Uses stage-level broad warmup and recovery rather than per-step rehearsal.",
+  "datasets": [
+    {
+      "id": "deepvk/ru-HNP",
+      "license": "Apache-2.0",
+      "usage": ["sts", "paraphrase", "hard_negative_finetune", "synthetic"],
+      "splits": ["train"],
+      "coverage_tags": ["hard_negative", "paraphrase", "negation", "numeric_logic", "entity_swap"],
+      "contaminates_rumteb_tasks": [],
+      "notes": "Synthetic GPT-3.5 hard non-paraphrase dataset. Used through the STS-v6/v9 mixture."
+    },
+    {
+      "id": "merionum/ru_paraphraser",
+      "license": "MIT",
+      "usage": ["sts", "paraphrase", "multitask"],
+      "splits": ["train"],
+      "coverage_tags": ["sts", "paraphrase", "news_headlines"],
+      "contaminates_rumteb_tasks": ["RUParaPhraserSTS"],
+      "notes": "Exact ruMTEB dataset path overlap for RUParaPhraserSTS; excluded from clean reporting."
+    },
+    {
+      "id": "ai-forever/ru-stsbenchmark-sts",
+      "license": "CC-BY-SA-4.0",
+      "usage": ["sts", "pair_score", "multitask"],
+      "splits": ["train"],
+      "coverage_tags": ["sts", "graded_similarity"],
+      "contaminates_rumteb_tasks": ["RuSTSBenchmarkSTS"],
+      "notes": "Exact ruMTEB dataset path overlap for RuSTSBenchmarkSTS; excluded from clean reporting."
+    },
+    {
+      "id": "ai-forever/rubq-retrieval",
+      "license": "CC-BY-SA-4.0",
+      "usage": ["retrieval", "hard_negative_finetune"],
+      "splits": ["train"],
+      "coverage_tags": ["retrieval"],
+      "contaminates_rumteb_tasks": ["RuBQRetrieval"],
+      "notes": "Exact ruMTEB dataset path overlap; included in broad warmup/recovery."
+    },
+    {
+      "id": "ai-forever/ru-scibench-grnti-classification",
+      "license": "MIT",
+      "usage": ["classification", "clustering", "multitask"],
+      "splits": ["train"],
+      "coverage_tags": ["classification", "clustering", "scientific_text"],
+      "contaminates_rumteb_tasks": ["RuSciBenchGRNTIClassification", "RuSciBenchGRNTIClusteringP2P"],
+      "notes": "Same dataset backs both classification and clustering ruMTEB tasks; included in broad warmup/recovery."
+    },
+    {
+      "id": "ai-forever/ru-scibench-oecd-classification",
+      "license": "MIT",
+      "usage": ["classification", "clustering", "multitask"],
+      "splits": ["train"],
+      "coverage_tags": ["classification", "clustering", "scientific_text"],
+      "contaminates_rumteb_tasks": ["RuSciBenchOECDClassification", "RuSciBenchOECDClusteringP2P"],
+      "notes": "Same dataset backs both classification and clustering ruMTEB tasks; included in broad warmup/recovery."
+    }
+  ]
+}

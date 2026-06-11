@@ -1,0 +1,40 @@
+{
+  "name": "fair_oecd29_strong_geo_supcon_recover_from_step40_lr1e6_anchor5_b12_20_save5_4096_eager_frozenrepro",
+  "description": "Targeted Georeview-clustering recovery from the fair OECD29 linear-probe strong step-40 checkpoint. Uses only decontaminated Georeview/GeRaCl grouped labeled-text SupCon batches and parameter anchoring to the OECD-pushed checkpoint, testing whether Georeview clustering can recover while preserving the OECD gains.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_oecd29_linear_probe_strong_from_frontier_lr2e6_anchor5_reh02_b12_40_save20_4096_eager_frozenrepro/step-40.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/fair_geo_cluster_labeled_supcon_6000_seed2034.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_oecd29_strong_geo_supcon_recover_from_step40_lr1e6_anchor5_b12_20_save5_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 12,
+  "learning_rate": 1e-6,
+  "weight_decay": 0.0,
+  "temperature": 0.02,
+  "max_steps": 20,
+  "log_every": 5,
+  "save_every": 5,
+  "seed": 3031,
+  "stages": [
+    {
+      "name": "geo_supcon_recover_from_oecd_push",
+      "data_path": "data/contrastive/fair_geo_cluster_labeled_supcon_6000_seed2034.jsonl",
+      "max_steps": 20,
+      "batch_size": 12,
+      "learning_rate": 1e-6,
+      "shuffle": false,
+      "task_loss_weight": 1.0,
+      "temperature": 0.02,
+      "parameter_anchor_weight": 5.0,
+      "save_every": 5
+    }
+  ],
+  "retention": {
+    "parameter_anchor_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_oecd29_linear_probe_strong_from_frontier_lr2e6_anchor5_reh02_b12_40_save20_4096_eager_frozenrepro/step-40.pt",
+    "parameter_anchor_weight": 5.0
+  }
+}

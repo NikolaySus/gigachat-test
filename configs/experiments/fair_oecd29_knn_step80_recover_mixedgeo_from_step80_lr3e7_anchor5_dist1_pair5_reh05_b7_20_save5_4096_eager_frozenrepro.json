@@ -1,0 +1,53 @@
+{
+  "name": "fair_oecd29_knn_step80_recover_mixedgeo_from_step80_lr3e7_anchor5_dist1_pair5_reh05_b7_20_save5_4096_eager_frozenrepro",
+  "description": "Short fair recovery from the OECD29 KNN step80 push checkpoint. Uses mixed Georeview/CEDR/OECD/GRNTI preservation batches, distills outputs/pairwise geometry toward the accepted frontier, and weakly anchors parameters to the OECD-pushed checkpoint to test whether the OECD clustering gain can survive collateral-damage repair.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_oecd29_knn_from_oecd29_step40_lr1e6_anchor10_reh05_b1_80_4096_eager_frozenrepro/step-80.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/fair_frontier_mixed_cedr_oecd_grnti_geo_b7_420_seed2791.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_oecd29_knn_step80_recover_mixedgeo_from_step80_lr3e7_anchor5_dist1_pair5_reh05_b7_20_save5_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 7,
+  "learning_rate": 3e-7,
+  "weight_decay": 0.0,
+  "temperature": 0.03,
+  "pair_score_loss_weight": 1.0,
+  "max_steps": 20,
+  "log_every": 1,
+  "save_every": 5,
+  "seed": 2921,
+  "stages": [
+    {
+      "name": "recover_mixedgeo_from_oecd_push",
+      "data_path": "data/contrastive/fair_frontier_mixed_cedr_oecd_grnti_geo_b7_420_seed2791.jsonl",
+      "max_steps": 20,
+      "batch_size": 7,
+      "learning_rate": 3e-7,
+      "shuffle": false,
+      "task_loss_weight": 0.5,
+      "temperature": 0.03,
+      "distillation_loss_weight": 1.0,
+      "pairwise_distillation_loss_weight": 5.0,
+      "parameter_anchor_weight": 5.0,
+      "rehearsal_loss_weight": 0.5,
+      "save_every": 5
+    }
+  ],
+  "retention": {
+    "teacher_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_oecd29_circle_from_oecd_step40_lr5e7_anchor20_reh05_b4_40_4096_eager_frozenrepro/step-40.pt",
+    "parameter_anchor_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_oecd29_knn_from_oecd29_step40_lr1e6_anchor10_reh05_b1_80_4096_eager_frozenrepro/step-80.pt",
+    "parameter_anchor_weight": 5.0,
+    "rehearsal_data_path": "data/contrastive/fair_rusts_repair_rehearsal_cedr800_mixh1600_seed2032.jsonl",
+    "rehearsal_batch_size": 1,
+    "rehearsal_loss_weight": 0.5,
+    "distillation_loss_weight": 1.0,
+    "distillation_max_texts": 8,
+    "pairwise_distillation_loss_weight": 5.0,
+    "pairwise_distillation_max_texts": 12,
+    "distillation_max_length": 4096
+  }
+}

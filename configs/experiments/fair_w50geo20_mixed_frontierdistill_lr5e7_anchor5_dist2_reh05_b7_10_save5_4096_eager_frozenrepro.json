@@ -1,0 +1,50 @@
+{
+  "name": "fair_w50geo20_mixed_frontierdistill_lr5e7_anchor5_dist2_reh05_b7_10_save5_4096_eager_frozenrepro",
+  "description": "Short mixed recovery from the high-CEDR W50->Geo step-20 branch. Uses clean mixed Georeview/CEDR/OECD/GRNTI batches, output distillation toward the accepted fair frontier, and parameter anchoring to the W50->Geo branch to test whether frontier geometry can be recovered while retaining part of the CEDR gain.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_w50_geo_supcon_recreate_lr1e6_anchor5_b12_40_save20_4096_eager_frozenrepro/step-20.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/fair_frontier_mixed_cedr_oecd_grnti_geo_b7_420_seed2791.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_w50geo20_mixed_frontierdistill_lr5e7_anchor5_dist2_reh05_b7_10_save5_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 7,
+  "learning_rate": 5e-7,
+  "weight_decay": 0.0,
+  "temperature": 0.03,
+  "pair_score_loss_weight": 1.0,
+  "max_steps": 10,
+  "log_every": 1,
+  "save_every": 5,
+  "seed": 3061,
+  "stages": [
+    {
+      "name": "mixed_frontierdistill_from_w50geo20",
+      "data_path": "data/contrastive/fair_frontier_mixed_cedr_oecd_grnti_geo_b7_420_seed2791.jsonl",
+      "max_steps": 10,
+      "batch_size": 7,
+      "learning_rate": 5e-7,
+      "shuffle": false,
+      "task_loss_weight": 0.5,
+      "temperature": 0.03,
+      "distillation_loss_weight": 2.0,
+      "parameter_anchor_weight": 5.0,
+      "rehearsal_loss_weight": 0.5,
+      "save_every": 5
+    }
+  ],
+  "retention": {
+    "teacher_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_oecd29_circle_from_oecd_step40_lr5e7_anchor20_reh05_b4_40_4096_eager_frozenrepro/step-40.pt",
+    "parameter_anchor_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_w50_geo_supcon_recreate_lr1e6_anchor5_b12_40_save20_4096_eager_frozenrepro/step-20.pt",
+    "parameter_anchor_weight": 5.0,
+    "rehearsal_data_path": "data/contrastive/fair_rusts_repair_rehearsal_cedr800_mixh1600_seed2032.jsonl",
+    "rehearsal_batch_size": 1,
+    "rehearsal_loss_weight": 0.5,
+    "distillation_loss_weight": 2.0,
+    "distillation_max_texts": 8,
+    "distillation_max_length": 4096
+  }
+}

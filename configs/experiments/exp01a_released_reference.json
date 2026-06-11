@@ -1,0 +1,14 @@
+{
+  "name": "exp01a_released_reference",
+  "description": "Released GigaEmbeddings reference with no new training.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "training": {
+    "enabled": false
+  },
+  "evaluation": {
+    "max_length": 4096,
+    "prompts": true,
+    "training_manifest": null,
+    "eval_scope": "all"
+  }
+}

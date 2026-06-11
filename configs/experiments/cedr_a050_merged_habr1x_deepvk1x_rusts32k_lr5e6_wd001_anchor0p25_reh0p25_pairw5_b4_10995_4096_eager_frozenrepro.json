@@ -1,0 +1,29 @@
+{
+  "name": "cedr_a050_merged_habr1x_deepvk1x_rusts32k_lr5e6_wd001_anchor0p25_reh0p25_pairw5_b4_10995_4096_eager_frozenrepro",
+  "description": "Post-manipulation one-stage alternative: start from CEDR a050 arithmetic checkpoint and train a shuffled 1x mix of Habr harder, DeepVK-HNP, and audited 32k Cointegrated RuSTS data.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/cedr_goal_best_minus_nogeracl_a050/latent.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/cedr_a050_recovery_habr1x_deepvk1x_plus_rusts_cointegrated_43977_shuf8832.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/cedr_a050_merged_habr1x_deepvk1x_rusts32k_lr5e6_wd001_anchor0p25_reh0p25_pairw5_b4_10995_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 4,
+  "learning_rate": 5e-6,
+  "weight_decay": 0.001,
+  "temperature": 0.02,
+  "pair_score_loss_weight": 5.0,
+  "max_steps": 10995,
+  "log_every": 50,
+  "save_every": 10995,
+  "seed": 8832,
+  "retention": {
+    "parameter_anchor_weight": 0.25,
+    "rehearsal_data_path": "data/contrastive/open_ru_1r_nc_cedr_ailab_goemotions_ru_prior_neutral404_9000.jsonl",
+    "rehearsal_batch_size": 4,
+    "rehearsal_loss_weight": 0.25
+  }
+}

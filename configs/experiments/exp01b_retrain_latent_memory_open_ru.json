@@ -1,0 +1,20 @@
+{
+  "name": "exp01b_retrain_latent_memory_open_ru",
+  "description": "Experiment 1b: continue-train the original latent-memory block on prepared open-data JSONL pairs.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": false,
+  "attn_implementation": "flash_attention_2",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_train.jsonl",
+  "output_dir": "experiments/exp01_original_latent_memory/checkpoints/open_ru",
+  "max_length": 512,
+  "batch_size": 12,
+  "learning_rate": 0.00001,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "max_steps": 1000,
+  "log_every": 10,
+  "save_every": 100,
+  "seed": 13
+}

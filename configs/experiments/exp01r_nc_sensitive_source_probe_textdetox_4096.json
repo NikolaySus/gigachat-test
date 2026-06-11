@@ -1,0 +1,22 @@
+{
+  "name": "exp01r_nc_sensitive_source_probe_textdetox_4096",
+  "description": "Marginal source probe: start from fair Mix F + GeRaCl recovery and train one pass over SensitiveTopicDiscrimination built only from textdetox/multilingual_toxicity_dataset ru.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "flash_attention_2",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/open_ru_1r_nc_mixf_plus_geracl_remaining_seed53_4096/latest.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_sensitive_topic_textdetox_3200.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/open_ru_1r_nc_sensitive_source_probe_textdetox_4096",
+  "max_length": 4096,
+  "batch_size": 4,
+  "learning_rate": 3e-6,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "max_steps": 800,
+  "log_every": 50,
+  "save_every": 800,
+  "seed": 213
+}

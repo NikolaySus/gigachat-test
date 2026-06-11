@@ -1,0 +1,52 @@
+{
+  "name": "fair_rusts_str2022_nonsts_promptaligned_from_w50_step30_lr2e6_anchor5_reh05_b8_80_4096_eager_frozenrepro",
+  "description": "Fair RuSTS repair from current best w50 checkpoint using STR-2022 human relatedness rows with SourceID=STS excluded. Exact RuSTS/CEDR text overlap is removed and records are prompt-aligned to the frozen RuSTS wrapper.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_cedr_dirproj_from_nli100_target0_lr2e5_w50_dense45_4096_eager_frozenrepro/step-30.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/fair_rusts_str2022_nonsts_pairscore_promptaligned_seed2271.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_rusts_str2022_nonsts_promptaligned_from_w50_step30_lr2e6_anchor5_reh05_b8_80_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 8,
+  "learning_rate": 2e-6,
+  "weight_decay": 0.0,
+  "temperature": 0.02,
+  "pair_score_loss_weight": 8.0,
+  "pair_score_rank_loss_weight": 1.0,
+  "pair_score_correlation_loss_weight": 1.0,
+  "pair_score_rank_scale": 15.0,
+  "pair_score_rank_min_gap": 0.05,
+  "max_steps": 80,
+  "log_every": 20,
+  "save_every": 20,
+  "seed": 2273,
+  "stages": [
+    {
+      "name": "str2022_nonsts_promptaligned_relatedness",
+      "data_path": "data/contrastive/fair_rusts_str2022_nonsts_pairscore_promptaligned_seed2271.jsonl",
+      "max_steps": 80,
+      "batch_size": 8,
+      "learning_rate": 2e-6,
+      "shuffle": true,
+      "task_loss_weight": 1.0,
+      "pair_score_loss_weight": 8.0,
+      "pair_score_rank_loss_weight": 1.0,
+      "pair_score_correlation_loss_weight": 1.0,
+      "pair_score_rank_scale": 15.0,
+      "pair_score_rank_min_gap": 0.05,
+      "rehearsal_loss_weight": 0.5,
+      "parameter_anchor_weight": 5.0,
+      "save_every": 20
+    }
+  ],
+  "retention": {
+    "parameter_anchor_weight": 5.0,
+    "rehearsal_data_path": "data/contrastive/fair_rusts_repair_rehearsal_cedr800_mixh1600_seed2032.jsonl",
+    "rehearsal_batch_size": 2,
+    "rehearsal_loss_weight": 0.5
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "exp01r_nc_cedr_lenta_step150_ruizard_pseudolabel_neu55_lr5e7_anchor1_rehgo05_200_4096_eager_frozenrepro",
+  "description": "Stronger CEDR correction probe from retained best using clean RuIzard-classifier pseudo-labels with weak anchor to escape the conservative plateau.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/cedr_correction_lenta_reported_replay_go9000_from_retainedbest_lr1e7_anchor10_reh1_300_4096_eager_frozenrepro/step-150.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_cedr_ruizard_classifier_pseudolabel_neu55_7200.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/cedr_lenta_step150_ruizard_pseudolabel_neu55_lr5e7_anchor1_rehgo05_200_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 4,
+  "learning_rate": 5e-7,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "max_steps": 200,
+  "log_every": 25,
+  "save_every": 25,
+  "seed": 4017,
+  "retention": {
+    "parameter_anchor_weight": 1.0,
+    "rehearsal_data_path": "data/contrastive/open_ru_1r_nc_cedr_ailab_goemotions_ru_prior_neutral404_9000.jsonl",
+    "rehearsal_batch_size": 2,
+    "rehearsal_loss_weight": 0.5
+  }
+}

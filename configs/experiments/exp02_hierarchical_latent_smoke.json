@@ -1,0 +1,23 @@
+{
+  "name": "exp02_hierarchical_latent_smoke",
+  "description": "Experiment 2 smoke: hierarchical latent-memory block with stage1=512 and stage2=128.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": false,
+  "attn_implementation": "flash_attention_2",
+  "latent_architecture": "hierarchical_latent_attention",
+  "stage2_latents": 128,
+  "copy_stage1_from_original": true,
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "experiments/exp01_original_latent_memory/data/toy_pairs.jsonl",
+  "output_dir": "experiments/exp02_hierarchical_latent/checkpoints/smoke",
+  "max_length": 128,
+  "batch_size": 2,
+  "learning_rate": 0.00001,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "max_steps": 2,
+  "log_every": 1,
+  "save_every": 2,
+  "seed": 13
+}

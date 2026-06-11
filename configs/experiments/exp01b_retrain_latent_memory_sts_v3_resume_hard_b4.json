@@ -1,0 +1,32 @@
+{
+  "name": "exp01b_retrain_latent_memory_sts_v3_resume_hard_b4",
+  "description": "Resume STS-v3 from the batch-8 resumed checkpoint after rare long-batch OOM; finish hard contrastive stage with batch size 4.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "flash_attention_2",
+  "latent_architecture": "original_latent_attention",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "initial_latent_checkpoint": "experiments/exp01_original_latent_memory/checkpoints/open_ru_sts_v3_resumed/step-300.pt",
+  "data_path": "data/contrastive/open_ru_sts_v3_train.jsonl",
+  "output_dir": "experiments/exp01_original_latent_memory/checkpoints/open_ru_sts_v3_final",
+  "max_length": 4096,
+  "batch_size": 4,
+  "learning_rate": 1e-5,
+  "weight_decay": 0.01,
+  "temperature": 0.03,
+  "pair_score_loss_weight": 1.0,
+  "log_every": 10,
+  "save_every": 100,
+  "seed": 23,
+  "stages": [
+    {
+      "name": "hard_contrastive_finish",
+      "data_path": "data/contrastive/open_ru_sts_v3_train.jsonl",
+      "objectives": ["contrastive"],
+      "max_steps": 300,
+      "batch_size": 4,
+      "temperature": 0.03
+    }
+  ]
+}

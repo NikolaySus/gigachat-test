@@ -1,0 +1,45 @@
+{
+  "name": "fair_recovery_from_w50_step30_nli100_teacher_mixhcedr_lr7e7_d05_task03_b2_40_4096_eager_frozenrepro",
+  "description": "Tiny fair recovery probe from the current best w50 checkpoint. Distills toward the fair NLI100 checkpoint, which had better RuSTS/GeoCluster but worse CEDR, on clean CEDR+MixH records while keeping task loss active. No released teacher, released latent weights, benchmark rows, or checkpoint arithmetic are used.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_cedr_dirproj_from_nli100_target0_lr2e5_w50_dense45_4096_eager_frozenrepro/step-30.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/fair_cedr_mixh_rehearsal_cedr1600_mixh1600_seed2225.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_recovery_from_w50_step30_nli100_teacher_mixhcedr_lr7e7_d05_task03_b2_40_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 2,
+  "learning_rate": 7e-7,
+  "weight_decay": 0.0,
+  "temperature": 0.02,
+  "max_steps": 40,
+  "log_every": 10,
+  "save_every": 10,
+  "seed": 2281,
+  "retention": {
+    "teacher_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_stage_nli100_then_cedr_repair_from_frontier_180_4096_eager_frozenrepro/step-100.pt",
+    "distillation_max_texts": 8,
+    "distillation_max_length": 4096,
+    "rehearsal_data_path": "data/contrastive/fair_rusts_repair_rehearsal_cedr800_mixh1600_seed2032.jsonl",
+    "rehearsal_batch_size": 2,
+    "rehearsal_loss_weight": 0.1,
+    "parameter_anchor_weight": 0.0
+  },
+  "stages": [
+    {
+      "name": "nli100_teacher_recovery_on_clean_cedr_mixh",
+      "data_path": "data/contrastive/fair_cedr_mixh_rehearsal_cedr1600_mixh1600_seed2225.jsonl",
+      "max_steps": 40,
+      "batch_size": 2,
+      "learning_rate": 7e-7,
+      "task_loss_weight": 0.3,
+      "distillation_loss_weight": 0.5,
+      "rehearsal_loss_weight": 0.1,
+      "parameter_anchor_weight": 0.0,
+      "save_every": 10
+    }
+  ]
+}

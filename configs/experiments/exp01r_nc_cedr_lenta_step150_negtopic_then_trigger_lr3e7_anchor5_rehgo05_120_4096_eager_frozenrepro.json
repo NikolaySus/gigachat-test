@@ -1,0 +1,49 @@
+{
+  "name": "exp01r_nc_cedr_lenta_step150_negtopic_then_trigger_lr3e7_anchor5_rehgo05_120_4096_eager_frozenrepro",
+  "description": "Stronger CEDR continuation from retained best: first Lenta negative-topic neutral examples, then hard-neutral trigger contrastive examples, with weaker anchor/rehearsal to escape the 0.677 plateau.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/cedr_correction_lenta_reported_replay_go9000_from_retainedbest_lr1e7_anchor10_reh1_300_4096_eager_frozenrepro/step-150.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_cedr_lenta_negative_topic_neutral_reported_2400.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/cedr_lenta_step150_negtopic_then_trigger_lr3e7_anchor5_rehgo05_120_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 4,
+  "learning_rate": 3e-7,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "max_steps": 120,
+  "log_every": 10,
+  "save_every": 10,
+  "seed": 1161,
+  "stages": [
+    {
+      "name": "negative_topic_neutral",
+      "data_path": "data/contrastive/open_ru_1r_nc_cedr_lenta_negative_topic_neutral_reported_2400.jsonl",
+      "max_steps": 60,
+      "batch_size": 4,
+      "learning_rate": 3e-7,
+      "temperature": 0.02,
+      "save_every": 10
+    },
+    {
+      "name": "neutral_trigger_contrastive",
+      "data_path": "data/contrastive/open_ru_1r_nc_cedr_neutral_trigger_contrastive_9000.jsonl",
+      "max_steps": 60,
+      "batch_size": 2,
+      "learning_rate": 3e-7,
+      "temperature": 0.02,
+      "save_every": 10,
+      "multi_positive_metadata_key": "group"
+    }
+  ],
+  "retention": {
+    "parameter_anchor_weight": 5.0,
+    "rehearsal_data_path": "data/contrastive/open_ru_1r_nc_cedr_ailab_goemotions_ru_prior_neutral404_9000.jsonl",
+    "rehearsal_batch_size": 2,
+    "rehearsal_loss_weight": 0.5
+  }
+}

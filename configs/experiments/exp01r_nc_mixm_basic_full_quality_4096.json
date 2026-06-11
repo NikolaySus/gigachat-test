@@ -1,0 +1,39 @@
+{
+  "name": "exp01r_nc_mixm_basic_full_quality_4096",
+  "description": "Fair 1R-NC Mix M quality-filter ablation. Stage 1 uses GeRaCl:Habr:DeepVK:Grounded:Sensitive as 2:1:1:1:1 base without arbitrary non-GeRaCl caps; Habr/DeepVK/Grounded/Sensitive are consumed fully after quality filtering, and stage 2 consumes the remaining GeRaCl rows.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "flash_attention_2",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": null,
+  "freeze_llm": true,
+  "reinit_latent": true,
+  "data_path": "data/contrastive/open_ru_1r_nc_mixm_basic_full_quality_stage1_20618.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/open_ru_1r_nc_mixm_basic_full_quality_4096",
+  "max_length": 4096,
+  "batch_size": 4,
+  "learning_rate": 1e-05,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "max_steps": 6346,
+  "log_every": 50,
+  "save_every": 5154,
+  "seed": 173,
+  "stages": [
+    {
+      "name": "mixm_basic_stage1_full_quality",
+      "data_path": "data/contrastive/open_ru_1r_nc_mixm_basic_full_quality_stage1_20618.jsonl",
+      "max_steps": 5154,
+      "batch_size": 4,
+      "save_every": 5154
+    },
+    {
+      "name": "mixm_basic_geracl_remaining",
+      "data_path": "data/contrastive/open_ru_1r_nc_mixm_basic_geracl_remaining_9540.jsonl",
+      "max_steps": 1192,
+      "batch_size": 8,
+      "learning_rate": 3e-06,
+      "save_every": 1192
+    }
+  ]
+}

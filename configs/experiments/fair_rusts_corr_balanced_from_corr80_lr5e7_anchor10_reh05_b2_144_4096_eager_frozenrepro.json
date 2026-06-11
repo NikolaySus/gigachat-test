@@ -1,0 +1,40 @@
+{
+  "name": "fair_rusts_corr_balanced_from_corr80_lr5e7_anchor10_reh05_b2_144_4096_eager_frozenrepro",
+  "description": "Fair RuSTS repair continuation from the correlation step-80 frontier checkpoint. Uses ordered score-balanced pair-score batches so every correlation-loss batch contains low/mid/high/very-high contrasts.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_rusts_corr_repair_from_h012_lr5e7_anchor10_reh05_160_4096_eager_frozenrepro/step-80.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/fair_rusts_rank_coin_leipzig_pairscore_balanced_batches_3200_seed2044.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_rusts_corr_balanced_from_corr80_lr5e7_anchor10_reh05_b2_144_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 8,
+  "learning_rate": 5e-7,
+  "weight_decay": 0.0,
+  "temperature": 0.02,
+  "pair_score_loss_weight": 0.0,
+  "pair_score_correlation_loss_weight": 1.0,
+  "max_steps": 144,
+  "log_every": 24,
+  "save_every": 48,
+  "seed": 2045,
+  "retention": {
+    "parameter_anchor_weight": 10.0,
+    "rehearsal_data_path": "data/contrastive/fair_rusts_repair_rehearsal_cedr800_mixh1600_seed2032.jsonl",
+    "rehearsal_batch_size": 2,
+    "rehearsal_loss_weight": 0.5
+  },
+  "stages": [
+    {
+      "name": "balanced_rusts_correlation",
+      "data_path": "data/contrastive/fair_rusts_rank_coin_leipzig_pairscore_balanced_batches_3200_seed2044.jsonl",
+      "batch_size": 8,
+      "max_steps": 144,
+      "shuffle": false,
+      "save_every": 48
+    }
+  ]
+}

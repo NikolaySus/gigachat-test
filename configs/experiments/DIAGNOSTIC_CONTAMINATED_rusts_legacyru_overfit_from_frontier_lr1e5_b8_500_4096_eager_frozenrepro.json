@@ -1,0 +1,43 @@
+{
+  "name": "DIAGNOSTIC_CONTAMINATED_rusts_legacyru_overfit_from_frontier_lr1e5_b8_500_4096_eager_frozenrepro",
+  "description": "Forbidden diagnostic overfit probe: train current fair frontier directly on exact RuSTS rows with the real frozen legacy_ru prefix ensemble and no retention, to test whether the training objective can reach the released RuSTS score.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_repair_from_strongsupcon40_supcon_distill_rehmixh_lr2e6_d1_reh02_lenta02_b2_80_4096_eager_frozenrepro/step-40.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/DIAGNOSTIC_CONTAMINATED_rusts_all_pairscore_legacyru_ensemble.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/DIAGNOSTIC_CONTAMINATED_rusts_legacyru_overfit_from_frontier_lr1e5_b8_500_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 8,
+  "learning_rate": 1e-5,
+  "weight_decay": 0.0,
+  "temperature": 0.02,
+  "pair_score_loss_weight": 10.0,
+  "pair_score_rank_loss_weight": 1.0,
+  "pair_score_correlation_loss_weight": 1.0,
+  "pair_score_rank_scale": 20.0,
+  "pair_score_rank_min_gap": 0.05,
+  "max_steps": 500,
+  "log_every": 25,
+  "save_every": 100,
+  "seed": 2195,
+  "stages": [
+    {
+      "name": "contaminated_rusts_legacyru_overfit",
+      "data_path": "data/contrastive/DIAGNOSTIC_CONTAMINATED_rusts_all_pairscore_legacyru_ensemble.jsonl",
+      "max_steps": 500,
+      "batch_size": 8,
+      "learning_rate": 1e-5,
+      "shuffle": true,
+      "pair_score_loss_weight": 10.0,
+      "pair_score_rank_loss_weight": 1.0,
+      "pair_score_correlation_loss_weight": 1.0,
+      "pair_score_rank_scale": 20.0,
+      "pair_score_rank_min_gap": 0.05,
+      "save_every": 100
+    }
+  ]
+}

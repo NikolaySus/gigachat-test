@@ -1,0 +1,36 @@
+{
+  "name": "exp01b_retrain_latent_memory_sts_v13c_balanced_recovery",
+  "description": "STS-v13c: initialize from STS-v12 1600 one-pass and apply a balanced clean clustering/retrieval recovery mix.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "flash_attention_2",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_original_latent_memory/checkpoints/open_ru_sts_v12_v9_targeted_recovery_1600_1pass/latest.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_sts_v13_balanced_recovery.jsonl",
+  "output_dir": "experiments/exp01_original_latent_memory/checkpoints/open_ru_sts_v13c_balanced_recovery",
+  "max_length": 4096,
+  "batch_size": 4,
+  "learning_rate": 1e-6,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "pair_score_loss_weight": 1.0,
+  "log_every": 10,
+  "save_every": 1500,
+  "seed": 13,
+  "retention": {
+    "parameter_anchor_weight": 20.0
+  },
+  "stages": [
+    {
+      "name": "balanced_clean_recovery",
+      "data_path": "data/contrastive/open_ru_sts_v13_balanced_recovery.jsonl",
+      "objectives": ["contrastive"],
+      "max_steps": 1500,
+      "batch_size": 4,
+      "temperature": 0.02,
+      "parameter_anchor_weight": 20.0
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "name": "open_ru_ablation_v1",
+  "description": "Open-data training mix candidate for latent attention architecture ablations. Use this manifest to mark ruMTEB contamination when any listed dataset is used for training.",
+  "datasets": [
+    {
+      "id": "miracl/miracl",
+      "license": "Apache-2.0",
+      "usage": ["retrieval", "hard_negative_finetune"],
+      "splits": ["train"],
+      "coverage_tags": ["retrieval", "long_context"],
+      "contaminates_rumteb_tasks": ["MIRACLReranking", "MIRACLRetrievalHardNegatives.v2"],
+      "notes": "Source data overlaps MIRACL ruMTEB wrappers; exclude MIRACL tasks from clean evaluation if trained on."
+    },
+    {
+      "id": "miracl/miracl-corpus",
+      "license": "Apache-2.0",
+      "usage": ["retrieval", "hard_negative_finetune"],
+      "splits": ["train"],
+      "coverage_tags": ["retrieval", "long_context"],
+      "contaminates_rumteb_tasks": ["MIRACLReranking", "MIRACLRetrievalHardNegatives.v2"],
+      "notes": "Corpus overlap with MIRACL evaluation documents contaminates MIRACL retrieval/reranking."
+    },
+    {
+      "id": "ai-forever/rubq-retrieval",
+      "license": "CC-BY-SA-4.0",
+      "usage": ["retrieval", "hard_negative_finetune"],
+      "splits": ["train"],
+      "coverage_tags": ["retrieval"],
+      "contaminates_rumteb_tasks": ["RuBQRetrieval"],
+      "notes": "Exact ruMTEB dataset path overlap."
+    },
+    {
+      "id": "mteb/RuBQReranking",
+      "license": "CC-BY-SA-4.0",
+      "usage": ["reranking", "hard_negative_finetune"],
+      "splits": ["train"],
+      "coverage_tags": ["reranking"],
+      "contaminates_rumteb_tasks": ["RuBQReranking"],
+      "notes": "Only include if reranking data is used for training."
+    },
+    {
+      "id": "ai-forever/ru-scibench-grnti-classification",
+      "license": "MIT",
+      "usage": ["classification", "multitask"],
+      "splits": ["train"],
+      "coverage_tags": ["classification", "clustering"],
+      "contaminates_rumteb_tasks": ["RuSciBenchGRNTIClassification", "RuSciBenchGRNTIClusteringP2P"],
+      "notes": "Same dataset backs both classification and clustering ruMTEB tasks."
+    },
+    {
+      "id": "ai-forever/ru-scibench-oecd-classification",
+      "license": "MIT",
+      "usage": ["classification", "multitask"],
+      "splits": ["train"],
+      "coverage_tags": ["classification", "clustering"],
+      "contaminates_rumteb_tasks": ["RuSciBenchOECDClassification", "RuSciBenchOECDClusteringP2P"],
+      "notes": "Same dataset backs both classification and clustering ruMTEB tasks."
+    },
+    {
+      "id": "RussianNLP/russian_super_glue",
+      "license": "MIT",
+      "usage": ["pair_classification", "multitask"],
+      "splits": ["train"],
+      "coverage_tags": ["nli", "role_reversal", "contrast_clauses"],
+      "contaminates_rumteb_tasks": ["TERRa"],
+      "notes": "TERRa-style data contaminates TERRa evaluation."
+    },
+    {
+      "id": "merionum/ru_paraphraser",
+      "license": "MIT",
+      "usage": ["sts", "paraphrase", "multitask"],
+      "splits": ["train"],
+      "coverage_tags": ["sts", "paraphrase", "role_reversal"],
+      "contaminates_rumteb_tasks": ["RUParaPhraserSTS"],
+      "notes": "Exact ruMTEB dataset path overlap."
+    },
+    {
+      "id": "ai-forever/ru-stsbenchmark-sts",
+      "license": "CC-BY-SA-4.0",
+      "usage": ["sts", "multitask"],
+      "splits": ["train"],
+      "coverage_tags": ["sts"],
+      "contaminates_rumteb_tasks": ["RuSTSBenchmarkSTS"],
+      "notes": "Exact ruMTEB dataset path overlap; keep out of clean STS reporting if trained on."
+    },
+    {
+      "id": "controlled/ru_logic_templates_v1",
+      "license": "project-generated",
+      "usage": ["diagnostic_only"],
+      "splits": ["diagnostic"],
+      "coverage_tags": ["numeric_logic", "contrast_clauses", "role_reversal"],
+      "contaminates_rumteb_tasks": [],
+      "notes": "Use as diagnostics by default. If used for training, mark template diagnostics as contaminated."
+    }
+  ]
+}

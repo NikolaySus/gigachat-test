@@ -1,0 +1,53 @@
+{
+  "name": "fair_mixed_cedrsupport_ultramicro_lr5e8_anchor300_dist2_pair10_reh1_b7_4_save1_4096_eager_frozenrepro",
+  "description": "Ultra-micro fair CEDR-support trust-region probe from the accepted frontier. Tests whether any tiny positive CEDR movement exists before Georeview collapse by using very low LR, weak task weight, strong parameter anchoring, and strong output/pairwise self-distillation to the accepted fair frontier.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_oecd29_circle_from_oecd_step40_lr5e7_anchor20_reh05_b4_40_4096_eager_frozenrepro/step-40.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/fair_frontier_mixed_cedrsupport_oecd_grnti_geo_b7_140_seed3081.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_mixed_cedrsupport_ultramicro_lr5e8_anchor300_dist2_pair10_reh1_b7_4_save1_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 7,
+  "learning_rate": 5e-8,
+  "weight_decay": 0.0,
+  "temperature": 0.04,
+  "pair_score_loss_weight": 1.0,
+  "max_steps": 4,
+  "log_every": 1,
+  "save_every": 1,
+  "seed": 3091,
+  "stages": [
+    {
+      "name": "ultramicro_mixed_cedrsupport",
+      "data_path": "data/contrastive/fair_frontier_mixed_cedrsupport_oecd_grnti_geo_b7_140_seed3081.jsonl",
+      "max_steps": 4,
+      "batch_size": 7,
+      "learning_rate": 5e-8,
+      "shuffle": false,
+      "task_loss_weight": 0.1,
+      "temperature": 0.04,
+      "distillation_loss_weight": 2.0,
+      "pairwise_distillation_loss_weight": 10.0,
+      "parameter_anchor_weight": 300.0,
+      "rehearsal_loss_weight": 1.0,
+      "save_every": 1
+    }
+  ],
+  "retention": {
+    "teacher_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_oecd29_circle_from_oecd_step40_lr5e7_anchor20_reh05_b4_40_4096_eager_frozenrepro/step-40.pt",
+    "parameter_anchor_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_oecd29_circle_from_oecd_step40_lr5e7_anchor20_reh05_b4_40_4096_eager_frozenrepro/step-40.pt",
+    "parameter_anchor_weight": 300.0,
+    "rehearsal_data_path": "data/contrastive/fair_rusts_repair_rehearsal_cedr800_mixh1600_seed2032.jsonl",
+    "rehearsal_batch_size": 1,
+    "rehearsal_loss_weight": 1.0,
+    "distillation_loss_weight": 2.0,
+    "distillation_max_texts": 8,
+    "distillation_max_length": 4096,
+    "pairwise_distillation_loss_weight": 10.0,
+    "pairwise_distillation_max_texts": 12
+  }
+}

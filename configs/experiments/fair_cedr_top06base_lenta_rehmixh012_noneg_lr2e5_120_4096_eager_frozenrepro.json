@@ -1,0 +1,28 @@
+{
+  "name": "fair_cedr_top06base_lenta_rehmixh012_noneg_lr2e5_120_4096_eager_frozenrepro",
+  "description": "Fair CEDR repair from the top06 geometry base without negative-direction pressure. The standard repair nearly reached CEDR but damaged RuSTS and Georeview clustering; this variant tests whether Lenta + Mix H rehearsal alone preserves the top06 geometry better.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/lossgap_top06_open_ru_1r_nc_cedr_dvach_sarcasm_surprise5_3000_4096_eager_frozenrepro/latest.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_cedr_lenta_news_neutral_distractors_reported_3200.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_cedr_top06base_lenta_rehmixh012_noneg_lr2e5_120_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 2,
+  "learning_rate": 2e-5,
+  "weight_decay": 0.001,
+  "temperature": 0.02,
+  "max_steps": 120,
+  "log_every": 20,
+  "save_every": 40,
+  "seed": 2042,
+  "retention": {
+    "parameter_anchor_weight": 1.0,
+    "rehearsal_data_path": "data/contrastive/open_ru_1r_nc_mixh_habrfull_geracl6400_habr4369_deepvk3200_grandmaster3200_17169.jsonl",
+    "rehearsal_batch_size": 3,
+    "rehearsal_loss_weight": 0.12
+  }
+}

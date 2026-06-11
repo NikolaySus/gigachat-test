@@ -1,0 +1,44 @@
+{
+  "name": "fair_grandmaster_supcon_repair_from_taxv2_step20_lr7e7_anchor12_reh05_b8_40_4096_eager_frozenrepro",
+  "description": "Fair task-shaped clustering repair from the current best fair checkpoint. Uses clean GrandMaster cluster IDs converted into fixed supervised-contrastive batches, with strong parameter anchor and CEDR/STS/MixH rehearsal. No ruMTEB rows or released-model scores are used.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_taxonomy_recovery_v2_from_rawpara_step40_mixh_habrfull_lr2e6_anchor5_reh05_b4_40_4096_eager_frozenrepro/step-20.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_grandmaster_labeled_supcon_b8_1920_seed2501.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_grandmaster_supcon_repair_from_taxv2_step20_lr7e7_anchor12_reh05_b8_40_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 8,
+  "learning_rate": 7e-7,
+  "weight_decay": 0.0,
+  "temperature": 0.03,
+  "pair_score_loss_weight": 1.0,
+  "max_steps": 40,
+  "log_every": 5,
+  "save_every": 20,
+  "seed": 2507,
+  "stages": [
+    {
+      "name": "grandmaster_labeled_supcon_repair",
+      "data_path": "data/contrastive/open_ru_1r_nc_grandmaster_labeled_supcon_b8_1920_seed2501.jsonl",
+      "max_steps": 40,
+      "batch_size": 8,
+      "learning_rate": 7e-7,
+      "shuffle": false,
+      "task_loss_weight": 1.0,
+      "temperature": 0.03,
+      "parameter_anchor_weight": 12.0,
+      "rehearsal_loss_weight": 0.5,
+      "save_every": 20
+    }
+  ],
+  "retention": {
+    "parameter_anchor_weight": 12.0,
+    "rehearsal_data_path": "data/contrastive/fair_rusts_repair_rehearsal_cedr800_mixh1600_seed2032.jsonl",
+    "rehearsal_batch_size": 2,
+    "rehearsal_loss_weight": 0.5
+  }
+}

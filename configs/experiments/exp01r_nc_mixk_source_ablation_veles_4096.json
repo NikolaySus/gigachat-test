@@ -1,0 +1,39 @@
+{
+  "name": "exp01r_nc_mixk_source_ablation_veles_4096",
+  "description": "Fair source ablation for Mix K: SensitiveTopicDiscrimination built only from Vikhrmodels/Veles-2.5, then the same GeRaCl remaining recovery.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "flash_attention_2",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": null,
+  "freeze_llm": true,
+  "reinit_latent": true,
+  "data_path": "data/contrastive/open_ru_1r_nc_mixk_veles_geracl2_habr1_deepvk1_groundedstrict1_sensitive1_19200.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/open_ru_1r_nc_mixk_source_ablation_veles_4096",
+  "max_length": 4096,
+  "batch_size": 4,
+  "learning_rate": 1e-5,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "max_steps": 6000,
+  "log_every": 50,
+  "save_every": 4800,
+  "seed": 113,
+  "stages": [
+    {
+      "name": "mixk_veles",
+      "data_path": "data/contrastive/open_ru_1r_nc_mixk_veles_geracl2_habr1_deepvk1_groundedstrict1_sensitive1_19200.jsonl",
+      "max_steps": 4800,
+      "batch_size": 4,
+      "save_every": 4800
+    },
+    {
+      "name": "geracl_remaining_seed113",
+      "data_path": "data/contrastive/open_ru_1r_nc_mixk_geracl_remaining_seed113_9600.jsonl",
+      "max_steps": 1200,
+      "batch_size": 8,
+      "learning_rate": 3e-6,
+      "save_every": 1200
+    }
+  ]
+}

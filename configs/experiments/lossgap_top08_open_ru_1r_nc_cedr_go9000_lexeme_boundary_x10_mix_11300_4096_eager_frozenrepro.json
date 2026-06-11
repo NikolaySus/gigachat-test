@@ -1,0 +1,52 @@
+{
+  "name": "lossgap_top08_open_ru_1r_nc_cedr_go9000_lexeme_boundary_x10_mix_11300_4096_eager_frozenrepro",
+  "description": "Loss-gap candidate ablation. Released latent weights were used only for offline screening, not as labels or training targets.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/open_ru_1r_nc_mixh_habrfull_plus_geracl_remaining_4096_eager_frozenrepro/latest.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_cedr_go9000_lexeme_boundary_x10_mix_11300.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/lossgap_top08_open_ru_1r_nc_cedr_go9000_lexeme_boundary_x10_mix_11300_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 2,
+  "learning_rate": 2e-06,
+  "weight_decay": 0.001,
+  "temperature": 0.02,
+  "max_steps": 300,
+  "log_every": 50,
+  "save_every": 300,
+  "seed": 1839,
+  "retention": {
+    "rehearsal_data_path": "data/contrastive/open_ru_1r_nc_cedr_ailab_goemotions_ru_prior_neutral404_9000.jsonl",
+    "rehearsal_batch_size": 3,
+    "rehearsal_loss_weight": 0.0
+  },
+  "stages": [
+    {
+      "name": "lossgap_candidate",
+      "data_path": "data/contrastive/open_ru_1r_nc_cedr_go9000_lexeme_boundary_x10_mix_11300.jsonl",
+      "max_steps": 300,
+      "batch_size": 2,
+      "learning_rate": 2e-06,
+      "weight_decay": 0.001,
+      "temperature": 0.02,
+      "pair_score_loss_weight": 1.0,
+      "parameter_anchor_weight": 0.5,
+      "rehearsal_loss_weight": 0.25,
+      "save_every": 300,
+      "shuffle": true
+    }
+  ],
+  "screening": {
+    "dataset": "open_ru_1r_nc_cedr_go9000_lexeme_boundary_x10_mix_11300.jsonl",
+    "loss": "contrastive",
+    "temperature": 0.02,
+    "our_loss": 3.4805834591388702,
+    "released_loss": 3.3157604932785034,
+    "loss_gap": 0.16482296586036682,
+    "valid_batches": 8
+  }
+}

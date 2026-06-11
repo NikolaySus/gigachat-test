@@ -1,0 +1,49 @@
+{
+  "name": "DIAGNOSTIC_CONTAMINATED_rusts_promptaligned_from_frontier_lr2e6_b8_200_4096_eager_frozenrepro",
+  "description": "Forbidden diagnostic: continue current fair frontier on exact mteb/RuSTSBenchmarkSTS rows, duplicated with frozen legacy_ru prompts, to test whether the current STS objective can reproduce the released RuSTS score. Do not use for fair model selection.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_repair_from_strongsupcon40_supcon_distill_rehmixh_lr2e6_d1_reh02_lenta02_b2_80_4096_eager_frozenrepro/step-40.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/DIAGNOSTIC_CONTAMINATED_rusts_all_pairscore_promptaligned.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/DIAGNOSTIC_CONTAMINATED_rusts_promptaligned_from_frontier_lr2e6_b8_200_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 8,
+  "learning_rate": 2e-6,
+  "weight_decay": 0.0,
+  "temperature": 0.02,
+  "pair_score_loss_weight": 1.0,
+  "pair_score_rank_loss_weight": 0.5,
+  "pair_score_correlation_loss_weight": 1.0,
+  "pair_score_rank_scale": 10.0,
+  "pair_score_rank_min_gap": 0.10,
+  "max_steps": 200,
+  "log_every": 20,
+  "save_every": 50,
+  "seed": 2193,
+  "stages": [
+    {
+      "name": "contaminated_rusts_promptaligned",
+      "data_path": "data/contrastive/DIAGNOSTIC_CONTAMINATED_rusts_all_pairscore_promptaligned.jsonl",
+      "max_steps": 200,
+      "batch_size": 8,
+      "learning_rate": 2e-6,
+      "shuffle": true,
+      "pair_score_loss_weight": 1.0,
+      "pair_score_rank_loss_weight": 0.5,
+      "pair_score_correlation_loss_weight": 1.0,
+      "pair_score_rank_scale": 10.0,
+      "pair_score_rank_min_gap": 0.10,
+      "save_every": 50
+    }
+  ],
+  "retention": {
+    "parameter_anchor_weight": 2.0,
+    "rehearsal_data_path": "data/contrastive/open_ru_1r_nc_mixh_habrfull_geracl6400_habr4369_deepvk3200_grandmaster3200_17169.jsonl",
+    "rehearsal_batch_size": 2,
+    "rehearsal_loss_weight": 0.25
+  }
+}

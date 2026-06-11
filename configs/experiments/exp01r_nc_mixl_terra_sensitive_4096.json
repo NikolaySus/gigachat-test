@@ -1,0 +1,39 @@
+{
+  "name": "exp01r_nc_mixl_terra_sensitive_4096",
+  "description": "Fair 1R-NC Mix L: TERRa-oriented broad mix with GeRaCl 12800, all Habr harder sim021, all DeepVK, Grounded strict 3200, and SensitiveTopicDiscrimination built only from MVR-CII + UC Berkeley; then remaining GeRaCl recovery.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "flash_attention_2",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": null,
+  "freeze_llm": true,
+  "reinit_latent": true,
+  "data_path": "data/contrastive/open_ru_1r_nc_mixl_geracl12800_habrall_deepvkall_grounded3200_sensitive_mvrcii_ucb_27020.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/open_ru_1r_nc_mixl_terra_sensitive_4096",
+  "max_length": 4096,
+  "batch_size": 4,
+  "learning_rate": 1e-5,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "max_steps": 7155,
+  "log_every": 50,
+  "save_every": 6755,
+  "seed": 131,
+  "stages": [
+    {
+      "name": "mixl_terra_sensitive_stage1",
+      "data_path": "data/contrastive/open_ru_1r_nc_mixl_geracl12800_habrall_deepvkall_grounded3200_sensitive_mvrcii_ucb_27020.jsonl",
+      "max_steps": 6755,
+      "batch_size": 4,
+      "save_every": 6755
+    },
+    {
+      "name": "mixl_geracl_remaining_seed131",
+      "data_path": "data/contrastive/open_ru_1r_nc_mixl_geracl_remaining_seed131_3200.jsonl",
+      "max_steps": 400,
+      "batch_size": 8,
+      "learning_rate": 3e-6,
+      "save_every": 400
+    }
+  ]
+}

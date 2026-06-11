@@ -1,0 +1,46 @@
+{
+  "name": "fair_rusts_paraphrase_corr_from_nli160_lr2e6_anchor5_reh05_b2_160_4096_eager_frozenrepro",
+  "description": "Fair stronger RuSTS/paraphrase repair from the current best NLI checkpoint. Uses ordered score-balanced batches from merionum/ru_paraphraser, MilyaShams/paws-ru_10k, and andidu paraphrase datasets with exact RuSTS/CEDR text overlaps removed.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_rusts_nli_corr_from_h012_lr5e7_anchor10_reh05_b2_160_4096_eager_frozenrepro/step-160.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/fair_rusts_paraphrase_pairscore_balanced_6400_seed2071.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_rusts_paraphrase_corr_from_nli160_lr2e6_anchor5_reh05_b2_160_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 8,
+  "learning_rate": 2e-6,
+  "weight_decay": 0.0,
+  "temperature": 0.02,
+  "pair_score_loss_weight": 0.0,
+  "pair_score_rank_loss_weight": 0.5,
+  "pair_score_correlation_loss_weight": 1.0,
+  "pair_score_rank_scale": 10.0,
+  "pair_score_rank_min_gap": 0.15,
+  "max_steps": 160,
+  "log_every": 20,
+  "save_every": 40,
+  "seed": 2072,
+  "stages": [
+    {
+      "data_path": "data/contrastive/fair_rusts_paraphrase_pairscore_balanced_6400_seed2071.jsonl",
+      "max_steps": 160,
+      "shuffle": false,
+      "pair_score_loss_weight": 0.0,
+      "pair_score_rank_loss_weight": 0.5,
+      "pair_score_correlation_loss_weight": 1.0,
+      "pair_score_rank_scale": 10.0,
+      "pair_score_rank_min_gap": 0.15,
+      "rehearsal_loss_weight": 0.5
+    }
+  ],
+  "retention": {
+    "parameter_anchor_weight": 5.0,
+    "rehearsal_data_path": "data/contrastive/fair_rusts_repair_rehearsal_cedr800_mixh1600_seed2032.jsonl",
+    "rehearsal_batch_size": 2,
+    "rehearsal_loss_weight": 0.5
+  }
+}

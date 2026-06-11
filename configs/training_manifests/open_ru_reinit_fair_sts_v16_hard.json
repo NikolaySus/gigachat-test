@@ -1,0 +1,60 @@
+{
+  "name": "open_ru_reinit_fair_sts_v16_hard",
+  "description": "Fair reinitialized latent-attention curriculum: train the original latent block from random weights using open-source broad, STS, recovery, and hard-filtered Habr QA SBS data.",
+  "datasets": [
+    {
+      "id": "open_ru_train.jsonl",
+      "license": "mixed",
+      "usage": ["broad_embedding", "retrieval", "classification", "pair_classification"],
+      "splits": ["prepared"],
+      "coverage_tags": ["russian", "retrieval", "classification", "nli", "paraphrase"],
+      "contaminates_rumteb_tasks": [
+        "MIRACLReranking",
+        "MIRACLRetrievalHardNegatives.v2",
+        "RuBQRetrieval",
+        "RuBQReranking",
+        "RuSciBenchGRNTIClassification",
+        "RuSciBenchGRNTIClusteringP2P",
+        "RuSciBenchOECDClassification",
+        "RuSciBenchOECDClusteringP2P",
+        "TERRa",
+        "RUParaPhraserSTS",
+        "RuSTSBenchmarkSTS"
+      ],
+      "notes": "Prepared broad open-RU training mix. Used only in the fair reinit lineage, not inherited from released latent weights."
+    },
+    {
+      "id": "open_ru_sts_v6_train.jsonl",
+      "license": "mixed",
+      "usage": ["sts", "paraphrase", "hard_negative_finetune"],
+      "splits": ["prepared"],
+      "coverage_tags": ["sts", "paraphrase", "hard_negative", "ru_hnp"],
+      "contaminates_rumteb_tasks": ["RUParaPhraserSTS", "RuSTSBenchmarkSTS"],
+      "notes": "Prepared STS-v6/v9 style STS and hard-negative mixture."
+    },
+    {
+      "id": "open_ru_recovery_v12_2134_per_source.jsonl",
+      "license": "mixed",
+      "usage": ["retrieval", "classification", "clustering_recovery"],
+      "splits": ["prepared"],
+      "coverage_tags": ["retrieval", "classification", "broad_recovery"],
+      "contaminates_rumteb_tasks": [
+        "RuBQRetrieval",
+        "RuSciBenchGRNTIClassification",
+        "RuSciBenchGRNTIClusteringP2P",
+        "RuSciBenchOECDClassification",
+        "RuSciBenchOECDClusteringP2P"
+      ],
+      "notes": "Targeted broad recovery data used after STS training."
+    },
+    {
+      "id": "Vikhrmodels/habr_qa_sbs",
+      "license": "unknown",
+      "usage": ["retrieval", "qa", "preference", "hard_negative_finetune", "recovery"],
+      "splits": ["train"],
+      "coverage_tags": ["russian", "technical_qa", "question_answer_matching", "preference_negative", "hard_filtered"],
+      "contaminates_rumteb_tasks": [],
+      "notes": "Hard-filtered question -> best answer positives with bad answer negatives. 10352 retained records."
+    }
+  ]
+}

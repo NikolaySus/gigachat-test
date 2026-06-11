@@ -1,0 +1,51 @@
+{
+  "name": "fair_blinoff_restaurant_circle_micro_from_frontier_lr2e7_anchor120_dist05_pair2_reh05_b8_10_save1_4096_eager_frozenrepro",
+  "description": "Micro clean restaurant-review labeled metric probe from the current accepted frontier. Tests whether balanced review-style labels can improve RuReviews/Kinopoisk/MASSIVE gaps while preserving CEDR and Georeview.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_oecd29_circle_from_oecd_step40_lr5e7_anchor20_reh05_b4_40_4096_eager_frozenrepro/step-40.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/fair_blinoff_restaurant_balanced_circle_b8_10_seed2901.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_blinoff_restaurant_circle_micro_from_frontier_lr2e7_anchor120_dist05_pair2_reh05_b8_10_save1_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 8,
+  "learning_rate": 2e-7,
+  "weight_decay": 0.0,
+  "temperature": 0.02,
+  "task_loss_weight": 0.25,
+  "max_steps": 10,
+  "log_every": 1,
+  "save_every": 1,
+  "seed": 2903,
+  "stages": [
+    {
+      "name": "restaurant_balanced_circle_micro",
+      "data_path": "data/contrastive/fair_blinoff_restaurant_balanced_circle_b8_10_seed2901.jsonl",
+      "max_steps": 10,
+      "batch_size": 8,
+      "learning_rate": 2e-7,
+      "shuffle": false,
+      "temperature": 0.02,
+      "task_loss_weight": 0.25,
+      "distillation_loss_weight": 0.5,
+      "pairwise_distillation_loss_weight": 2.0,
+      "parameter_anchor_weight": 120.0,
+      "rehearsal_loss_weight": 0.5,
+      "save_every": 1
+    }
+  ],
+  "retention": {
+    "parameter_anchor_weight": 120.0,
+    "rehearsal_data_path": "data/contrastive/fair_rusts_repair_rehearsal_cedr800_mixh1600_seed2032.jsonl",
+    "rehearsal_batch_size": 2,
+    "rehearsal_loss_weight": 0.5,
+    "distillation_loss_weight": 0.5,
+    "distillation_max_texts": 8,
+    "pairwise_distillation_loss_weight": 2.0,
+    "pairwise_distillation_max_texts": 12,
+    "distillation_max_length": 4096
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "name": "exp01b_retrain_latent_memory_sts_v16_habr_qa_sbs_full_1pass_lr3e6",
+  "description": "STS-v16: full filtered Vikhr Habr QA SBS one-pass recovery from v12_1600 at 3e-6 learning rate.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "flash_attention_2",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_original_latent_memory/checkpoints/open_ru_sts_v12_v9_targeted_recovery_1600_1pass/latest.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_sts_v16_habr_qa_sbs_full.jsonl",
+  "output_dir": "experiments/exp01_original_latent_memory/checkpoints/open_ru_sts_v16_habr_qa_sbs_full_1pass_lr3e6",
+  "max_length": 4096,
+  "batch_size": 4,
+  "learning_rate": 3e-6,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "pair_score_loss_weight": 1.0,
+  "log_every": 50,
+  "save_every": 17747,
+  "seed": 13,
+  "retention": {
+    "parameter_anchor_weight": 20.0
+  },
+  "stages": [
+    {
+      "name": "habr_qa_sbs_full_filtered_1pass_lr3e6",
+      "data_path": "data/contrastive/open_ru_sts_v16_habr_qa_sbs_full.jsonl",
+      "objectives": ["contrastive"],
+      "sources": ["Vikhrmodels/habr_qa_sbs:filtered"],
+      "max_steps": 17747,
+      "batch_size": 4,
+      "temperature": 0.02,
+      "parameter_anchor_weight": 20.0
+    }
+  ]
+}

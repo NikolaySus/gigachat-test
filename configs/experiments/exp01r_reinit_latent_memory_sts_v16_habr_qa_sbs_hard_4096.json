@@ -1,0 +1,37 @@
+{
+  "name": "exp01r_reinit_latent_memory_sts_v16_habr_qa_sbs_hard_4096",
+  "description": "Fair 1R-STS stage 4: initialize from fair v12 recovery checkpoint and run hard-filtered Habr QA SBS recovery.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "flash_attention_2",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/open_ru_sts_v12_targeted_recovery_1600_4096/latest.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_sts_v16_habr_qa_sbs_hard.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/open_ru_sts_v16_habr_qa_sbs_hard_4096",
+  "max_length": 4096,
+  "batch_size": 4,
+  "learning_rate": 3e-6,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "pair_score_loss_weight": 1.0,
+  "log_every": 50,
+  "save_every": 2588,
+  "seed": 13,
+  "retention": {
+    "parameter_anchor_weight": 20.0
+  },
+  "stages": [
+    {
+      "name": "habr_qa_sbs_hard_filtered_anchor_to_fair_v12",
+      "data_path": "data/contrastive/open_ru_sts_v16_habr_qa_sbs_hard.jsonl",
+      "objectives": ["contrastive"],
+      "sources": ["Vikhrmodels/habr_qa_sbs:filtered"],
+      "max_steps": 2588,
+      "batch_size": 4,
+      "temperature": 0.02,
+      "parameter_anchor_weight": 20.0
+    }
+  ]
+}

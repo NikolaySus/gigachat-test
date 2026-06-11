@@ -1,0 +1,46 @@
+{
+  "name": "fair_rusts_nli_cosent_from_nli160_lr7e7_anchor10_reh05_b8_200_4096_eager_frozenrepro",
+  "description": "Fair RuSTS repair probe from the current balanced/NLI checkpoint using a CoSENT-style rank objective on decontaminated Russian NLI pair-score batches. Exact RuSTS/CEDR text overlaps were removed when preparing the source data.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_rusts_nli_corr_from_h012_lr5e7_anchor10_reh05_b2_160_4096_eager_frozenrepro/step-160.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/fair_rusts_nli_pairscore_balanced_3200_seed2051.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_rusts_nli_cosent_from_nli160_lr7e7_anchor10_reh05_b8_200_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 8,
+  "learning_rate": 7e-7,
+  "weight_decay": 0.0,
+  "temperature": 0.02,
+  "pair_score_loss_weight": 0.0,
+  "pair_score_rank_loss_weight": 1.0,
+  "pair_score_correlation_loss_weight": 0.0,
+  "pair_score_rank_scale": 20.0,
+  "pair_score_rank_min_gap": 0.0,
+  "max_steps": 200,
+  "log_every": 20,
+  "save_every": 40,
+  "seed": 2130,
+  "stages": [
+    {
+      "data_path": "data/contrastive/fair_rusts_nli_pairscore_balanced_3200_seed2051.jsonl",
+      "max_steps": 200,
+      "shuffle": false,
+      "pair_score_loss_weight": 0.0,
+      "pair_score_rank_loss_weight": 1.0,
+      "pair_score_correlation_loss_weight": 0.0,
+      "pair_score_rank_scale": 20.0,
+      "pair_score_rank_min_gap": 0.0,
+      "rehearsal_loss_weight": 0.5
+    }
+  ],
+  "retention": {
+    "parameter_anchor_weight": 10.0,
+    "rehearsal_data_path": "data/contrastive/fair_rusts_repair_rehearsal_cedr800_mixh1600_seed2032.jsonl",
+    "rehearsal_batch_size": 2,
+    "rehearsal_loss_weight": 0.5
+  }
+}

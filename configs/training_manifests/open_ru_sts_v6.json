@@ -1,0 +1,60 @@
+{
+  "name": "open_ru_sts_v6",
+  "description": "STS-v6 ablation mix: starts from STS-v5 but increases deepvk/ru-HNP from 4500 to 9000 records, while keeping other sources unchanged.",
+  "datasets": [
+    {
+      "id": "deepvk/ru-HNP",
+      "license": "Apache-2.0",
+      "usage": ["sts", "paraphrase", "hard_negative_finetune", "synthetic"],
+      "splits": ["train"],
+      "coverage_tags": ["hard_negative", "paraphrase", "negation", "numeric_logic", "entity_swap"],
+      "contaminates_rumteb_tasks": [],
+      "notes": "Synthetic GPT-3.5 hard non-paraphrase dataset. STS-v6 tests a 3x contribution relative to STS-v3."
+    },
+    {
+      "id": "merionum/ru_paraphraser",
+      "license": "MIT",
+      "usage": ["sts", "paraphrase", "multitask"],
+      "splits": ["train"],
+      "coverage_tags": ["sts", "paraphrase", "news_headlines"],
+      "contaminates_rumteb_tasks": ["RUParaPhraserSTS"],
+      "notes": "Exact ruMTEB dataset path overlap for RUParaPhraserSTS; not for clean STS22."
+    },
+    {
+      "id": "ai-forever/ru-stsbenchmark-sts",
+      "license": "CC-BY-SA-4.0",
+      "usage": ["sts", "pair_score", "multitask"],
+      "splits": ["train"],
+      "coverage_tags": ["sts", "graded_similarity"],
+      "contaminates_rumteb_tasks": ["RuSTSBenchmarkSTS"],
+      "notes": "Exact ruMTEB dataset path overlap for RuSTSBenchmarkSTS; not for clean STS22."
+    },
+    {
+      "id": "ai-forever/rubq-retrieval",
+      "license": "CC-BY-SA-4.0",
+      "usage": ["retrieval", "hard_negative_finetune"],
+      "splits": ["train"],
+      "coverage_tags": ["retrieval"],
+      "contaminates_rumteb_tasks": ["RuBQRetrieval"],
+      "notes": "Exact ruMTEB dataset path overlap."
+    },
+    {
+      "id": "ai-forever/ru-scibench-grnti-classification",
+      "license": "MIT",
+      "usage": ["classification", "multitask"],
+      "splits": ["train"],
+      "coverage_tags": ["classification", "clustering"],
+      "contaminates_rumteb_tasks": ["RuSciBenchGRNTIClassification", "RuSciBenchGRNTIClusteringP2P"],
+      "notes": "Same dataset backs both classification and clustering ruMTEB tasks."
+    },
+    {
+      "id": "ai-forever/ru-scibench-oecd-classification",
+      "license": "MIT",
+      "usage": ["classification", "multitask"],
+      "splits": ["train"],
+      "coverage_tags": ["classification", "clustering"],
+      "contaminates_rumteb_tasks": ["RuSciBenchOECDClassification", "RuSciBenchOECDClusteringP2P"],
+      "notes": "Same dataset backs both classification and clustering ruMTEB tasks."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "name": "exp01r_nc_cedr_lenta_step150_pairscore_repulsion_lr1e7_anchor10_rehgo_120_4096_eager_frozenrepro",
+  "description": "CEDR continuation from retained best using pair-score repulsion: hard neutral texts are pushed away from same-trigger emotion texts while emotion pairs are preserved.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/cedr_correction_lenta_reported_replay_go9000_from_retainedbest_lr1e7_anchor10_reh1_300_4096_eager_frozenrepro/step-150.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_cedr_neutral_emotion_pairscore_repulsion_7200.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/cedr_lenta_step150_pairscore_repulsion_lr1e7_anchor10_rehgo_120_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 8,
+  "learning_rate": 1e-7,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "pair_score_loss_weight": 2.0,
+  "max_steps": 120,
+  "log_every": 10,
+  "save_every": 10,
+  "seed": 1132,
+  "retention": {
+    "parameter_anchor_weight": 10.0,
+    "rehearsal_data_path": "data/contrastive/open_ru_1r_nc_cedr_ailab_goemotions_ru_prior_neutral404_9000.jsonl",
+    "rehearsal_batch_size": 2,
+    "rehearsal_loss_weight": 1.0
+  }
+}

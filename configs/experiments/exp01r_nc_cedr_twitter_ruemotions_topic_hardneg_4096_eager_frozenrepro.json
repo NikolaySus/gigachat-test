@@ -1,0 +1,22 @@
+{
+  "name": "exp01r_nc_cedr_twitter_ruemotions_topic_hardneg_4096_eager_frozenrepro",
+  "description": "CEDR ablation, stage 1 only: cedr_twitter_ruemotions_topic_hardneg",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": null,
+  "freeze_llm": true,
+  "reinit_latent": true,
+  "data_path": "data/contrastive/open_ru_1r_nc_cedr_twitter_ruemotions_topic_hardneg.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/cedr_twitter_ruemotions_topic_hardneg_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 3,
+  "learning_rate": 1e-05,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "max_steps": 6790,
+  "log_every": 50,
+  "save_every": 6790,
+  "seed": 91
+}

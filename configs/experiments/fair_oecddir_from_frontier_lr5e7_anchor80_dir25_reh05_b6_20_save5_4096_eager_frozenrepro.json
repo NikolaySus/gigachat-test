@@ -1,0 +1,49 @@
+{
+  "name": "fair_oecddir_from_frontier_lr5e7_anchor80_dir25_reh05_b6_20_save5_4096_eager_frozenrepro",
+  "description": "Fair OECD/GRNTI direction-import probe from the accepted frontier. It starts from the accepted Kaggle-OECD29 circle frontier, trains only on clean science/geo proxy batches, keeps strong parameter anchoring to the frontier, and softly targets 25% of the fair OECD-strong+Minds14 direction. The direction checkpoint is fair and used only as a training signal; no released model, released latent weights, benchmark rows, or contaminated OECD rows are used.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_oecd29_circle_from_oecd_step40_lr5e7_anchor20_reh05_b4_40_4096_eager_frozenrepro/step-40.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/fair_mixed_oecd29_grnti_geo_knn_supcon_b6_480_seed2681.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_oecddir_from_frontier_lr5e7_anchor80_dir25_reh05_b6_20_save5_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 6,
+  "learning_rate": 5e-7,
+  "weight_decay": 0.0,
+  "temperature": 0.03,
+  "pair_score_loss_weight": 1.0,
+  "max_steps": 20,
+  "log_every": 1,
+  "save_every": 5,
+  "seed": 3201,
+  "stages": [
+    {
+      "name": "oecd_grnti_geo_direction_import",
+      "data_path": "data/contrastive/fair_mixed_oecd29_grnti_geo_knn_supcon_b6_480_seed2681.jsonl",
+      "max_steps": 20,
+      "batch_size": 6,
+      "learning_rate": 5e-7,
+      "shuffle": false,
+      "task_loss_weight": 0.4,
+      "temperature": 0.03,
+      "parameter_anchor_weight": 80.0,
+      "negative_direction_weight": 25.0,
+      "negative_direction_target_projection": 0.25,
+      "rehearsal_loss_weight": 0.5,
+      "save_every": 5
+    }
+  ],
+  "retention": {
+    "parameter_anchor_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_oecd29_circle_from_oecd_step40_lr5e7_anchor20_reh05_b4_40_4096_eager_frozenrepro/step-40.pt",
+    "negative_direction_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_oecdstrong_geo20_minds14_repair_lr5e7_anchor80_reh05_b12_20_save5_4096_eager_frozenrepro/step-5.pt",
+    "negative_direction_target_projection": 0.25,
+    "parameter_anchor_weight": 80.0,
+    "rehearsal_data_path": "data/contrastive/fair_frontier_mixed_cedr_oecd_grnti_geo_b7_420_seed2791.jsonl",
+    "rehearsal_batch_size": 1,
+    "rehearsal_loss_weight": 0.5
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "name": "fair_cedr_lenta_selfdistill_from_oecd29_frontier_lr2e6_d5_anchor20_reh05_b3_40_save20_4096_eager_frozenrepro",
+  "description": "Current-frontier CEDR repair with strong output self-distillation. Clean Lenta neutral-distractor CEDR data supplies the task signal; clean rehearsal texts are distilled to the current fair frontier to preserve embedding geometry more directly than parameter anchoring.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_oecd29_circle_from_oecd_step40_lr5e7_anchor20_reh05_b4_40_4096_eager_frozenrepro/step-40.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_cedr_lenta_news_neutral_distractors_reported_3200.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_cedr_lenta_selfdistill_from_oecd29_frontier_lr2e6_d5_anchor20_reh05_b3_40_save20_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 3,
+  "learning_rate": 2e-6,
+  "weight_decay": 0.0,
+  "temperature": 0.02,
+  "pair_score_loss_weight": 1.0,
+  "max_steps": 40,
+  "log_every": 5,
+  "save_every": 20,
+  "seed": 2741,
+  "stages": [
+    {
+      "name": "lenta_cedr_with_frontier_selfdistill",
+      "data_path": "data/contrastive/open_ru_1r_nc_cedr_lenta_news_neutral_distractors_reported_3200.jsonl",
+      "max_steps": 40,
+      "batch_size": 3,
+      "learning_rate": 2e-6,
+      "weight_decay": 0.0,
+      "shuffle": true,
+      "task_loss_weight": 1.0,
+      "temperature": 0.02,
+      "distillation_loss_weight": 5.0,
+      "parameter_anchor_weight": 20.0,
+      "rehearsal_loss_weight": 0.5,
+      "save_every": 20
+    }
+  ],
+  "retention": {
+    "parameter_anchor_weight": 20.0,
+    "rehearsal_data_path": "data/contrastive/fair_rusts_repair_rehearsal_cedr800_mixh1600_seed2032.jsonl",
+    "rehearsal_batch_size": 2,
+    "rehearsal_loss_weight": 0.5,
+    "distillation_loss_weight": 5.0,
+    "distillation_max_texts": 8,
+    "distillation_max_length": 4096
+  }
+}

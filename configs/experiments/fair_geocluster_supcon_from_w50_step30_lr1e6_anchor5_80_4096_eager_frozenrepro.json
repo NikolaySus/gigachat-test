@@ -1,0 +1,26 @@
+{
+  "name": "fair_geocluster_supcon_from_w50_step30_lr1e6_anchor5_80_4096_eager_frozenrepro",
+  "description": "Short fair GeoCluster repair from the current best w50 step-30 checkpoint. Uses decontaminated GeRaCl/GrandMaster grouped labeled-text SupCon batches with parameter anchoring to test whether GeoCluster can recover without sacrificing RuSTS/CEDR.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_cedr_dirproj_from_nli100_target0_lr2e5_w50_dense45_4096_eager_frozenrepro/step-30.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/fair_geo_cluster_labeled_supcon_6000_seed2034.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_geocluster_supcon_from_w50_step30_lr1e6_anchor5_80_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 12,
+  "learning_rate": 1e-6,
+  "weight_decay": 0.0,
+  "temperature": 0.02,
+  "max_steps": 80,
+  "log_every": 20,
+  "save_every": 40,
+  "seed": 2241,
+  "shuffle": false,
+  "retention": {
+    "parameter_anchor_weight": 5.0
+  }
+}

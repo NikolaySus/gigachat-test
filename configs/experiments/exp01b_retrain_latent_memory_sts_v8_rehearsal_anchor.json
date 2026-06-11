@@ -1,0 +1,52 @@
+{
+  "name": "exp01b_retrain_latent_memory_sts_v8_rehearsal_anchor",
+  "description": "STS-v8: STS-v6 data weights and schedule, with light rehearsal and L2-SP style latent-parameter anchoring, but no teacher-output distillation.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "flash_attention_2",
+  "latent_architecture": "original_latent_attention",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_sts_v6_train.jsonl",
+  "output_dir": "experiments/exp01_original_latent_memory/checkpoints/open_ru_sts_v8_rehearsal_anchor",
+  "max_length": 4096,
+  "batch_size": 12,
+  "learning_rate": 1e-5,
+  "weight_decay": 0.01,
+  "temperature": 0.03,
+  "pair_score_loss_weight": 1.0,
+  "log_every": 10,
+  "save_every": 2250,
+  "seed": 13,
+  "retention": {
+    "rehearsal_data_path": "data/contrastive/open_ru_train.jsonl",
+    "rehearsal_batch_size": 4,
+    "rehearsal_loss_weight": 0.15,
+    "rehearsal_temperature": 0.03,
+    "rehearsal_pair_score_loss_weight": 1.0,
+    "parameter_anchor_weight": 10.0
+  },
+  "stages": [
+    {
+      "name": "soft_pair_scores_rehearsal_anchor",
+      "data_path": "data/contrastive/open_ru_sts_v6_train.jsonl",
+      "objectives": ["pair_score"],
+      "max_steps": 450,
+      "batch_size": 12,
+      "pair_score_loss_weight": 0.5,
+      "temperature": 0.02,
+      "rehearsal_loss_weight": 0.15,
+      "parameter_anchor_weight": 10.0
+    },
+    {
+      "name": "hard_contrastive_b4_rehearsal_anchor",
+      "data_path": "data/contrastive/open_ru_sts_v6_train.jsonl",
+      "objectives": ["contrastive"],
+      "max_steps": 1800,
+      "batch_size": 4,
+      "temperature": 0.03,
+      "rehearsal_loss_weight": 0.15,
+      "parameter_anchor_weight": 10.0
+    }
+  ]
+}

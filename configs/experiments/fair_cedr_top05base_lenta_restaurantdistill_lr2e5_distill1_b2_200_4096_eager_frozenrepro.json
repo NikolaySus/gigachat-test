@@ -1,0 +1,42 @@
+{
+  "name": "fair_cedr_top05base_lenta_restaurantdistill_lr2e5_distill1_b2_200_4096_eager_frozenrepro",
+  "description": "Fair CEDR repair from top05 using output-level preservation on clean restaurant-review texts. This tests whether review-style distillation preserves Georeview clustering better than broad Mix H distillation while Lenta records supply the CEDR signal.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/lossgap_top05_open_ru_1r_nc_cedr_ruizard_classifier_pseudolabel_neu55_7200_4096_eager_frozenrepro/step-300.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_cedr_lenta_news_neutral_distractors_reported_3200.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_cedr_top05base_lenta_restaurantdistill_lr2e5_distill1_b2_200_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 2,
+  "learning_rate": 2e-5,
+  "weight_decay": 0.0,
+  "temperature": 0.02,
+  "max_steps": 200,
+  "log_every": 25,
+  "save_every": 50,
+  "seed": 2091,
+  "retention": {
+    "teacher_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/lossgap_top05_open_ru_1r_nc_cedr_ruizard_classifier_pseudolabel_neu55_7200_4096_eager_frozenrepro/step-300.pt",
+    "distillation_max_texts": 8,
+    "distillation_max_length": 4096,
+    "rehearsal_data_path": "data/contrastive/fair_blinoff_restaurant_reviews_distill_12000_seed2090.jsonl",
+    "rehearsal_batch_size": 2,
+    "rehearsal_loss_weight": 0.0,
+    "parameter_anchor_weight": 0.0
+  },
+  "stages": [
+    {
+      "name": "lenta_cedr_with_top05_restaurant_output_distill",
+      "data_path": "data/contrastive/open_ru_1r_nc_cedr_lenta_news_neutral_distractors_reported_3200.jsonl",
+      "max_steps": 200,
+      "task_loss_weight": 1.0,
+      "distillation_loss_weight": 1.0,
+      "rehearsal_loss_weight": 0.0,
+      "parameter_anchor_weight": 0.0
+    }
+  ]
+}

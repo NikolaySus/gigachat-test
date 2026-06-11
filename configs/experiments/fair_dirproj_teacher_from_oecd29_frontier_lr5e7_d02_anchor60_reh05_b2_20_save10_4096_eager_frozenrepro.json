@@ -1,0 +1,49 @@
+{
+  "name": "fair_dirproj_teacher_from_oecd29_frontier_lr5e7_d02_anchor60_reh05_b2_20_save10_4096_eager_frozenrepro",
+  "description": "Post-restart fair continuation from the current OECD29 frontier. Distills outputs toward the retained fair high-CEDR dirproj checkpoint while anchoring parameters to the current frontier via parameter_anchor_checkpoint. Uses only clean CEDR/MixH rehearsal; no released teacher, released latent initialization, benchmark rows, or checkpoint arithmetic.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_oecd29_circle_from_oecd_step40_lr5e7_anchor20_reh05_b4_40_4096_eager_frozenrepro/step-40.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/fair_cedr_mixh_rehearsal_cedr1600_mixh1600_seed2225.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_dirproj_teacher_from_oecd29_frontier_lr5e7_d02_anchor60_reh05_b2_20_save10_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 2,
+  "learning_rate": 5e-7,
+  "weight_decay": 0.0,
+  "temperature": 0.02,
+  "pair_score_loss_weight": 1.0,
+  "max_steps": 20,
+  "log_every": 5,
+  "save_every": 10,
+  "seed": 2781,
+  "retention": {
+    "teacher_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_cedr_dirproj_from_nli100_target0_lr2e5_w50_dense45_4096_eager_frozenrepro/step-30.pt",
+    "parameter_anchor_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_oecd29_circle_from_oecd_step40_lr5e7_anchor20_reh05_b4_40_4096_eager_frozenrepro/step-40.pt",
+    "distillation_max_texts": 8,
+    "distillation_max_length": 4096,
+    "rehearsal_data_path": "data/contrastive/fair_rusts_repair_rehearsal_cedr800_mixh1600_seed2032.jsonl",
+    "rehearsal_batch_size": 2,
+    "rehearsal_loss_weight": 0.5,
+    "parameter_anchor_weight": 60.0
+  },
+  "stages": [
+    {
+      "name": "dirproj_teacher_cedr_mixh_guarded",
+      "data_path": "data/contrastive/fair_cedr_mixh_rehearsal_cedr1600_mixh1600_seed2225.jsonl",
+      "max_steps": 20,
+      "batch_size": 2,
+      "learning_rate": 5e-7,
+      "shuffle": true,
+      "task_loss_weight": 0.2,
+      "distillation_loss_weight": 0.2,
+      "rehearsal_loss_weight": 0.5,
+      "parameter_anchor_weight": 60.0,
+      "temperature": 0.02,
+      "save_every": 10
+    }
+  ]
+}

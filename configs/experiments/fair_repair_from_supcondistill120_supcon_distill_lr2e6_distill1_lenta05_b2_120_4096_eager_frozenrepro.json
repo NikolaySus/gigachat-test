@@ -1,0 +1,44 @@
+{
+  "name": "fair_repair_from_supcondistill120_supcon_distill_lr2e6_distill1_lenta05_b2_120_4096_eager_frozenrepro",
+  "description": "Stronger fair local recovery from the current best SupCon-distilled checkpoint. Uses more SupCon output-distillation pressure while clean Lenta records preserve CEDR. No released teacher, no released latent initialization, no benchmark rows, and no checkpoint arithmetic.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_repair_from_nli160_supcon_distill_lr5e7_distill025_lenta05_b2_120_4096_eager_frozenrepro/step-120.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_cedr_lenta_news_neutral_distractors_reported_3200.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_repair_from_supcondistill120_supcon_distill_lr2e6_distill1_lenta05_b2_120_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 2,
+  "learning_rate": 2e-6,
+  "weight_decay": 0.0,
+  "temperature": 0.02,
+  "max_steps": 120,
+  "log_every": 20,
+  "save_every": 40,
+  "seed": 2143,
+  "retention": {
+    "teacher_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/nomanip_radical_supcon_lr5_t10_loanchor600_4096_eager_frozenrepro/step-600.pt",
+    "distillation_max_texts": 8,
+    "distillation_max_length": 4096,
+    "rehearsal_data_path": "data/contrastive/open_ru_1r_nc_mixh_habrfull_geracl6400_habr4369_deepvk3200_grandmaster3200_17169.jsonl",
+    "rehearsal_batch_size": 2,
+    "rehearsal_loss_weight": 0.0,
+    "parameter_anchor_weight": 0.0
+  },
+  "stages": [
+    {
+      "name": "stronger_supcon_distill_with_cedr_preserve",
+      "data_path": "data/contrastive/open_ru_1r_nc_cedr_lenta_news_neutral_distractors_reported_3200.jsonl",
+      "max_steps": 120,
+      "batch_size": 2,
+      "task_loss_weight": 0.5,
+      "distillation_loss_weight": 1.0,
+      "rehearsal_loss_weight": 0.0,
+      "parameter_anchor_weight": 0.0,
+      "save_every": 40
+    }
+  ]
+}

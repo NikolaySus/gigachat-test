@@ -1,0 +1,96 @@
+{
+  "name": "open_ru_reinit_fair_1r_nc",
+  "description": "Fair no-contamination 1R-NC manifest: reinitialize the original latent-attention block and train only on sources with no known ruMTEB dataset overlap.",
+  "datasets": [
+    {
+      "id": "deepvk/ru-HNP",
+      "license": "Apache-2.0",
+      "usage": ["sts", "paraphrase", "hard_negative_finetune", "synthetic"],
+      "splits": ["train"],
+      "coverage_tags": ["russian", "hard_negative", "paraphrase", "negation", "numeric_logic", "entity_swap"],
+      "contaminates_rumteb_tasks": [],
+      "notes": "Clean hard-negative paraphrase source. Used directly in 1R-NC, not inherited from released latent weights."
+    },
+    {
+      "id": "deepvk/GeRaCl_synthethic_dataset",
+      "license": "Apache-2.0",
+      "usage": ["classification", "clustering", "synthetic"],
+      "splits": ["synthetic_classes_train/train", "synthetic_positives/train"],
+      "coverage_tags": ["russian", "classification", "clustering", "synthetic_classes", "c4"],
+      "contaminates_rumteb_tasks": [],
+      "notes": "Only synthetic_classes_train and synthetic_positives are allowed. Do not use ru_mteb_classes or ru_mteb_extended_classes."
+    },
+    {
+      "id": "Vladimirlv/ru-promptriever-dataset",
+      "license": "CC-BY-NC-4.0",
+      "usage": ["retrieval", "hard_negative_finetune", "research_only"],
+      "splits": ["train"],
+      "coverage_tags": ["russian", "retrieval", "bm25_hard_negatives"],
+      "contaminates_rumteb_tasks": [],
+      "notes": "Only non-repeated, non-instruction rows are used. Non-commercial research license."
+    },
+    {
+      "id": "Vikhrmodels/Grounded-RAG-RU-v2",
+      "license": "Apache-2.0",
+      "usage": ["retrieval", "rag", "qa"],
+      "splits": ["train"],
+      "coverage_tags": ["russian", "retrieval", "question_answer_matching", "grounded_rag"],
+      "contaminates_rumteb_tasks": [],
+      "notes": "Only rows with type=good are converted to question-document contrastive examples."
+    },
+    {
+      "id": "Vikhrmodels/habr_qa_sbs",
+      "license": "Apache-2.0",
+      "usage": ["retrieval", "qa", "preference", "hard_negative_finetune"],
+      "splits": ["train"],
+      "coverage_tags": ["russian", "technical_qa", "question_answer_matching", "preference_negative", "hard_filtered"],
+      "contaminates_rumteb_tasks": [],
+      "notes": "Uses the stricter STS-v16 hard filter: moderate best/bad lexical similarity, longer answers, and duplicate removal."
+    },
+    {
+      "id": "mvrcii/safety-moderation-benchmark",
+      "license": "cc-by-nc-sa-4.0",
+      "usage": ["sensitive_topic_discrimination", "safety", "classification", "research_only"],
+      "splits": ["train"],
+      "coverage_tags": ["english", "safety", "topic", "subtopic", "hard_negative"],
+      "contaminates_rumteb_tasks": [],
+      "notes": "Mapped from safety policy topic/subtopic fields into the 18 sensitive-topic target space. Exact normalized RuMTEB SensitiveTopics texts are filtered out."
+    },
+    {
+      "id": "Vikhrmodels/Veles-2.5",
+      "license": "unknown",
+      "usage": ["sensitive_topic_discrimination", "russian", "instruction", "lexicon_filtered"],
+      "splits": ["train"],
+      "coverage_tags": ["russian", "instruction", "topic_lexicon", "hard_negative"],
+      "contaminates_rumteb_tasks": [],
+      "notes": "Only lexicon-labeled sensitive-topic conversation texts are used. Exact normalized RuMTEB SensitiveTopics texts are filtered out."
+    },
+    {
+      "id": "Mnwa/russian-toxic",
+      "license": "unknown",
+      "usage": ["sensitive_topic_discrimination", "toxicity_style", "russian"],
+      "splits": ["train"],
+      "coverage_tags": ["russian", "toxicity", "social_text", "auxiliary"],
+      "contaminates_rumteb_tasks": [],
+      "notes": "Used lightly as Russian social/toxic style auxiliary data, not as primary topic supervision. Exact normalized RuMTEB SensitiveTopics texts are filtered out."
+    },
+    {
+      "id": "textdetox/multilingual_toxicity_dataset",
+      "license": "openrail++",
+      "usage": ["sensitive_topic_discrimination", "toxicity_style", "russian"],
+      "splits": ["ru"],
+      "coverage_tags": ["russian", "toxicity", "balanced", "auxiliary"],
+      "contaminates_rumteb_tasks": [],
+      "notes": "Russian split used lightly as auxiliary toxicity/neutral calibration. Exact normalized RuMTEB SensitiveTopics texts are filtered out."
+    },
+    {
+      "id": "ucberkeley-dlab/measuring-hate-speech",
+      "license": "unknown",
+      "usage": ["sensitive_topic_discrimination", "hate_speech", "target_group_labels", "research_only"],
+      "splits": ["train"],
+      "coverage_tags": ["english", "hate_speech", "target_race", "target_religion", "target_gender", "target_sexuality", "target_disability", "target_politics"],
+      "contaminates_rumteb_tasks": [],
+      "notes": "Used at low weight for fine target-group topic geometry. Exact normalized RuMTEB SensitiveTopics texts are filtered out."
+    }
+  ]
+}

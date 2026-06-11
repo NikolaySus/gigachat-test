@@ -1,0 +1,65 @@
+{
+  "name": "fair_scidistill_from_frontier_lr5e7_anchor100_dist05_pair2_reh025_b4_20_save5_4096_eager_frozenrepro",
+  "description": "Fair science-local transfer probe from the accepted frontier. Unlike parameter-direction transfer, OECD-strong is used only as an embedding/pairwise teacher on clean OECD/GRNTI/Geo science proxy records. Broad preservation is handled separately with frontier mixed rehearsal and Minds14 train-only rehearsal. No released model, released latent weights, benchmark rows, or contaminated OECD rows are used.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_oecd29_circle_from_oecd_step40_lr5e7_anchor20_reh05_b4_40_4096_eager_frozenrepro/step-40.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/fair_mixed_oecd29_grnti_geo_knn_supcon_b6_480_seed2681.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_scidistill_from_frontier_lr5e7_anchor100_dist05_pair2_reh025_b4_20_save5_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 4,
+  "learning_rate": 5e-7,
+  "weight_decay": 0.0,
+  "temperature": 0.03,
+  "pair_score_loss_weight": 1.0,
+  "max_steps": 20,
+  "log_every": 1,
+  "save_every": 5,
+  "seed": 3211,
+  "stages": [
+    {
+      "name": "science_local_teacher_with_broad_rehearsal",
+      "data_path": "data/contrastive/fair_mixed_oecd29_grnti_geo_knn_supcon_b6_480_seed2681.jsonl",
+      "max_steps": 20,
+      "batch_size": 4,
+      "learning_rate": 5e-7,
+      "shuffle": false,
+      "task_loss_weight": 0.2,
+      "temperature": 0.03,
+      "distillation_loss_weight": 0.5,
+      "pairwise_distillation_loss_weight": 2.0,
+      "parameter_anchor_weight": 100.0,
+      "rehearsal_loss_weight": 0.25,
+      "save_every": 5
+    }
+  ],
+  "retention": {
+    "teacher_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_oecdstrong_geo20_minds14_repair_lr5e7_anchor80_reh05_b12_20_save5_4096_eager_frozenrepro/step-5.pt",
+    "parameter_anchor_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_oecd29_circle_from_oecd_step40_lr5e7_anchor20_reh05_b4_40_4096_eager_frozenrepro/step-40.pt",
+    "parameter_anchor_weight": 100.0,
+    "distillation_data_path": "data/contrastive/fair_mixed_oecd29_grnti_geo_knn_supcon_b6_480_seed2681.jsonl",
+    "distillation_batch_size": 1,
+    "distillation_max_texts": 4,
+    "pairwise_distillation_max_texts": 6,
+    "distillation_max_length": 4096,
+    "rehearsal_data_paths": [
+      {
+        "data_path": "data/contrastive/fair_frontier_mixed_cedr_oecd_grnti_geo_b7_420_seed2791.jsonl",
+        "batch_size": 1,
+        "loss_weight": 1.0,
+        "temperature": 0.03
+      },
+      {
+        "data_path": "data/contrastive/fair_minds14_ru_intent_linear_probe_b12_80_seed3111.jsonl",
+        "batch_size": 12,
+        "loss_weight": 1.0,
+        "temperature": 0.07
+      }
+    ],
+    "rehearsal_loss_weight": 0.25
+  }
+}

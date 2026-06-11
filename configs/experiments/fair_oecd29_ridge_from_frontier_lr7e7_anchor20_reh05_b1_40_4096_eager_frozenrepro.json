@@ -1,0 +1,44 @@
+{
+  "name": "fair_oecd29_ridge_from_frontier_lr7e7_anchor20_reh05_b1_40_4096_eager_frozenrepro",
+  "description": "Fair OECD-style ridge-probe repair from current frontier. Uses audited Kaggle GRNTI-to-OECD29 TF-IDF episodes converted from KNN support episodes to a differentiable ridge-classification objective, matching the logReg probe tasks more closely than circle/KNN losses.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_oecd29_circle_from_oecd_step40_lr5e7_anchor20_reh05_b4_40_4096_eager_frozenrepro/step-40.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_kaggle_oecd29_tfidf_ridge_episode_p2_n4s1_1200_seed2671_lam1.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_oecd29_ridge_from_frontier_lr7e7_anchor20_reh05_b1_40_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 1,
+  "learning_rate": 7e-7,
+  "weight_decay": 0.0,
+  "temperature": 0.07,
+  "pair_score_loss_weight": 1.0,
+  "max_steps": 40,
+  "log_every": 5,
+  "save_every": 20,
+  "seed": 2711,
+  "stages": [
+    {
+      "name": "kaggle_oecd29_tfidf_ridge_lam1_b1",
+      "data_path": "data/contrastive/open_ru_1r_nc_kaggle_oecd29_tfidf_ridge_episode_p2_n4s1_1200_seed2671_lam1.jsonl",
+      "max_steps": 40,
+      "batch_size": 1,
+      "learning_rate": 7e-7,
+      "shuffle": false,
+      "task_loss_weight": 1.0,
+      "temperature": 0.07,
+      "parameter_anchor_weight": 20.0,
+      "rehearsal_loss_weight": 0.5,
+      "save_every": 20
+    }
+  ],
+  "retention": {
+    "parameter_anchor_weight": 20.0,
+    "rehearsal_data_path": "data/contrastive/fair_rusts_repair_rehearsal_cedr800_mixh1600_seed2032.jsonl",
+    "rehearsal_batch_size": 1,
+    "rehearsal_loss_weight": 0.5
+  }
+}

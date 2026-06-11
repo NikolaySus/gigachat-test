@@ -1,0 +1,45 @@
+{
+  "name": "fair_w50geo20_oecd29_repair_lr15e7_anchor10_reh05_b12_40_save20_4096_eager_frozenrepro",
+  "description": "Conservative OECD29 linear-probe repair from the high-CEDR W50->Georeview step-20 branch. Tests whether OECD classification/clustering can recover while preserving the CEDR gain via stronger anchoring and CEDR/MixH rehearsal.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_w50_geo_supcon_recreate_lr1e6_anchor5_b12_40_save20_4096_eager_frozenrepro/step-20.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/fair_oecd29_linear_probe_b12_60_seed2963.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_w50geo20_oecd29_repair_lr15e7_anchor10_reh05_b12_40_save20_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 12,
+  "learning_rate": 1.5e-6,
+  "weight_decay": 0.0,
+  "temperature": 0.07,
+  "pair_score_loss_weight": 1.0,
+  "max_steps": 40,
+  "log_every": 5,
+  "save_every": 20,
+  "seed": 3051,
+  "stages": [
+    {
+      "name": "oecd29_linear_probe_from_w50geo20",
+      "data_path": "data/contrastive/fair_oecd29_linear_probe_b12_60_seed2963.jsonl",
+      "max_steps": 40,
+      "batch_size": 12,
+      "learning_rate": 1.5e-6,
+      "shuffle": false,
+      "task_loss_weight": 1.0,
+      "temperature": 0.07,
+      "parameter_anchor_weight": 10.0,
+      "rehearsal_loss_weight": 0.5,
+      "save_every": 20
+    }
+  ],
+  "retention": {
+    "parameter_anchor_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_w50_geo_supcon_recreate_lr1e6_anchor5_b12_40_save20_4096_eager_frozenrepro/step-20.pt",
+    "parameter_anchor_weight": 10.0,
+    "rehearsal_data_path": "data/contrastive/fair_rusts_repair_rehearsal_cedr800_mixh1600_seed2032.jsonl",
+    "rehearsal_batch_size": 1,
+    "rehearsal_loss_weight": 0.5
+  }
+}

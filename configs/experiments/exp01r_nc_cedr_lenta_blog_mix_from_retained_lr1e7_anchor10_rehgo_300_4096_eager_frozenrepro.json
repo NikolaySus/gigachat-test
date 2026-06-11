@@ -1,0 +1,28 @@
+{
+  "name": "exp01r_nc_cedr_lenta_blog_mix_from_retained_lr1e7_anchor10_rehgo_300_4096_eager_frozenrepro",
+  "description": "CEDR correction from retained Go checkpoint using a mixed clean neutral-boundary stage: strict Lenta reported examples plus blog-style neutral distractors, with Go9000 rehearsal.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/cedr_correction_go9000_neutral404_continue_from_step1800_lr5e7_anchor10_1200_4096_eager_frozenrepro/step-1200.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_cedr_lenta_reported_blog_broad_mix_4470.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/cedr_lenta_blog_mix_from_retained_lr1e7_anchor10_rehgo_300_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 3,
+  "learning_rate": 1e-7,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "max_steps": 300,
+  "log_every": 50,
+  "save_every": 50,
+  "seed": 1062,
+  "retention": {
+    "parameter_anchor_weight": 10.0,
+    "rehearsal_data_path": "data/contrastive/open_ru_1r_nc_cedr_ailab_goemotions_ru_prior_neutral404_9000.jsonl",
+    "rehearsal_batch_size": 3,
+    "rehearsal_loss_weight": 1.0
+  }
+}

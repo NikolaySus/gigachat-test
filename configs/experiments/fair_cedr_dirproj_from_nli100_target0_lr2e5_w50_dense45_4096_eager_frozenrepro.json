@@ -1,0 +1,31 @@
+{
+  "name": "fair_cedr_dirproj_from_nli100_target0_lr2e5_w50_dense45_4096_eager_frozenrepro",
+  "description": "Weaker no-GeRaCl direction repair from NLI100. Uses the same fair Lenta CEDR proxy and GoEmotions rehearsal as the successful high-CEDR route, but halves direction weight to reduce GeoCluster/RuSTS damage.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_stage_nli100_then_cedr_repair_from_frontier_180_4096_eager_frozenrepro/step-100.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_cedr_lenta_news_neutral_distractors_reported_3200.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_cedr_dirproj_from_nli100_target0_lr2e5_w50_dense45_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 3,
+  "learning_rate": 2e-5,
+  "weight_decay": 0.0,
+  "temperature": 0.02,
+  "max_steps": 45,
+  "log_every": 5,
+  "save_every": 5,
+  "seed": 2231,
+  "retention": {
+    "parameter_anchor_weight": 1.0,
+    "rehearsal_data_path": "data/contrastive/open_ru_1r_nc_cedr_ailab_goemotions_ru_prior_neutral404_9000.jsonl",
+    "rehearsal_batch_size": 3,
+    "rehearsal_loss_weight": 0.5,
+    "negative_direction_checkpoint": "experiments/exp01_reinit_fair/checkpoints/mixh_habrfull_leave1out_no_geracl_4096_eager_frozenrepro/latest.pt",
+    "negative_direction_weight": 50.0,
+    "negative_direction_target_projection": 0.0
+  }
+}

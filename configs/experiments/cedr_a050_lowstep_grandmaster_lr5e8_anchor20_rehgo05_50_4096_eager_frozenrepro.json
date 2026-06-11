@@ -1,0 +1,28 @@
+{
+  "name": "cedr_a050_lowstep_grandmaster_lr5e8_anchor20_rehgo05_50_4096_eager_frozenrepro",
+  "description": "Low-step recovery sweep from CEDR a050 arithmetic checkpoint with anchor and CEDR rehearsal.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/cedr_goal_best_minus_nogeracl_a050/latent.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_grandmaster_clustered_3200.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/cedr_a050_lowstep_grandmaster_lr5e8_anchor20_rehgo05_50_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 2,
+  "learning_rate": 5e-08,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "max_steps": 50,
+  "log_every": 25,
+  "save_every": 50,
+  "seed": 975,
+  "retention": {
+    "parameter_anchor_weight": 20.0,
+    "rehearsal_data_path": "data/contrastive/open_ru_1r_nc_cedr_ailab_goemotions_ru_prior_neutral404_9000.jsonl",
+    "rehearsal_batch_size": 2,
+    "rehearsal_loss_weight": 0.5
+  }
+}

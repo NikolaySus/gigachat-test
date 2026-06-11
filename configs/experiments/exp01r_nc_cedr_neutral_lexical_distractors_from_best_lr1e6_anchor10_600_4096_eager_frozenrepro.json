@@ -1,0 +1,25 @@
+{
+  "name": "exp01r_nc_cedr_neutral_lexical_distractors_from_best_lr1e6_anchor10_600_4096_eager_frozenrepro",
+  "description": "CEDR correction targeting neutral examples that contain emotion lexemes, using clean non-CEDR factual/technical distractors and GoEmotions-RU emotion negatives.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/cedr_correction_go9000_neutral404_continue_from_step1800_lr5e7_anchor10_1200_4096_eager_frozenrepro/step-1200.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_cedr_neutral_lexical_distractors_3200.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/cedr_neutral_lexical_distractors_from_best_lr1e6_anchor10_600_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 3,
+  "learning_rate": 1e-6,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "max_steps": 600,
+  "log_every": 50,
+  "save_every": 100,
+  "seed": 872,
+  "retention": {
+    "parameter_anchor_weight": 10.0
+  }
+}

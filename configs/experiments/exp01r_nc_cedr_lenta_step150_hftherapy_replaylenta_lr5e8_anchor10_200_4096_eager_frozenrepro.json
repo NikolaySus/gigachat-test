@@ -1,0 +1,28 @@
+{
+  "name": "exp01r_nc_cedr_lenta_step150_hftherapy_replaylenta_lr5e8_anchor10_200_4096_eager_frozenrepro",
+  "description": "CEDR continuation from current best: add clean direct-emotion Russian HF data (therapy_emotions_ru + RuEmotions) while rehearsing the strict Lenta neutral-boundary data that produced the best score.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/cedr_correction_lenta_reported_replay_go9000_from_retainedbest_lr1e7_anchor10_reh1_300_4096_eager_frozenrepro/step-150.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_cedr_hf_therapy_ruemotions_clean_1600.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/cedr_lenta_step150_hftherapy_replaylenta_lr5e8_anchor10_200_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 4,
+  "learning_rate": 5e-8,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "max_steps": 200,
+  "log_every": 50,
+  "save_every": 50,
+  "seed": 952,
+  "retention": {
+    "parameter_anchor_weight": 10.0,
+    "rehearsal_data_path": "data/contrastive/open_ru_1r_nc_cedr_lenta_news_neutral_distractors_reported_3200.jsonl",
+    "rehearsal_batch_size": 3,
+    "rehearsal_loss_weight": 1.0
+  }
+}

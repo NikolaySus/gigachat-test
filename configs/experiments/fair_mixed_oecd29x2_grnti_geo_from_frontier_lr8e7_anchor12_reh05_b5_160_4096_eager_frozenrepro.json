@@ -1,0 +1,44 @@
+{
+  "name": "fair_mixed_oecd29x2_grnti_geo_from_frontier_lr8e7_anchor12_reh05_b5_160_4096_eager_frozenrepro",
+  "description": "Fair coupled local-structure continuation from the current Kaggle OECD29 frontier. Each batch strengthens OECD29 kNN pressure while retaining GRNTI kNN and Georeview positive-pair rehearsal: 2 OECD29 KNN + 1 GRNTI KNN + 1x2 Georeview SupCon. No benchmark rows, released model outputs, released teacher, or released latent weights are used.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_oecd29_circle_from_oecd_step40_lr5e7_anchor20_reh05_b4_40_4096_eager_frozenrepro/step-40.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/fair_mixed_oecd29x2_grnti_geo_knn_supcon_b5_800_seed2692.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_mixed_oecd29x2_grnti_geo_from_frontier_lr8e7_anchor12_reh05_b5_160_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 5,
+  "learning_rate": 8e-7,
+  "weight_decay": 0.0,
+  "temperature": 0.03,
+  "pair_score_loss_weight": 1.0,
+  "max_steps": 160,
+  "log_every": 5,
+  "save_every": 40,
+  "seed": 2693,
+  "stages": [
+    {
+      "name": "mixed_oecd29x2_grnti_geo_local_structure",
+      "data_path": "data/contrastive/fair_mixed_oecd29x2_grnti_geo_knn_supcon_b5_800_seed2692.jsonl",
+      "max_steps": 160,
+      "batch_size": 5,
+      "learning_rate": 8e-7,
+      "shuffle": false,
+      "task_loss_weight": 1.0,
+      "temperature": 0.03,
+      "parameter_anchor_weight": 12.0,
+      "rehearsal_loss_weight": 0.5,
+      "save_every": 40
+    }
+  ],
+  "retention": {
+    "parameter_anchor_weight": 12.0,
+    "rehearsal_data_path": "data/contrastive/fair_rusts_repair_rehearsal_cedr800_mixh1600_seed2032.jsonl",
+    "rehearsal_batch_size": 1,
+    "rehearsal_loss_weight": 0.5
+  }
+}

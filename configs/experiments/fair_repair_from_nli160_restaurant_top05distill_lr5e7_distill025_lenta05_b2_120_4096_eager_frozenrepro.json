@@ -1,0 +1,42 @@
+{
+  "name": "fair_repair_from_nli160_restaurant_top05distill_lr5e7_distill025_lenta05_b2_120_4096_eager_frozenrepro",
+  "description": "Fair reversed-direction geometry repair from the current balanced/NLI checkpoint. Keeps clean Lenta CEDR pressure while applying a small top05 output-distillation signal on clean restaurant-review texts to recover Georeview clustering without rebuilding CEDR from top05.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_rusts_nli_corr_from_h012_lr5e7_anchor10_reh05_b2_160_4096_eager_frozenrepro/step-160.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_cedr_lenta_news_neutral_distractors_reported_3200.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_repair_from_nli160_restaurant_top05distill_lr5e7_distill025_lenta05_b2_120_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 2,
+  "learning_rate": 5e-7,
+  "weight_decay": 0.0,
+  "temperature": 0.02,
+  "max_steps": 120,
+  "log_every": 20,
+  "save_every": 40,
+  "seed": 2093,
+  "retention": {
+    "teacher_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/lossgap_top05_open_ru_1r_nc_cedr_ruizard_classifier_pseudolabel_neu55_7200_4096_eager_frozenrepro/step-300.pt",
+    "distillation_max_texts": 8,
+    "distillation_max_length": 4096,
+    "rehearsal_data_path": "data/contrastive/fair_blinoff_restaurant_reviews_distill_12000_seed2090.jsonl",
+    "rehearsal_batch_size": 2,
+    "rehearsal_loss_weight": 0.0,
+    "parameter_anchor_weight": 5.0
+  },
+  "stages": [
+    {
+      "name": "cedr_preserve_with_tiny_restaurant_top05_distill",
+      "data_path": "data/contrastive/open_ru_1r_nc_cedr_lenta_news_neutral_distractors_reported_3200.jsonl",
+      "max_steps": 120,
+      "task_loss_weight": 0.5,
+      "distillation_loss_weight": 0.25,
+      "rehearsal_loss_weight": 0.0,
+      "parameter_anchor_weight": 5.0
+    }
+  ]
+}

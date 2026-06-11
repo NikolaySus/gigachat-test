@@ -1,0 +1,29 @@
+{
+  "name": "latentdir_rusts_cleaned_leipzig_steps600_lr2e6_anchor1_reh0p5_pairw5_4096_eager_frozenrepro",
+  "description": "Controlled open-data latent direction probe from the current Habr1x+DeepVK1x CEDR-recovery checkpoint. Released weights are not used in training; they are measured only after training.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/cedr_a050_recover_habr1x_deepvk1x_lr2e6_anchor1_rehgo05_5989_4096_eager_frozenrepro/step-5989.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/rusts_external_cleaned_leipzig_diverse_3200.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/latentdir_rusts_cleaned_leipzig_steps600_lr2e6_anchor1_reh0p5_pairw5_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 2,
+  "learning_rate": 2e-06,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "max_steps": 600,
+  "log_every": 50,
+  "save_every": 600,
+  "seed": 8801,
+  "pair_score_loss_weight": 5.0,
+  "retention": {
+    "parameter_anchor_weight": 1.0,
+    "rehearsal_data_path": "data/contrastive/open_ru_1r_nc_cedr_ailab_goemotions_ru_prior_neutral404_9000.jsonl",
+    "rehearsal_batch_size": 2,
+    "rehearsal_loss_weight": 0.5
+  }
+}

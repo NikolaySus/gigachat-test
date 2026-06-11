@@ -1,0 +1,28 @@
+{
+  "name": "fair_repair_from_rehmixh015_circle_lr5e7_anchor1_reh025_200_4096_eager_frozenrepro",
+  "description": "Fair short metric-geometry repair from the high-CEDR-margin checkpoint. The circle-loss CEDR-labeled metric data historically improved RuSTS/OECD/Georeview clustering from the clean base but left CEDR too low. Starting from the +0.0125 CEDR-margin checkpoint tests whether a small anchored dose can recover clustering while preserving released CEDR.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_cedr_highstsbase_lenta_rehmixh015_target0_lr2e5_w100_120_4096_eager_frozenrepro/step-120.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_cedr_labeled_metric_v1_circle.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_repair_from_rehmixh015_circle_lr5e7_anchor1_reh025_200_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 10,
+  "learning_rate": 5e-7,
+  "weight_decay": 0.001,
+  "temperature": 0.05,
+  "max_steps": 200,
+  "log_every": 25,
+  "save_every": 50,
+  "seed": 2035,
+  "retention": {
+    "parameter_anchor_weight": 1.0,
+    "rehearsal_data_path": "data/contrastive/open_ru_1r_nc_mixh_habrfull_geracl6400_habr4369_deepvk3200_grandmaster3200_17169.jsonl",
+    "rehearsal_batch_size": 3,
+    "rehearsal_loss_weight": 0.25
+  }
+}

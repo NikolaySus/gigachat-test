@@ -1,0 +1,45 @@
+{
+  "name": "fair_humarticles_micro_from_oecd29_frontier_lr2e7_anchor100_reh1_b2_10_save5_4096_eager_frozenrepro",
+  "description": "Micro fair HumArticles title/abstract probe from the current OECD29 frontier. The previous 25-step title/abstract stage improved OECD classification but damaged CEDR and clustering badly; this route tests whether a tiny, strongly anchored update can keep the OECD-classification nudge before geometry collapse. Exact RuSciBench GRNTI/OECD overlaps were removed in the prepared data.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_oecd29_circle_from_oecd_step40_lr5e7_anchor20_reh05_b4_40_4096_eager_frozenrepro/step-40.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_humarticles_academic_hybrid_ordered_neg1_seed2761.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_humarticles_micro_from_oecd29_frontier_lr2e7_anchor100_reh1_b2_10_save5_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 2,
+  "learning_rate": 2e-7,
+  "weight_decay": 0.0,
+  "temperature": 0.03,
+  "pair_score_loss_weight": 1.0,
+  "max_steps": 10,
+  "log_every": 1,
+  "save_every": 5,
+  "seed": 2771,
+  "stages": [
+    {
+      "name": "humarticles_title_abstract_micro",
+      "data_path": "data/contrastive/open_ru_1r_nc_humarticles_academic_hybrid_ordered_neg1_seed2761.jsonl",
+      "objectives": ["contrastive"],
+      "max_steps": 10,
+      "batch_size": 2,
+      "learning_rate": 2e-7,
+      "shuffle": true,
+      "task_loss_weight": 0.5,
+      "temperature": 0.03,
+      "parameter_anchor_weight": 100.0,
+      "rehearsal_loss_weight": 1.0,
+      "save_every": 5
+    }
+  ],
+  "retention": {
+    "parameter_anchor_weight": 100.0,
+    "rehearsal_data_path": "data/contrastive/fair_rusts_repair_rehearsal_cedr800_mixh1600_seed2032.jsonl",
+    "rehearsal_batch_size": 1,
+    "rehearsal_loss_weight": 1.0
+  }
+}

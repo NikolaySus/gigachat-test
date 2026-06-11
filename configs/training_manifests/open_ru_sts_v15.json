@@ -1,0 +1,42 @@
+{
+  "name": "open_ru_sts_v15",
+  "description": "Clean-first v15 recovery manifest: starts from v12_1600 and adds filtered Vikhr Habr QA SBS preference data.",
+  "datasets": [
+    {
+      "id": "deepvk/ru-HNP",
+      "license": "Apache-2.0",
+      "usage": ["sts", "paraphrase", "hard_negative_finetune", "synthetic", "initial_checkpoint"],
+      "splits": ["train"],
+      "coverage_tags": ["hard_negative", "paraphrase", "negation", "numeric_logic", "entity_swap"],
+      "contaminates_rumteb_tasks": [],
+      "notes": "Inherited through the STS-v9/v12 initialization checkpoint, not used directly in v15 recovery."
+    },
+    {
+      "id": "merionum/ru_paraphraser",
+      "license": "MIT",
+      "usage": ["sts", "paraphrase", "initial_checkpoint"],
+      "splits": ["train"],
+      "coverage_tags": ["sts", "paraphrase", "news_headlines"],
+      "contaminates_rumteb_tasks": ["RUParaPhraserSTS"],
+      "notes": "Inherited through STS-v9/v12 initialization; excluded from v15 recovery."
+    },
+    {
+      "id": "ai-forever/ru-stsbenchmark-sts",
+      "license": "CC-BY-SA-4.0",
+      "usage": ["sts", "pair_score", "initial_checkpoint"],
+      "splits": ["train"],
+      "coverage_tags": ["sts", "graded_similarity"],
+      "contaminates_rumteb_tasks": ["RuSTSBenchmarkSTS"],
+      "notes": "Inherited through STS-v9/v12 initialization; excluded from v15 recovery."
+    },
+    {
+      "id": "Vikhrmodels/habr_qa_sbs",
+      "license": "unknown",
+      "usage": ["retrieval", "qa", "preference", "hard_negative_finetune", "recovery"],
+      "splits": ["train"],
+      "coverage_tags": ["russian", "technical_qa", "question_answer_matching", "preference_negative"],
+      "contaminates_rumteb_tasks": [],
+      "notes": "Converted as question -> best answer with bad answer as a negative. Rows are filtered for answer length, duplicate best/bad text, and high lexical similarity between best and bad."
+    }
+  ]
+}

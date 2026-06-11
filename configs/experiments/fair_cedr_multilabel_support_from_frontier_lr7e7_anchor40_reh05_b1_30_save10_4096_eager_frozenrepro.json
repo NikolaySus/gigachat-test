@@ -1,0 +1,45 @@
+{
+  "name": "fair_cedr_multilabel_support_from_frontier_lr7e7_anchor40_reh05_b1_30_save10_4096_eager_frozenrepro",
+  "description": "Small fair CEDR multilabel-support continuation from the accepted OECD29 frontier. Unlike Lenta/circle repairs, this uses thresholded support-set BCE, closer to CEDR's multilabel evaluation, with strong anchoring and clean CEDR/MixH rehearsal to protect current geometry.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_oecd29_circle_from_oecd_step40_lr5e7_anchor20_reh05_b4_40_4096_eager_frozenrepro/step-40.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_cedr_multilabel_support_v1_p4_7100.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_cedr_multilabel_support_from_frontier_lr7e7_anchor40_reh05_b1_30_save10_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 1,
+  "learning_rate": 7e-7,
+  "weight_decay": 0.0,
+  "temperature": 0.08,
+  "pair_score_loss_weight": 1.0,
+  "max_steps": 30,
+  "log_every": 5,
+  "save_every": 10,
+  "seed": 3071,
+  "stages": [
+    {
+      "name": "cedr_multilabel_support_frontier_guarded",
+      "data_path": "data/contrastive/open_ru_1r_nc_cedr_multilabel_support_v1_p4_7100.jsonl",
+      "max_steps": 30,
+      "batch_size": 1,
+      "learning_rate": 7e-7,
+      "shuffle": true,
+      "task_loss_weight": 1.0,
+      "temperature": 0.08,
+      "parameter_anchor_weight": 40.0,
+      "rehearsal_loss_weight": 0.5,
+      "save_every": 10
+    }
+  ],
+  "retention": {
+    "parameter_anchor_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_oecd29_circle_from_oecd_step40_lr5e7_anchor20_reh05_b4_40_4096_eager_frozenrepro/step-40.pt",
+    "parameter_anchor_weight": 40.0,
+    "rehearsal_data_path": "data/contrastive/fair_rusts_repair_rehearsal_cedr800_mixh1600_seed2032.jsonl",
+    "rehearsal_batch_size": 1,
+    "rehearsal_loss_weight": 0.5
+  }
+}

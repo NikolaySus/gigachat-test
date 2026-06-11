@@ -1,0 +1,44 @@
+{
+  "name": "fair_openalex_fos_circle_from_oecd_step40_lr5e7_anchor20_reh05_b8_40_4096_eager_frozenrepro",
+  "description": "Fair scientific taxonomy continuation from the current OECD-circle frontier using OpenAlex Russian title/abstract records with primary_topic subfield circle-loss batches. Exact RuSciBench GRNTI/OECD text/title/prefix overlaps are removed; no released model or benchmark rows are used.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_oecd_proxy_circle_from_step80_lr5e7_anchor20_reh05_b6_40_4096_eager_frozenrepro/step-40.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/openalex_ru_fos_subfield_circle_b8_3200_seed2641.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_openalex_fos_circle_from_oecd_step40_lr5e7_anchor20_reh05_b8_40_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 8,
+  "learning_rate": 5e-7,
+  "weight_decay": 0.0,
+  "temperature": 0.03,
+  "pair_score_loss_weight": 1.0,
+  "max_steps": 40,
+  "log_every": 5,
+  "save_every": 20,
+  "seed": 2643,
+  "stages": [
+    {
+      "name": "openalex_ru_fos_subfield_circle",
+      "data_path": "data/contrastive/openalex_ru_fos_subfield_circle_b8_3200_seed2641.jsonl",
+      "max_steps": 40,
+      "batch_size": 8,
+      "learning_rate": 5e-7,
+      "shuffle": false,
+      "task_loss_weight": 1.0,
+      "temperature": 0.03,
+      "parameter_anchor_weight": 20.0,
+      "rehearsal_loss_weight": 0.5,
+      "save_every": 20
+    }
+  ],
+  "retention": {
+    "parameter_anchor_weight": 20.0,
+    "rehearsal_data_path": "data/contrastive/fair_rusts_repair_rehearsal_cedr800_mixh1600_seed2032.jsonl",
+    "rehearsal_batch_size": 1,
+    "rehearsal_loss_weight": 0.5
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "exp01b_retrain_latent_memory_sts_v2_smoke",
+  "description": "Smoke-test mixed contrastive + pair-score training for the original latent-memory block.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "flash_attention_2",
+  "latent_architecture": "original_latent_attention",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "experiments/exp01_original_latent_memory/data/toy_mixed_pairs.jsonl",
+  "output_dir": "experiments/exp01_original_latent_memory/checkpoints/sts_v2_smoke",
+  "max_length": 128,
+  "batch_size": 2,
+  "learning_rate": 1e-5,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "pair_score_loss_weight": 1.0,
+  "max_steps": 2,
+  "log_every": 1,
+  "save_every": 2,
+  "seed": 13
+}

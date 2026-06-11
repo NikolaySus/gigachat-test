@@ -1,0 +1,25 @@
+{
+  "name": "exp01r_nc_cedr_correction_djacon_rugoemotions9000_from_best_lr1e6_anchor10_900_4096_eager_frozenrepro",
+  "description": "CEDR correction probe with clean Djacon/ru_goemotions component from the current best Go9000 checkpoint.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/cedr_correction_go9000_neutral404_from_anchorbest_lr1e6_anchor5_4096_eager_frozenrepro/step-900.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_cedr_djacon_rugoemotions_prior9000.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/cedr_correction_djacon_rugoemotions9000_from_best_lr1e6_anchor10_900_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 3,
+  "learning_rate": 1e-6,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "max_steps": 900,
+  "log_every": 50,
+  "save_every": 300,
+  "seed": 825,
+  "retention": {
+    "parameter_anchor_weight": 10.0
+  }
+}

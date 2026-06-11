@@ -1,0 +1,26 @@
+{
+  "name": "fair_geocluster_repair_from_h012_ms_lr1e6_anchor5_80_4096_eager_frozenrepro",
+  "description": "Short fair Georeview-clustering repair from the current best balanced CEDR checkpoint. Uses grouped GeRaCl/GrandMaster labeled-text multi-similarity batches with a strong parameter anchor; no benchmark rows, released latent weights, a050 outputs, or checkpoint arithmetic.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_cedr_highstsbase_lenta_rehmixh012_target0_lr2e5_w100_80_4096_eager_frozenrepro/step-80.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/fair_geo_cluster_labeled_ms_6000_seed2034.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_geocluster_repair_from_h012_ms_lr1e6_anchor5_80_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 12,
+  "learning_rate": 1e-6,
+  "weight_decay": 0.0,
+  "temperature": 0.02,
+  "max_steps": 80,
+  "log_every": 20,
+  "save_every": 40,
+  "seed": 2035,
+  "shuffle": false,
+  "retention": {
+    "parameter_anchor_weight": 5.0
+  }
+}

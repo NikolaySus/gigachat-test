@@ -1,0 +1,57 @@
+{
+  "name": "fair_kaggle_knn_then_geo_supcon_from_grandcircle_lr5e7_anchor15_reh05_20p20_4096_eager_frozenrepro",
+  "description": "Two-stage clean repair: first a task-shaped Kaggle GRNTI KNN episode stage to preserve/improve RuSciBench clustering, then a short ordered Georeview SupCon stage to recover GeoreviewClusteringP2P. No released model or benchmark rows.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_grandmaster_circle_repair_from_taxv2_step20_lr5e7_anchor15_reh05_b8_40_4096_eager_frozenrepro/step-20.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_kaggle_grnti_tfidf_knn_episode_p2_n3s2_900_seed2591.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_knn_then_geo_supcon_from_grandcircle_lr5e7_anchor15_reh05_20p20_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 1,
+  "learning_rate": 5e-7,
+  "weight_decay": 0.0,
+  "temperature": 0.03,
+  "pair_score_loss_weight": 1.0,
+  "max_steps": 40,
+  "log_every": 5,
+  "save_every": 20,
+  "seed": 2601,
+  "stages": [
+    {
+      "name": "kaggle_grnti_tfidf_knn_episode",
+      "data_path": "data/contrastive/open_ru_1r_nc_kaggle_grnti_tfidf_knn_episode_p2_n3s2_900_seed2591.jsonl",
+      "max_steps": 20,
+      "batch_size": 1,
+      "learning_rate": 5e-7,
+      "shuffle": true,
+      "task_loss_weight": 1.0,
+      "temperature": 0.03,
+      "parameter_anchor_weight": 15.0,
+      "rehearsal_loss_weight": 0.5,
+      "save_every": 20
+    },
+    {
+      "name": "ordered_georeview_supcon_recovery",
+      "data_path": "data/contrastive/fair_geo_cluster_labeled_supcon_6000_seed2034.jsonl",
+      "max_steps": 20,
+      "batch_size": 12,
+      "learning_rate": 5e-7,
+      "shuffle": false,
+      "task_loss_weight": 1.0,
+      "temperature": 0.03,
+      "parameter_anchor_weight": 15.0,
+      "rehearsal_loss_weight": 0.5,
+      "save_every": 20
+    }
+  ],
+  "retention": {
+    "parameter_anchor_weight": 15.0,
+    "rehearsal_data_path": "data/contrastive/fair_rusts_repair_rehearsal_cedr800_mixh1600_seed2032.jsonl",
+    "rehearsal_batch_size": 1,
+    "rehearsal_loss_weight": 0.5
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "exp01r_nc_cedr_lenta_step150_boundary_distill_release_lr1e7_150_4096_eager_frozenrepro",
+  "description": "CEDR recovery probe: distill the current best Lenta-corrected latent block toward the released latent block on clean non-CEDR CEDR-like boundary proxy texts. No CEDR records are used.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/cedr_correction_lenta_reported_replay_go9000_from_retainedbest_lr1e7_anchor10_reh1_300_4096_eager_frozenrepro/step-150.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/open_ru_1r_nc_cedr_lenta_boundary_mix_v1_9600.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/cedr_lenta_step150_boundary_distill_release_lr1e7_150_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 2,
+  "learning_rate": 1e-7,
+  "weight_decay": 0.01,
+  "temperature": 0.02,
+  "task_loss_weight": 0.0,
+  "max_steps": 150,
+  "log_every": 25,
+  "save_every": 25,
+  "seed": 941,
+  "retention": {
+    "teacher_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/released_original_latent_attention.pt",
+    "distillation_loss_weight": 1.0,
+    "distillation_max_texts": 16,
+    "distillation_max_length": 4096
+  }
+}

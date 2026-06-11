@@ -1,0 +1,44 @@
+{
+  "name": "fair_geracl_synth_classes_probe_from_frontier_lr8e7_anchor30_reh05_b12_20_save10_4096_eager_frozenrepro",
+  "description": "Post-restart clean GeRaCl synthetic_classes_train linear-probe probe from the accepted fair frontier. This explicitly excludes GeRaCl ru_mteb_classes because that config contains benchmark-like label schemas. Goal: test whether broad clean classification episodes can improve/recover classification geometry without damaging CEDR/Geo/OECD/MASSIVE.",
+  "model_name": "ai-sage/Giga-Embeddings-instruct",
+  "local_files_only": true,
+  "attn_implementation": "eager",
+  "latent_architecture": "original_latent_attention",
+  "initial_latent_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_oecd29_circle_from_oecd_step40_lr5e7_anchor20_reh05_b4_40_4096_eager_frozenrepro/step-40.pt",
+  "freeze_llm": true,
+  "reinit_latent": false,
+  "data_path": "data/contrastive/fair_geracl_synth_classes_linear_probe_b12_60_seed3091.jsonl",
+  "output_dir": "experiments/exp01_reinit_fair/checkpoints/fair_geracl_synth_classes_probe_from_frontier_lr8e7_anchor30_reh05_b12_20_save10_4096_eager_frozenrepro",
+  "max_length": 4096,
+  "batch_size": 12,
+  "learning_rate": 8e-7,
+  "weight_decay": 0.0,
+  "temperature": 0.07,
+  "max_steps": 20,
+  "log_every": 5,
+  "save_every": 10,
+  "seed": 3093,
+  "stages": [
+    {
+      "name": "geracl_synthetic_classes_linear_probe",
+      "data_path": "data/contrastive/fair_geracl_synth_classes_linear_probe_b12_60_seed3091.jsonl",
+      "max_steps": 20,
+      "batch_size": 12,
+      "learning_rate": 8e-7,
+      "shuffle": false,
+      "task_loss_weight": 1.0,
+      "temperature": 0.07,
+      "parameter_anchor_weight": 30.0,
+      "rehearsal_loss_weight": 0.5,
+      "save_every": 10
+    }
+  ],
+  "retention": {
+    "parameter_anchor_checkpoint": "experiments/exp01_reinit_fair/checkpoints/fair_kaggle_oecd29_circle_from_oecd_step40_lr5e7_anchor20_reh05_b4_40_4096_eager_frozenrepro/step-40.pt",
+    "parameter_anchor_weight": 30.0,
+    "rehearsal_data_path": "data/contrastive/fair_rusts_repair_rehearsal_cedr800_mixh1600_seed2032.jsonl",
+    "rehearsal_batch_size": 1,
+    "rehearsal_loss_weight": 0.5
+  }
+}
