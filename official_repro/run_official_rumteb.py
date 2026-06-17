@@ -87,20 +87,28 @@ def patch_datasets_trust_remote_code() -> None:
     import datasets
     import datasets.load
 
-    if getattr(datasets, "_giga_trust_remote_code_patch", False):
-        return
-
     original_load_dataset = datasets.load_dataset
     original_load_dataset_builder = datasets.load_dataset_builder
+    if getattr(datasets, "_giga_trust_remote_code_patch", False):
+        original_load_dataset = getattr(datasets, "_giga_original_load_dataset", original_load_dataset)
+        original_load_dataset_builder = getattr(
+            datasets,
+            "_giga_original_load_dataset_builder",
+            original_load_dataset_builder,
+        )
 
     def resolve_known_configless_cache_load(args, kwargs):
-        if not args or args[0] != "ai-forever/ria-news-retrieval":
+        path = args[0] if args else kwargs.get("path")
+        if path != "ai-forever/ria-news-retrieval":
             return args, kwargs
         has_positional_config = len(args) > 1 and args[1] is not None
         has_keyword_config = kwargs.get("name") is not None
         if has_positional_config or has_keyword_config:
             return args, kwargs
-        return (args[0], "default", *args[1:]), kwargs
+        if args:
+            return (args[0], "default", *args[1:]), kwargs
+        kwargs["name"] = "default"
+        return args, kwargs
 
     def load_dataset_with_trust(*args, **kwargs):
         if kwargs.get("trust_remote_code") is None:
@@ -118,7 +126,16 @@ def patch_datasets_trust_remote_code() -> None:
     datasets.load_dataset_builder = load_dataset_builder_with_trust
     datasets.load.load_dataset = load_dataset_with_trust
     datasets.load.load_dataset_builder = load_dataset_builder_with_trust
+    datasets._giga_original_load_dataset = original_load_dataset
+    datasets._giga_original_load_dataset_builder = original_load_dataset_builder
     datasets._giga_trust_remote_code_patch = True
+
+    try:
+        import mteb.abstasks.AbsTaskRetrieval as retrieval_module
+
+        retrieval_module.load_dataset = load_dataset_with_trust
+    except ModuleNotFoundError:
+        pass
 
 
 def patch_transformers_config_compat() -> None:
@@ -581,10 +598,10 @@ def main() -> None:
     args = parser.parse_args()
 
     args.cache_dir.mkdir(parents=True, exist_ok=True)
-    os.environ.setdefault("MTEB_CACHE", str(args.cache_dir.resolve()))
-    os.environ.setdefault("HF_HOME", str((args.cache_dir / "hf_home").resolve()))
-    os.environ.setdefault("HF_DATASETS_CACHE", str((args.cache_dir / "datasets").resolve()))
-    os.environ.setdefault("HF_DATASETS_TRUST_REMOTE_CODE", "1")
+    os.environ["MTEB_CACHE"] = str(args.cache_dir.resolve())
+    os.environ["HF_HOME"] = str((args.cache_dir / "hf_home").resolve())
+    os.environ["HF_DATASETS_CACHE"] = str((args.cache_dir / "datasets").resolve())
+    os.environ["HF_DATASETS_TRUST_REMOTE_CODE"] = "1"
     hf_modules = str((args.cache_dir / "hf_home" / "modules").resolve())
     if hf_modules not in sys.path:
         sys.path.insert(0, hf_modules)
