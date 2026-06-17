@@ -93,14 +93,25 @@ def patch_datasets_trust_remote_code() -> None:
     original_load_dataset = datasets.load_dataset
     original_load_dataset_builder = datasets.load_dataset_builder
 
+    def resolve_known_configless_cache_load(args, kwargs):
+        if not args or args[0] != "ai-forever/ria-news-retrieval":
+            return args, kwargs
+        has_positional_config = len(args) > 1 and args[1] is not None
+        has_keyword_config = kwargs.get("name") is not None
+        if has_positional_config or has_keyword_config:
+            return args, kwargs
+        return (args[0], "default", *args[1:]), kwargs
+
     def load_dataset_with_trust(*args, **kwargs):
         if kwargs.get("trust_remote_code") is None:
             kwargs["trust_remote_code"] = True
+        args, kwargs = resolve_known_configless_cache_load(args, kwargs)
         return original_load_dataset(*args, **kwargs)
 
     def load_dataset_builder_with_trust(*args, **kwargs):
         if kwargs.get("trust_remote_code") is None:
             kwargs["trust_remote_code"] = True
+        args, kwargs = resolve_known_configless_cache_load(args, kwargs)
         return original_load_dataset_builder(*args, **kwargs)
 
     datasets.load_dataset = load_dataset_with_trust
