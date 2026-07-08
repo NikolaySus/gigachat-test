@@ -100,7 +100,16 @@ def load_terra() -> tuple[list[str], list[str], np.ndarray]:
     dataset = task.dataset["dev"]
     if isinstance(dataset, list):
         dataset = dataset[0]
-    return list(dataset["sentence1"]), list(dataset["sentence2"]), np.asarray(dataset["labels"], dtype=np.int64)
+    sentence1 = dataset["sentence1"]
+    sentence2 = dataset["sentence2"]
+    labels = dataset["labels"]
+    if len(sentence1) == 1 and isinstance(sentence1[0], list):
+        sentence1 = sentence1[0]
+    if len(sentence2) == 1 and isinstance(sentence2[0], list):
+        sentence2 = sentence2[0]
+    if len(labels) == 1 and isinstance(labels[0], list):
+        labels = labels[0]
+    return list(sentence1), list(sentence2), np.asarray(labels, dtype=np.int64)
 
 
 def ap(scores: np.ndarray, labels: np.ndarray, *, reverse: bool = False) -> float:
