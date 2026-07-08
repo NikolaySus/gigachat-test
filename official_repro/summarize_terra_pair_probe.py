@@ -14,8 +14,9 @@ def main() -> None:
     data = json.loads(args.input.read_text(encoding="utf-8"))
     baseline = float(data.get("baseline_frozen_legacy_ru_0ad", 0.675025))
     target = float(data.get("target_score", 0.7))
+    official = float(data.get("online_official_terra", 0.795677))
     rows: list[tuple[float, str, str, dict]] = []
-    for group_name in ("variants", "pair_variants"):
+    for group_name in ("variants", "pair_variants", "ensembles"):
         for name, scores in data.get(group_name, {}).items():
             rows.append((float(scores["main_score"]), group_name, name, scores))
     rows.sort(reverse=True, key=lambda item: item[0])
@@ -27,9 +28,10 @@ def main() -> None:
         "",
         f"Baseline frozen `legacy_ru` on `0ad5b29...`: `{baseline:.6f}`",
         f"Target: `{target:.6f}`",
+        f"Online official TERRa: `{official:.6f}`",
         "",
-        "| Rank | Family | Variant | TERRa | Delta vs baseline | Delta vs target | Best metric |",
-        "|---:|---|---|---:|---:|---:|---|",
+        "| Rank | Family | Variant | TERRa | Delta vs baseline | Delta vs target | Delta vs official | Best metric |",
+        "|---:|---|---|---:|---:|---:|---:|---|",
     ]
     for rank, (score, group_name, name, scores) in enumerate(rows, start=1):
         metric_values = {
@@ -37,10 +39,10 @@ def main() -> None:
             for key, value in scores.items()
             if key.endswith("_ap") and isinstance(value, int | float)
         }
-        best_metric = max(metric_values, key=metric_values.get) if metric_values else "main_score"
+        best_metric = max(metric_values, key=metric_values.get) if metric_values else str(scores.get("method", "main_score"))
         lines.append(
             f"| {rank} | `{group_name}` | `{name}` | {score:.6f} | "
-            f"{score - baseline:+.6f} | {score - target:+.6f} | `{best_metric}` |"
+            f"{score - baseline:+.6f} | {score - target:+.6f} | {score - official:+.6f} | `{best_metric}` |"
         )
 
     if rows:

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import itertools
 import json
 import os
 import random
@@ -18,6 +19,7 @@ from run_official_rumteb import GigaOfficialMTEBWrapper, patch_datasets_trust_re
 MODEL_REV_0AD = "0ad5b29bfecd806cecc9d66b927d828a736594dc"
 BASELINE_FROZEN_LEGACY_RU_0AD = 0.675025
 TARGET_SCORE = 0.700000
+ONLINE_OFFICIAL_TERRA = 0.795677
 
 
 VARIANTS: dict[str, tuple[str, str]] = {
@@ -32,6 +34,50 @@ VARIANTS: dict[str, tuple[str, str]] = {
     "entails_direction": (
         "Текст, из которого может следовать утверждение: ",
         "Утверждение, которое может следовать из текста: ",
+    ),
+    "entails_direction_newline": (
+        "Текст, из которого может следовать утверждение:\n",
+        "Утверждение, которое может следовать из текста:\n",
+    ),
+    "entails_direction_text_field": (
+        "Текст, из которого может следовать утверждение:\nтекст: ",
+        "Утверждение, которое может следовать из текста:\nутверждение: ",
+    ),
+    "entails_direction_statement_field": (
+        "Исходный текст:\n",
+        "Утверждение, проверяемое по исходному тексту:\n",
+    ),
+    "entails_direction_query_style": (
+        "Дан текст, из которого нужно вывести утверждение:\nтекст: ",
+        "Нужно найти утверждение, которое следует из текста:\nутверждение: ",
+    ),
+    "entails_direction_short": (
+        "из этого следует: ",
+        "следующее утверждение: ",
+    ),
+    "entails_direction_fact_claim": (
+        "Факт или ситуация: ",
+        "Вывод или утверждение: ",
+    ),
+    "entails_direction_logical": (
+        "Логическая предпосылка: ",
+        "Логическое следствие: ",
+    ),
+    "entails_direction_semantic": (
+        "Смысл исходного текста: ",
+        "Смысл проверяемого утверждения: ",
+    ),
+    "entails_direction_question": (
+        "Ответ находится в тексте: ",
+        "Проверяемое утверждение: ",
+    ),
+    "entails_direction_hypothesis_query": (
+        "Документ для проверки гипотезы: ",
+        "Гипотеза, которую нужно проверить: ",
+    ),
+    "entails_direction_rte": (
+        "Premise / предпосылка: ",
+        "Hypothesis / гипотеза: ",
     ),
     "condition_conclusion": ("условие: ", "вывод: "),
     "nli_role_long": (
@@ -117,31 +163,95 @@ def ap(scores: np.ndarray, labels: np.ndarray, *, reverse: bool = False) -> floa
 
 
 def compute_scores(emb1: np.ndarray, emb2: np.ndarray, labels: np.ndarray) -> dict[str, float]:
+    arrays = compute_pair_score_arrays(emb1, emb2)
+    scores = {
+        "cosine_ap": ap(arrays["cosine"], labels),
+        "dot_ap": ap(arrays["dot"], labels),
+        "manhattan_ap": ap(arrays["manhattan"], labels),
+        "euclidean_ap": ap(arrays["euclidean"], labels),
+    }
+    scores["main_score"] = max(scores.values())
+    return scores
+
+
+def compute_pair_score_arrays(emb1: np.ndarray, emb2: np.ndarray) -> dict[str, np.ndarray]:
     cosine_scores = 1 - paired_cosine_distances(emb1, emb2)
     manhattan_distances = paired_manhattan_distances(emb1, emb2)
     euclidean_distances = paired_euclidean_distances(emb1, emb2)
     dot_scores = np.sum(emb1 * emb2, axis=1)
-    scores = {
-        "cosine_ap": ap(cosine_scores, labels),
-        "dot_ap": ap(dot_scores, labels),
-        "manhattan_ap": ap(manhattan_distances, labels, reverse=True),
-        "euclidean_ap": ap(euclidean_distances, labels, reverse=True),
+    return {
+        "cosine": cosine_scores,
+        "dot": dot_scores,
+        "manhattan": -manhattan_distances,
+        "euclidean": -euclidean_distances,
     }
-    scores["main_score"] = max(scores.values())
-    return scores
 
 
 def compute_pair_anchor_scores(pair_emb: np.ndarray, positive_emb: np.ndarray, negative_emb: np.ndarray, labels: np.ndarray) -> dict[str, float]:
+    arrays = compute_pair_anchor_score_arrays(pair_emb, positive_emb, negative_emb)
+    scores = {f"{name}_ap": ap(values, labels) for name, values in arrays.items()}
+    scores["main_score"] = max(scores.values())
+    return scores
+
+
+def compute_pair_anchor_score_arrays(pair_emb: np.ndarray, positive_emb: np.ndarray, negative_emb: np.ndarray) -> dict[str, np.ndarray]:
     positive_scores = pair_emb @ positive_emb
     negative_scores = pair_emb @ negative_emb
     margin_scores = positive_scores - negative_scores
-    scores = {
-        "positive_ap": ap(positive_scores, labels),
-        "negative_ap": ap(negative_scores, labels, reverse=True),
-        "margin_ap": ap(margin_scores, labels),
+    return {
+        "positive": positive_scores,
+        "negative_inverse": -negative_scores,
+        "margin": margin_scores,
     }
-    scores["main_score"] = max(scores.values())
-    return scores
+
+
+def zscore(values: np.ndarray) -> np.ndarray:
+    values = np.asarray(values, dtype=np.float64)
+    std = values.std()
+    if std < 1e-12:
+        return values - values.mean()
+    return (values - values.mean()) / std
+
+
+def rank01(values: np.ndarray) -> np.ndarray:
+    order = np.argsort(values)
+    ranks = np.empty_like(order, dtype=np.float64)
+    ranks[order] = np.arange(len(values), dtype=np.float64)
+    denom = max(len(values) - 1, 1)
+    return ranks / denom
+
+
+def compute_ensembles(score_streams: dict[str, np.ndarray], labels: np.ndarray, *, top_k: int = 8) -> list[dict[str, object]]:
+    ranked = sorted(
+        ((ap(values, labels), name, values) for name, values in score_streams.items()),
+        reverse=True,
+        key=lambda item: item[0],
+    )[:top_k]
+    results: list[dict[str, object]] = []
+    for size in (2, 3, 4):
+        for combo in itertools.combinations(ranked, size):
+            names = [item[1] for item in combo]
+            arrays = [item[2] for item in combo]
+            zavg = np.mean([zscore(values) for values in arrays], axis=0)
+            ravg = np.mean([rank01(values) for values in arrays], axis=0)
+            results.append(
+                {
+                    "name": "zavg:" + "+".join(names),
+                    "main_score": ap(zavg, labels),
+                    "members": names,
+                    "method": "zavg",
+                }
+            )
+            results.append(
+                {
+                    "name": "rankavg:" + "+".join(names),
+                    "main_score": ap(ravg, labels),
+                    "members": names,
+                    "method": "rankavg",
+                }
+            )
+    results.sort(reverse=True, key=lambda item: float(item["main_score"]))
+    return results
 
 
 def main() -> None:
@@ -187,9 +297,12 @@ def main() -> None:
         "num_pairs": len(labels),
         "baseline_frozen_legacy_ru_0ad": BASELINE_FROZEN_LEGACY_RU_0AD,
         "target_score": TARGET_SCORE,
+        "online_official_terra": ONLINE_OFFICIAL_TERRA,
         "variants": {},
         "pair_variants": {},
+        "ensembles": {},
     }
+    score_streams: dict[str, np.ndarray] = {}
     for name in args.variants:
         if name not in VARIANTS:
             raise SystemExit(f"Unknown variant {name!r}. Available: {', '.join(VARIANTS)}")
@@ -199,6 +312,9 @@ def main() -> None:
         emb1 = model._encode_texts(texts1, batch_size=args.batch_size, instruction=None, prompt_mode="none")
         emb2 = model._encode_texts(texts2, batch_size=args.batch_size, instruction=None, prompt_mode="none")
         variant_scores = compute_scores(emb1, emb2, labels)
+        arrays = compute_pair_score_arrays(emb1, emb2)
+        for metric_name, values in arrays.items():
+            score_streams[f"variant:{name}:{metric_name}"] = values
         variant_scores["prefix1"] = prefix1
         variant_scores["prefix2"] = prefix2
         results["variants"][name] = variant_scores
@@ -221,6 +337,9 @@ def main() -> None:
             prompt_mode="none",
         )
         variant_scores = compute_pair_anchor_scores(pair_emb, anchors[0], anchors[1], labels)
+        arrays = compute_pair_anchor_score_arrays(pair_emb, anchors[0], anchors[1])
+        for metric_name, values in arrays.items():
+            score_streams[f"pair_variant:{name}:{metric_name}"] = values
         variant_scores["template"] = template
         variant_scores["positive_anchor"] = positive_anchor
         variant_scores["negative_anchor"] = negative_anchor
@@ -228,6 +347,22 @@ def main() -> None:
         delta = variant_scores["main_score"] - BASELINE_FROZEN_LEGACY_RU_0AD
         target_gap = variant_scores["main_score"] - TARGET_SCORE
         print(f"{name}: {variant_scores['main_score']:.6f} (delta {delta:+.6f}, target {target_gap:+.6f})", flush=True)
+
+    for row in compute_ensembles(score_streams, labels):
+        row = dict(row)
+        name = str(row.pop("name"))
+        results["ensembles"][name] = row
+    if results["ensembles"]:
+        best_name, best_row = max(
+            results["ensembles"].items(),
+            key=lambda item: float(item[1]["main_score"]),
+        )
+        best_score = float(best_row["main_score"])
+        print(
+            f"best_ensemble: {best_name}: {best_score:.6f} "
+            f"(official {best_score - ONLINE_OFFICIAL_TERRA:+.6f})",
+            flush=True,
+        )
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding="utf-8")
